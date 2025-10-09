@@ -120,7 +120,6 @@ public:
    */
   void setYear(int year);
 
-  // ============ MÉTODOS DE GERENCIAMENTO DE MÚSICAS ============
 
   /**
    * @brief Adiciona uma música ao álbum
