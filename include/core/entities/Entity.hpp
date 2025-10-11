@@ -18,6 +18,9 @@ namespace core {
      * Interface que define caracteristicas essenciais para entidades do sistema.
      */
     class Entity {
+    protected:
+        unsigned id = 0; /**< ID da entidade */
+
     public:
         virtual ~Entity() = default;
 
@@ -38,7 +41,7 @@ namespace core {
          * @param other Entidade a ser comparada
          * @return true se as entidades forem iguais, false caso contrário
          */
-         bool operator==(const Entity& other) const;
+         virtual bool operator==(const Entity& other) const = 0;
     };
 
 }

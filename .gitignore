@@ -4,6 +4,7 @@
 # Object files
 objects*/
 build*/
+.cache/
 *.o
 *.ko
 *.obj
