@@ -17,7 +17,6 @@
 #include "Song.hpp"
 #include <string>
 #include <vector>
-
 /**
  * @class Album
  * @brief Representa um álbum musical com suas músicas
@@ -31,7 +30,7 @@ private:
   unsigned _id;
   std::string _name;
   std::string _artist;
-  std::vector<Song> _songs;
+  std::vector<Song> *_songs;
   std::string _genre;
   int _year;
 
@@ -55,9 +54,14 @@ public:
    */
   Album(unsigned id, const std::string name, const std::string artist,
         const std::string genre, int year);
+  /**
+   * @brief Destrutor padrão da clase Album
+   * @note Responsável por liberar a memória dos vetores alocados
+   */
+  ~Album();
 
   // Getters
-  //
+
   /**
    * @brief Obtém o ID do álbum
    * @return Identificador único do álbum
@@ -119,8 +123,6 @@ public:
    * @param year Novo ano de lançamento
    */
   void setYear(int year);
-
-  // ============ MÉTODOS DE GERENCIAMENTO DE MÚSICAS ============
 
   /**
    * @brief Adiciona uma música ao álbum
