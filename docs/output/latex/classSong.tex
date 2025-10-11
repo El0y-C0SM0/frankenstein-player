@@ -1,0 +1,401 @@
+\doxysection{Referência à classe Song}
+\hypertarget{classSong}{}\label{classSong}\index{Song@{Song}}
+
+
+Representa uma música com seus metadados.  
+
+
+
+
+{\ttfamily \#include $<$Song.\+hpp$>$}
+
+\doxysubsubsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSong_a035474a80c90dd7b8b01b9c5f1c6552c}{Song}} (int id, const std\+::string \&file\+\_\+path, const std\+::string \&title, const std\+::string \&artist)
+\begin{DoxyCompactList}\small\item\em Construtor da classe \doxylink{classSong}{Song}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classSong_a7528cd815af216ef71861765305a1d67}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o ID da música. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classSong_a0e465a02bdcd7db758a6cb8eae1f1073}{get\+File\+Path}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o caminho do arquivo. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classSong_ab7d1e83dd86f4220183d92149b108c0a}{get\+Title}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o título da música. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classSong_a0e3ea38ab798043d79426829e9774cc4}{get\+Artist}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o artista. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classSong_ab79ee4719b4b0041d9b64823ede0f3c5}{get\+Album}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o álbum. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classSong_ae305917a759e91936bce1faf4afae886}{get\+Duration}} () const
+\begin{DoxyCompactList}\small\item\em Obtém a duração. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classSong_a88695c24f547090eee57e64e186971e3}{get\+Genre}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o gênero. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classSong_a95b95f2110f0561b5abc223f82cb5e69}{get\+Year}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o ano de lançamento. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSong_a85cb00358b139b444372078303eb8735}{set\+Title}} (const std\+::string \&title)
+\begin{DoxyCompactList}\small\item\em Define o título da música. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSong_a9e140657fdb7f37ca6ac4fd4749b35ad}{set\+Artist}} (const std\+::string \&artist)
+\begin{DoxyCompactList}\small\item\em Define o artista. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSong_adc9d5aa0dabf0ab206d13d5cb7b7085b}{set\+Album}} (const std\+::string \&album)
+\begin{DoxyCompactList}\small\item\em Define o álbum. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSong_a3d93e209dfd59ae1feffdb0dd3d2cfcd}{set\+Duration}} (int duration)
+\begin{DoxyCompactList}\small\item\em Define a duração. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSong_a5628d5343039ca2d5c3d20a33bed77f5}{set\+Genre}} (const std\+::string \&genre)
+\begin{DoxyCompactList}\small\item\em Define o gênero. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSong_affde873f6c694eec5049fcb520ebb546}{set\+Year}} (int year)
+\begin{DoxyCompactList}\small\item\em Define o ano de lançamento. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classSong_a0822ca9d429e5092b234d9455d7c54b0}{load\+Metadata}} ()
+\begin{DoxyCompactList}\small\item\em Carrega metadados do arquivo de áudio. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classSong_a3517d09a53601bdf0be128b5ec55d5dd}{get\+Formatted\+Duration}} () const
+\begin{DoxyCompactList}\small\item\em Obtém a duração formatada. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classSong_a2ec0f008c1e3e163a768b62e58eac2af}{to\+String}} () const
+\begin{DoxyCompactList}\small\item\em Converte a música para string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos Privados}
+\begin{DoxyCompactItemize}
+\item 
+unsigned \mbox{\hyperlink{classSong_abdeb871d396d1422b23850971f4f0865}{\+\_\+id}}
+\item 
+std\+::string \mbox{\hyperlink{classSong_a14b627c557cc90cd68ca2b57f0f99195}{\+\_\+file\+\_\+path}}
+\item 
+std\+::string \mbox{\hyperlink{classSong_a367c769c2e55cf72ce3b8c6b959f662f}{\+\_\+title}}
+\item 
+std\+::string \mbox{\hyperlink{classSong_a77cd1bace3147dbb285fa5343fbef3d4}{\+\_\+artist}}
+\item 
+std\+::string \mbox{\hyperlink{classSong_a0a21893e959fe35ce161a0da07eca5bf}{\+\_\+album}}
+\item 
+int \mbox{\hyperlink{classSong_a748ff535febc300ea66be7696a9cd4d9}{\+\_\+duration}}
+\item 
+std\+::string \mbox{\hyperlink{classSong_a8b77f1ed7ef861705434f4f2ea16763d}{\+\_\+genre}}
+\item 
+int \mbox{\hyperlink{classSong_a6ee39eb5d140f14355d528730f075a7f}{\+\_\+year}}
+\item 
+bool \mbox{\hyperlink{classSong_a019f5afc9c7d39779ca02771c733c5f1}{\+\_\+metadata\+\_\+loaded}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+Representa uma música com seus metadados. 
+
+A classe \doxylink{classSong}{Song} armazena informações como título, artista, álbum, duração, gênero e ano de lançamento. Pode ser expandida para usar a biblioteca Tag\+Lib para extração automática de metadados de arquivos de áudio. Ademais, deve ser implementado a interface IPlayable 
+
+\doxysubsection{Documentação dos Construtores \& Destrutor}
+\Hypertarget{classSong_a035474a80c90dd7b8b01b9c5f1c6552c}\label{classSong_a035474a80c90dd7b8b01b9c5f1c6552c} 
+\index{Song@{Song}!Song@{Song}}
+\index{Song@{Song}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{Song()}{Song()}}
+{\footnotesize\ttfamily Song\+::\+Song (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{const std\+::string \&}]{file\+\_\+path,  }\item[{const std\+::string \&}]{title,  }\item[{const std\+::string \&}]{artist }\end{DoxyParamCaption})}
+
+
+
+Construtor da classe \doxylink{classSong}{Song}. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em id} & Identificador único da música \\
+\hline
+{\em file\+\_\+path} & Caminho do arquivo de áudio \\
+\hline
+{\em title} & Título da música \\
+\hline
+{\em artist} & Artista/banda \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{classSong_ab79ee4719b4b0041d9b64823ede0f3c5}\label{classSong_ab79ee4719b4b0041d9b64823ede0f3c5} 
+\index{Song@{Song}!getAlbum@{getAlbum}}
+\index{getAlbum@{getAlbum}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getAlbum()}{getAlbum()}}
+{\footnotesize\ttfamily std\+::string Song\+::get\+Album (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o álbum. 
+
+\begin{DoxyReturn}{Retorna}
+Nome do álbum 
+\end{DoxyReturn}
+\Hypertarget{classSong_a0e3ea38ab798043d79426829e9774cc4}\label{classSong_a0e3ea38ab798043d79426829e9774cc4} 
+\index{Song@{Song}!getArtist@{getArtist}}
+\index{getArtist@{getArtist}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getArtist()}{getArtist()}}
+{\footnotesize\ttfamily std\+::string Song\+::get\+Artist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o artista. 
+
+\begin{DoxyReturn}{Retorna}
+Nome do artista/banda 
+\end{DoxyReturn}
+\Hypertarget{classSong_ae305917a759e91936bce1faf4afae886}\label{classSong_ae305917a759e91936bce1faf4afae886} 
+\index{Song@{Song}!getDuration@{getDuration}}
+\index{getDuration@{getDuration}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getDuration()}{getDuration()}}
+{\footnotesize\ttfamily int Song\+::get\+Duration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém a duração. 
+
+\begin{DoxyReturn}{Retorna}
+Duração em segundos 
+\end{DoxyReturn}
+\Hypertarget{classSong_a0e465a02bdcd7db758a6cb8eae1f1073}\label{classSong_a0e465a02bdcd7db758a6cb8eae1f1073} 
+\index{Song@{Song}!getFilePath@{getFilePath}}
+\index{getFilePath@{getFilePath}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getFilePath()}{getFilePath()}}
+{\footnotesize\ttfamily std\+::string Song\+::get\+File\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o caminho do arquivo. 
+
+\begin{DoxyReturn}{Retorna}
+Caminho completo do arquivo de áudio 
+\end{DoxyReturn}
+\Hypertarget{classSong_a3517d09a53601bdf0be128b5ec55d5dd}\label{classSong_a3517d09a53601bdf0be128b5ec55d5dd} 
+\index{Song@{Song}!getFormattedDuration@{getFormattedDuration}}
+\index{getFormattedDuration@{getFormattedDuration}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getFormattedDuration()}{getFormattedDuration()}}
+{\footnotesize\ttfamily std\+::string Song\+::get\+Formatted\+Duration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém a duração formatada. 
+
+\begin{DoxyReturn}{Retorna}
+String com a duração no formato "{}\+MM\+:\+SS"{} 
+\end{DoxyReturn}
+\Hypertarget{classSong_a88695c24f547090eee57e64e186971e3}\label{classSong_a88695c24f547090eee57e64e186971e3} 
+\index{Song@{Song}!getGenre@{getGenre}}
+\index{getGenre@{getGenre}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getGenre()}{getGenre()}}
+{\footnotesize\ttfamily std\+::string Song\+::get\+Genre (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o gênero. 
+
+\begin{DoxyReturn}{Retorna}
+Gênero musical 
+\end{DoxyReturn}
+\Hypertarget{classSong_a7528cd815af216ef71861765305a1d67}\label{classSong_a7528cd815af216ef71861765305a1d67} 
+\index{Song@{Song}!getId@{getId}}
+\index{getId@{getId}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily int Song\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o ID da música. 
+
+\begin{DoxyReturn}{Retorna}
+Identificador único da música 
+\end{DoxyReturn}
+\Hypertarget{classSong_ab7d1e83dd86f4220183d92149b108c0a}\label{classSong_ab7d1e83dd86f4220183d92149b108c0a} 
+\index{Song@{Song}!getTitle@{getTitle}}
+\index{getTitle@{getTitle}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getTitle()}{getTitle()}}
+{\footnotesize\ttfamily std\+::string Song\+::get\+Title (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o título da música. 
+
+\begin{DoxyReturn}{Retorna}
+Título da música 
+\end{DoxyReturn}
+\Hypertarget{classSong_a95b95f2110f0561b5abc223f82cb5e69}\label{classSong_a95b95f2110f0561b5abc223f82cb5e69} 
+\index{Song@{Song}!getYear@{getYear}}
+\index{getYear@{getYear}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{getYear()}{getYear()}}
+{\footnotesize\ttfamily int Song\+::get\+Year (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o ano de lançamento. 
+
+\begin{DoxyReturn}{Retorna}
+Ano de lançamento 
+\end{DoxyReturn}
+\Hypertarget{classSong_a0822ca9d429e5092b234d9455d7c54b0}\label{classSong_a0822ca9d429e5092b234d9455d7c54b0} 
+\index{Song@{Song}!loadMetadata@{loadMetadata}}
+\index{loadMetadata@{loadMetadata}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{loadMetadata()}{loadMetadata()}}
+{\footnotesize\ttfamily bool Song\+::load\+Metadata (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Carrega metadados do arquivo de áudio. 
+
+\begin{DoxyReturn}{Retorna}
+true se os metadados foram carregados com sucesso, false caso contrário 
+\end{DoxyReturn}
+\begin{DoxyNote}{Nota}
+Futuramente será implementado com a biblioteca Tag\+Lib 
+\end{DoxyNote}
+\Hypertarget{classSong_adc9d5aa0dabf0ab206d13d5cb7b7085b}\label{classSong_adc9d5aa0dabf0ab206d13d5cb7b7085b} 
+\index{Song@{Song}!setAlbum@{setAlbum}}
+\index{setAlbum@{setAlbum}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{setAlbum()}{setAlbum()}}
+{\footnotesize\ttfamily void Song\+::set\+Album (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{album }\end{DoxyParamCaption})}
+
+
+
+Define o álbum. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em album} & Novo álbum \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classSong_a9e140657fdb7f37ca6ac4fd4749b35ad}\label{classSong_a9e140657fdb7f37ca6ac4fd4749b35ad} 
+\index{Song@{Song}!setArtist@{setArtist}}
+\index{setArtist@{setArtist}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{setArtist()}{setArtist()}}
+{\footnotesize\ttfamily void Song\+::set\+Artist (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{artist }\end{DoxyParamCaption})}
+
+
+
+Define o artista. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em artist} & Novo artista \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classSong_a3d93e209dfd59ae1feffdb0dd3d2cfcd}\label{classSong_a3d93e209dfd59ae1feffdb0dd3d2cfcd} 
+\index{Song@{Song}!setDuration@{setDuration}}
+\index{setDuration@{setDuration}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{setDuration()}{setDuration()}}
+{\footnotesize\ttfamily void Song\+::set\+Duration (\begin{DoxyParamCaption}\item[{int}]{duration }\end{DoxyParamCaption})}
+
+
+
+Define a duração. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em duration} & Nova duração em segundos \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classSong_a5628d5343039ca2d5c3d20a33bed77f5}\label{classSong_a5628d5343039ca2d5c3d20a33bed77f5} 
+\index{Song@{Song}!setGenre@{setGenre}}
+\index{setGenre@{setGenre}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{setGenre()}{setGenre()}}
+{\footnotesize\ttfamily void Song\+::set\+Genre (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{genre }\end{DoxyParamCaption})}
+
+
+
+Define o gênero. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em genre} & Novo gênero \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classSong_a85cb00358b139b444372078303eb8735}\label{classSong_a85cb00358b139b444372078303eb8735} 
+\index{Song@{Song}!setTitle@{setTitle}}
+\index{setTitle@{setTitle}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{setTitle()}{setTitle()}}
+{\footnotesize\ttfamily void Song\+::set\+Title (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Define o título da música. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em title} & Novo título \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classSong_affde873f6c694eec5049fcb520ebb546}\label{classSong_affde873f6c694eec5049fcb520ebb546} 
+\index{Song@{Song}!setYear@{setYear}}
+\index{setYear@{setYear}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{setYear()}{setYear()}}
+{\footnotesize\ttfamily void Song\+::set\+Year (\begin{DoxyParamCaption}\item[{int}]{year }\end{DoxyParamCaption})}
+
+
+
+Define o ano de lançamento. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em year} & Novo ano \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classSong_a2ec0f008c1e3e163a768b62e58eac2af}\label{classSong_a2ec0f008c1e3e163a768b62e58eac2af} 
+\index{Song@{Song}!toString@{toString}}
+\index{toString@{toString}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily std\+::string Song\+::to\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Converte a música para string. 
+
+\begin{DoxyReturn}{Retorna}
+String com todas as informações da música formatadas 
+\end{DoxyReturn}
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classSong_a0a21893e959fe35ce161a0da07eca5bf}\label{classSong_a0a21893e959fe35ce161a0da07eca5bf} 
+\index{Song@{Song}!\_album@{\_album}}
+\index{\_album@{\_album}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_album}{\_album}}
+{\footnotesize\ttfamily std\+::string Song\+::\+\_\+album\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_a77cd1bace3147dbb285fa5343fbef3d4}\label{classSong_a77cd1bace3147dbb285fa5343fbef3d4} 
+\index{Song@{Song}!\_artist@{\_artist}}
+\index{\_artist@{\_artist}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_artist}{\_artist}}
+{\footnotesize\ttfamily std\+::string Song\+::\+\_\+artist\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_a748ff535febc300ea66be7696a9cd4d9}\label{classSong_a748ff535febc300ea66be7696a9cd4d9} 
+\index{Song@{Song}!\_duration@{\_duration}}
+\index{\_duration@{\_duration}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_duration}{\_duration}}
+{\footnotesize\ttfamily int Song\+::\+\_\+duration\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_a14b627c557cc90cd68ca2b57f0f99195}\label{classSong_a14b627c557cc90cd68ca2b57f0f99195} 
+\index{Song@{Song}!\_file\_path@{\_file\_path}}
+\index{\_file\_path@{\_file\_path}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_file\_path}{\_file\_path}}
+{\footnotesize\ttfamily std\+::string Song\+::\+\_\+file\+\_\+path\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_a8b77f1ed7ef861705434f4f2ea16763d}\label{classSong_a8b77f1ed7ef861705434f4f2ea16763d} 
+\index{Song@{Song}!\_genre@{\_genre}}
+\index{\_genre@{\_genre}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_genre}{\_genre}}
+{\footnotesize\ttfamily std\+::string Song\+::\+\_\+genre\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_abdeb871d396d1422b23850971f4f0865}\label{classSong_abdeb871d396d1422b23850971f4f0865} 
+\index{Song@{Song}!\_id@{\_id}}
+\index{\_id@{\_id}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_id}{\_id}}
+{\footnotesize\ttfamily unsigned Song\+::\+\_\+id\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_a019f5afc9c7d39779ca02771c733c5f1}\label{classSong_a019f5afc9c7d39779ca02771c733c5f1} 
+\index{Song@{Song}!\_metadata\_loaded@{\_metadata\_loaded}}
+\index{\_metadata\_loaded@{\_metadata\_loaded}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_metadata\_loaded}{\_metadata\_loaded}}
+{\footnotesize\ttfamily bool Song\+::\+\_\+metadata\+\_\+loaded\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_a367c769c2e55cf72ce3b8c6b959f662f}\label{classSong_a367c769c2e55cf72ce3b8c6b959f662f} 
+\index{Song@{Song}!\_title@{\_title}}
+\index{\_title@{\_title}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_title}{\_title}}
+{\footnotesize\ttfamily std\+::string Song\+::\+\_\+title\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classSong_a6ee39eb5d140f14355d528730f075a7f}\label{classSong_a6ee39eb5d140f14355d528730f075a7f} 
+\index{Song@{Song}!\_year@{\_year}}
+\index{\_year@{\_year}!Song@{Song}}
+\doxysubsubsection{\texorpdfstring{\_year}{\_year}}
+{\footnotesize\ttfamily int Song\+::\+\_\+year\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+/home/joao/\+Desktop/trabalho\+Pds/2025-\/2-\/\+TW-\/\+TE-\/grupo06/include/core/entities/\mbox{\hyperlink{Song_8hpp}{Song.\+hpp}}\end{DoxyCompactItemize}

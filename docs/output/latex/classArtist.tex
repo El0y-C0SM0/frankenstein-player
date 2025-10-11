@@ -1,0 +1,438 @@
+\doxysection{Referência à classe Artist}
+\hypertarget{classArtist}{}\label{classArtist}\index{Artist@{Artist}}
+
+
+Representa um artista musical com suas músicas e álbuns.  
+
+
+
+
+{\ttfamily \#include $<$Artist.\+hpp$>$}
+
+\doxysubsubsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classArtist_ad0c4941a426bc2f701023f1a5b0ef9dd}{Artist}} (const std\+::string \&name, std\+::string \&genre)
+\begin{DoxyCompactList}\small\item\em Construtor da classe \doxylink{classArtist}{Artist}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classArtist_ab07f3ad7c2ebc2663e77a1663a705fe3}{\texorpdfstring{$\sim$}{\string~}\+Artist}} ()
+\begin{DoxyCompactList}\small\item\em Destrutor da classe \doxylink{classArtist}{Artist}. \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{classArtist_a3a261ed2f5603d705abf333c1ea3f18a}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o ID do artista. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classArtist_a2a25418125ddb5ec316b84f46cf01d40}{get\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o nome do artista. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classArtist_afc127a5fbb96ded814beb7af94278089}{get\+Genre}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o gênero musical. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classSong}{Song}} $>$ \mbox{\hyperlink{classArtist_a5544386f17ea13e7366bce00d2c0ffc6}{get\+Songs}} () const
+\begin{DoxyCompactList}\small\item\em Obtém todas as músicas do artista. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classAlbum}{Album}} $>$ \mbox{\hyperlink{classArtist_a69dd8e8615c760f8c86b36bc28e3d98c}{get\+Albums}} () const
+\begin{DoxyCompactList}\small\item\em Obtém todos os álbuns do artista. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classArtist_a7fa5097c13fba16df891e108d3e590d9}{get\+Songs\+Count}} () const
+\begin{DoxyCompactList}\small\item\em Obtém a quantidade de músicas do artista. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classArtist_a66c1f7e7192ed4e0e155e23c57495144}{get\+Albums\+Count}} () const
+\begin{DoxyCompactList}\small\item\em Obtém a quantidade de álbuns do artista. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classArtist_acdd21ece98798777ffefafd2f09e5f8a}{set\+Name}} (const std\+::string \&name)
+\begin{DoxyCompactList}\small\item\em Define o nome do artista. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classArtist_aef5868a18794b832b5f09f73bb5afa23}{set\+Genre}} (const std\+::string \&genre)
+\begin{DoxyCompactList}\small\item\em Define o gênero musical. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classArtist_adf47398917c1dcb6f744b4c24a04706a}{set\+Song}} (const \mbox{\hyperlink{classSong}{Song}} \&song)
+\begin{DoxyCompactList}\small\item\em Adiciona uma música ao artista. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classArtist_aa9ff34041cd652969474c1c816565e55}{set\+Album}} (const \mbox{\hyperlink{classAlbum}{Album}} \&album)
+\begin{DoxyCompactList}\small\item\em Adiciona um álbum ao artista. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classArtist_a2995f8317b4a2d0255dbb65708bfe25f}{remove\+Song}} (unsigned song\+Id)
+\begin{DoxyCompactList}\small\item\em Remove uma música do artista. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classArtist_a5e45e05662d7314ea9a85fe75e0c131f}{remove\+Album}} (unsigned album\+Id)
+\begin{DoxyCompactList}\small\item\em Remove um álbum do artista. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classSong}{Song}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classArtist_a036140f5e5774411479769a6d8d6aafc}{find\+Song\+By\+Name}} (const std\+::string \&song\+Name)
+\begin{DoxyCompactList}\small\item\em Busca uma música pelo nome. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classAlbum}{Album}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classArtist_afc38eb5a604403f4eb5783a22f87921b}{find\+Album\+By\+Name}} (const std\+::string \&album\+Name)
+\begin{DoxyCompactList}\small\item\em Busca um álbum pelo nome. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classArtist_ac7607f8b2549ec54cb18fb5fdd2364ea}{get\+Total\+Duration}} () const
+\begin{DoxyCompactList}\small\item\em Calcula a duração total de todas as músicas. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classArtist_a504746416d6e05425a87e06a3ce56e9c}{get\+Formatted\+Duration}} () const
+\begin{DoxyCompactList}\small\item\em Obtém a duração total formatada. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classArtist_a98723f62b415da73c61a71d70a030393}{to\+String}} () const
+\begin{DoxyCompactList}\small\item\em Converte o artista para string formatada. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classArtist_a5fe857986faca2af66a6108664f2ce16}{has\+Song}} () const
+\begin{DoxyCompactList}\small\item\em Verifica se o artista tem músicas. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classArtist_a9aa20d54a605881c6001c586d6b370e4}{has\+Album}} () const
+\begin{DoxyCompactList}\small\item\em Verifica se o artista tem álbuns. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos Privados}
+\begin{DoxyCompactItemize}
+\item 
+unsigned \mbox{\hyperlink{classArtist_a5684a55bedfdcf70d577d9146086d2b0}{\+\_\+id}}
+\item 
+std\+::string \mbox{\hyperlink{classArtist_ad6a6b86484c25349adb8d6da9803582f}{\+\_\+name}}
+\item 
+std\+::string \mbox{\hyperlink{classArtist_af3909de4e3b2eebfd46bf57c680b865c}{\+\_\+genre}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classSong}{Song}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classArtist_ab452ddfd4385164ad9473d8060e3c3a5}{\+\_\+songs}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classAlbum}{Album}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classArtist_a78c7c83532ba3fadc0c3167ade251b4a}{\+\_\+albums}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+Representa um artista musical com suas músicas e álbuns. 
+
+A classe \doxylink{classArtist}{Artist} gerencia as informações básicas de um artista e mantém referências para todas as suas músicas e álbuns associados. Permite operações de busca, adição e remoção de itens do catálogo. 
+
+\doxysubsection{Documentação dos Construtores \& Destrutor}
+\Hypertarget{classArtist_ad0c4941a426bc2f701023f1a5b0ef9dd}\label{classArtist_ad0c4941a426bc2f701023f1a5b0ef9dd} 
+\index{Artist@{Artist}!Artist@{Artist}}
+\index{Artist@{Artist}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{Artist()}{Artist()}}
+{\footnotesize\ttfamily Artist\+::\+Artist (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{std\+::string \&}]{genre }\end{DoxyParamCaption})}
+
+
+
+Construtor da classe \doxylink{classArtist}{Artist}. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em name} & Nome do artista \\
+\hline
+{\em genre} & Gênero musical do artista \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classArtist_ab07f3ad7c2ebc2663e77a1663a705fe3}\label{classArtist_ab07f3ad7c2ebc2663e77a1663a705fe3} 
+\index{Artist@{Artist}!````~Artist@{\texorpdfstring{$\sim$}{\string~}Artist}}
+\index{````~Artist@{\texorpdfstring{$\sim$}{\string~}Artist}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Artist()}{\string~Artist()}}
+{\footnotesize\ttfamily Artist\+::\texorpdfstring{$\sim$}{\string~}\+Artist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destrutor da classe \doxylink{classArtist}{Artist}. 
+
+\begin{DoxyNote}{Nota}
+Responsável por liberar a memória dos vetores alocados 
+\end{DoxyNote}
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{classArtist_afc38eb5a604403f4eb5783a22f87921b}\label{classArtist_afc38eb5a604403f4eb5783a22f87921b} 
+\index{Artist@{Artist}!findAlbumByName@{findAlbumByName}}
+\index{findAlbumByName@{findAlbumByName}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{findAlbumByName()}{findAlbumByName()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classAlbum}{Album}} \texorpdfstring{$\ast$}{*} Artist\+::find\+Album\+By\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{album\+Name }\end{DoxyParamCaption})}
+
+
+
+Busca um álbum pelo nome. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em album\+Name} & Nome do álbum a buscar \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Ponteiro para o álbum encontrado ou nullptr se não encontrado 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a036140f5e5774411479769a6d8d6aafc}\label{classArtist_a036140f5e5774411479769a6d8d6aafc} 
+\index{Artist@{Artist}!findSongByName@{findSongByName}}
+\index{findSongByName@{findSongByName}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{findSongByName()}{findSongByName()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classSong}{Song}} \texorpdfstring{$\ast$}{*} Artist\+::find\+Song\+By\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{song\+Name }\end{DoxyParamCaption})}
+
+
+
+Busca uma música pelo nome. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em song\+Name} & Nome da música a buscar \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Ponteiro para a música encontrada ou nullptr se não encontrada 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a69dd8e8615c760f8c86b36bc28e3d98c}\label{classArtist_a69dd8e8615c760f8c86b36bc28e3d98c} 
+\index{Artist@{Artist}!getAlbums@{getAlbums}}
+\index{getAlbums@{getAlbums}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getAlbums()}{getAlbums()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classAlbum}{Album}} $>$ Artist\+::get\+Albums (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém todos os álbuns do artista. 
+
+\begin{DoxyReturn}{Retorna}
+Vector com todos os álbuns do artista 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a66c1f7e7192ed4e0e155e23c57495144}\label{classArtist_a66c1f7e7192ed4e0e155e23c57495144} 
+\index{Artist@{Artist}!getAlbumsCount@{getAlbumsCount}}
+\index{getAlbumsCount@{getAlbumsCount}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getAlbumsCount()}{getAlbumsCount()}}
+{\footnotesize\ttfamily int Artist\+::get\+Albums\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém a quantidade de álbuns do artista. 
+
+\begin{DoxyReturn}{Retorna}
+Número total de álbuns 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a504746416d6e05425a87e06a3ce56e9c}\label{classArtist_a504746416d6e05425a87e06a3ce56e9c} 
+\index{Artist@{Artist}!getFormattedDuration@{getFormattedDuration}}
+\index{getFormattedDuration@{getFormattedDuration}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getFormattedDuration()}{getFormattedDuration()}}
+{\footnotesize\ttfamily std\+::string Artist\+::get\+Formatted\+Duration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém a duração total formatada. 
+
+\begin{DoxyReturn}{Retorna}
+String com duração no formato "{}\+HH\+:\+MM\+:\+SS"{} ou "{}\+MM\+:\+SS"{} 
+\end{DoxyReturn}
+\Hypertarget{classArtist_afc127a5fbb96ded814beb7af94278089}\label{classArtist_afc127a5fbb96ded814beb7af94278089} 
+\index{Artist@{Artist}!getGenre@{getGenre}}
+\index{getGenre@{getGenre}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getGenre()}{getGenre()}}
+{\footnotesize\ttfamily std\+::string Artist\+::get\+Genre (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o gênero musical. 
+
+\begin{DoxyReturn}{Retorna}
+Gênero musical principal do artista 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a3a261ed2f5603d705abf333c1ea3f18a}\label{classArtist_a3a261ed2f5603d705abf333c1ea3f18a} 
+\index{Artist@{Artist}!getId@{getId}}
+\index{getId@{getId}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily unsigned Artist\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o ID do artista. 
+
+\begin{DoxyReturn}{Retorna}
+Identificador único do artista 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a2a25418125ddb5ec316b84f46cf01d40}\label{classArtist_a2a25418125ddb5ec316b84f46cf01d40} 
+\index{Artist@{Artist}!getName@{getName}}
+\index{getName@{getName}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily std\+::string Artist\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o nome do artista. 
+
+\begin{DoxyReturn}{Retorna}
+Nome do artista/banda 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a5544386f17ea13e7366bce00d2c0ffc6}\label{classArtist_a5544386f17ea13e7366bce00d2c0ffc6} 
+\index{Artist@{Artist}!getSongs@{getSongs}}
+\index{getSongs@{getSongs}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getSongs()}{getSongs()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classSong}{Song}} $>$ Artist\+::get\+Songs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém todas as músicas do artista. 
+
+\begin{DoxyReturn}{Retorna}
+Vector com todas as músicas do artista 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a7fa5097c13fba16df891e108d3e590d9}\label{classArtist_a7fa5097c13fba16df891e108d3e590d9} 
+\index{Artist@{Artist}!getSongsCount@{getSongsCount}}
+\index{getSongsCount@{getSongsCount}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getSongsCount()}{getSongsCount()}}
+{\footnotesize\ttfamily int Artist\+::get\+Songs\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém a quantidade de músicas do artista. 
+
+\begin{DoxyReturn}{Retorna}
+Número total de músicas 
+\end{DoxyReturn}
+\Hypertarget{classArtist_ac7607f8b2549ec54cb18fb5fdd2364ea}\label{classArtist_ac7607f8b2549ec54cb18fb5fdd2364ea} 
+\index{Artist@{Artist}!getTotalDuration@{getTotalDuration}}
+\index{getTotalDuration@{getTotalDuration}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{getTotalDuration()}{getTotalDuration()}}
+{\footnotesize\ttfamily int Artist\+::get\+Total\+Duration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Calcula a duração total de todas as músicas. 
+
+\begin{DoxyReturn}{Retorna}
+Duração total em segundos 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a9aa20d54a605881c6001c586d6b370e4}\label{classArtist_a9aa20d54a605881c6001c586d6b370e4} 
+\index{Artist@{Artist}!hasAlbum@{hasAlbum}}
+\index{hasAlbum@{hasAlbum}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{hasAlbum()}{hasAlbum()}}
+{\footnotesize\ttfamily bool Artist\+::has\+Album (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Verifica se o artista tem álbuns. 
+
+\begin{DoxyReturn}{Retorna}
+true se possui pelo menos um álbum, false caso contrário 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a5fe857986faca2af66a6108664f2ce16}\label{classArtist_a5fe857986faca2af66a6108664f2ce16} 
+\index{Artist@{Artist}!hasSong@{hasSong}}
+\index{hasSong@{hasSong}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{hasSong()}{hasSong()}}
+{\footnotesize\ttfamily bool Artist\+::has\+Song (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Verifica se o artista tem músicas. 
+
+\begin{DoxyReturn}{Retorna}
+true se possui pelo menos uma música, false caso contrário 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a5e45e05662d7314ea9a85fe75e0c131f}\label{classArtist_a5e45e05662d7314ea9a85fe75e0c131f} 
+\index{Artist@{Artist}!removeAlbum@{removeAlbum}}
+\index{removeAlbum@{removeAlbum}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{removeAlbum()}{removeAlbum()}}
+{\footnotesize\ttfamily bool Artist\+::remove\+Album (\begin{DoxyParamCaption}\item[{unsigned}]{album\+Id }\end{DoxyParamCaption})}
+
+
+
+Remove um álbum do artista. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em album\+Id} & ID do álbum a ser removido \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+true se o álbum foi removido com sucesso, false caso contrário 
+\end{DoxyReturn}
+\Hypertarget{classArtist_a2995f8317b4a2d0255dbb65708bfe25f}\label{classArtist_a2995f8317b4a2d0255dbb65708bfe25f} 
+\index{Artist@{Artist}!removeSong@{removeSong}}
+\index{removeSong@{removeSong}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{removeSong()}{removeSong()}}
+{\footnotesize\ttfamily bool Artist\+::remove\+Song (\begin{DoxyParamCaption}\item[{unsigned}]{song\+Id }\end{DoxyParamCaption})}
+
+
+
+Remove uma música do artista. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em song\+Id} & ID da música a ser removida \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+true se a música foi removida com sucesso, false caso contrário 
+\end{DoxyReturn}
+\Hypertarget{classArtist_aa9ff34041cd652969474c1c816565e55}\label{classArtist_aa9ff34041cd652969474c1c816565e55} 
+\index{Artist@{Artist}!setAlbum@{setAlbum}}
+\index{setAlbum@{setAlbum}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{setAlbum()}{setAlbum()}}
+{\footnotesize\ttfamily void Artist\+::set\+Album (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classAlbum}{Album}} \&}]{album }\end{DoxyParamCaption})}
+
+
+
+Adiciona um álbum ao artista. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em album} & Álbum a ser adicionado \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classArtist_aef5868a18794b832b5f09f73bb5afa23}\label{classArtist_aef5868a18794b832b5f09f73bb5afa23} 
+\index{Artist@{Artist}!setGenre@{setGenre}}
+\index{setGenre@{setGenre}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{setGenre()}{setGenre()}}
+{\footnotesize\ttfamily void Artist\+::set\+Genre (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{genre }\end{DoxyParamCaption})}
+
+
+
+Define o gênero musical. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em genre} & Novo gênero musical \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classArtist_acdd21ece98798777ffefafd2f09e5f8a}\label{classArtist_acdd21ece98798777ffefafd2f09e5f8a} 
+\index{Artist@{Artist}!setName@{setName}}
+\index{setName@{setName}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{setName()}{setName()}}
+{\footnotesize\ttfamily void Artist\+::set\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Define o nome do artista. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em name} & Novo nome do artista \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classArtist_adf47398917c1dcb6f744b4c24a04706a}\label{classArtist_adf47398917c1dcb6f744b4c24a04706a} 
+\index{Artist@{Artist}!setSong@{setSong}}
+\index{setSong@{setSong}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{setSong()}{setSong()}}
+{\footnotesize\ttfamily void Artist\+::set\+Song (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSong}{Song}} \&}]{song }\end{DoxyParamCaption})}
+
+
+
+Adiciona uma música ao artista. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em song} & Música a ser adicionada \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classArtist_a98723f62b415da73c61a71d70a030393}\label{classArtist_a98723f62b415da73c61a71d70a030393} 
+\index{Artist@{Artist}!toString@{toString}}
+\index{toString@{toString}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily std\+::string Artist\+::to\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Converte o artista para string formatada. 
+
+\begin{DoxyReturn}{Retorna}
+String com nome, gênero e estatísticas do artista 
+\end{DoxyReturn}
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classArtist_a78c7c83532ba3fadc0c3167ade251b4a}\label{classArtist_a78c7c83532ba3fadc0c3167ade251b4a} 
+\index{Artist@{Artist}!\_albums@{\_albums}}
+\index{\_albums@{\_albums}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{\_albums}{\_albums}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classAlbum}{Album}}$>$\texorpdfstring{$\ast$}{*} Artist\+::\+\_\+albums\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classArtist_af3909de4e3b2eebfd46bf57c680b865c}\label{classArtist_af3909de4e3b2eebfd46bf57c680b865c} 
+\index{Artist@{Artist}!\_genre@{\_genre}}
+\index{\_genre@{\_genre}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{\_genre}{\_genre}}
+{\footnotesize\ttfamily std\+::string Artist\+::\+\_\+genre\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classArtist_a5684a55bedfdcf70d577d9146086d2b0}\label{classArtist_a5684a55bedfdcf70d577d9146086d2b0} 
+\index{Artist@{Artist}!\_id@{\_id}}
+\index{\_id@{\_id}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{\_id}{\_id}}
+{\footnotesize\ttfamily unsigned Artist\+::\+\_\+id\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classArtist_ad6a6b86484c25349adb8d6da9803582f}\label{classArtist_ad6a6b86484c25349adb8d6da9803582f} 
+\index{Artist@{Artist}!\_name@{\_name}}
+\index{\_name@{\_name}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{\_name}{\_name}}
+{\footnotesize\ttfamily std\+::string Artist\+::\+\_\+name\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classArtist_ab452ddfd4385164ad9473d8060e3c3a5}\label{classArtist_ab452ddfd4385164ad9473d8060e3c3a5} 
+\index{Artist@{Artist}!\_songs@{\_songs}}
+\index{\_songs@{\_songs}!Artist@{Artist}}
+\doxysubsubsection{\texorpdfstring{\_songs}{\_songs}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classSong}{Song}}$>$\texorpdfstring{$\ast$}{*} Artist\+::\+\_\+songs\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+/home/joao/\+Desktop/trabalho\+Pds/2025-\/2-\/\+TW-\/\+TE-\/grupo06/include/core/entities/\mbox{\hyperlink{Artist_8hpp}{Artist.\+hpp}}\end{DoxyCompactItemize}

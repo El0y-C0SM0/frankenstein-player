@@ -1,0 +1,70 @@
+\doxysection{Artist.\+hpp}
+\hypertarget{Artist_8hpp_source}{}\label{Artist_8hpp_source}\index{/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Artist.hpp@{/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Artist.hpp}}
+\mbox{\hyperlink{Artist_8hpp}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#ifndef\ ARTIST\_HPP}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ ARTIST\_HPP}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Album_8hpp}{Album.hpp}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Song_8hpp}{Song.hpp}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classArtist}{Artist}}\ \{}
+\DoxyCodeLine{00030\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{classArtist_a5684a55bedfdcf70d577d9146086d2b0}{\_id}};}
+\DoxyCodeLine{00032\ \ \ std::string\ \mbox{\hyperlink{classArtist_ad6a6b86484c25349adb8d6da9803582f}{\_name}};}
+\DoxyCodeLine{00033\ \ \ std::string\ \mbox{\hyperlink{classArtist_af3909de4e3b2eebfd46bf57c680b865c}{\_genre}};}
+\DoxyCodeLine{00034\ \ \ std::vector<Song>\ *\mbox{\hyperlink{classArtist_ab452ddfd4385164ad9473d8060e3c3a5}{\_songs}};}
+\DoxyCodeLine{00035\ \ \ std::vector<Album>\ *\mbox{\hyperlink{classArtist_a78c7c83532ba3fadc0c3167ade251b4a}{\_albums}};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \mbox{\hyperlink{classArtist_ad0c4941a426bc2f701023f1a5b0ef9dd}{Artist}}(\textcolor{keyword}{const}\ std::string\ \&name,\ std::string\ \&genre);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \ \ \mbox{\hyperlink{classArtist_ab07f3ad7c2ebc2663e77a1663a705fe3}{\string~Artist}}();}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{classArtist_a3a261ed2f5603d705abf333c1ea3f18a}{getId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \ \ std::string\ \mbox{\hyperlink{classArtist_a2a25418125ddb5ec316b84f46cf01d40}{getName}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00067\ \ \ std::string\ \mbox{\hyperlink{classArtist_afc127a5fbb96ded814beb7af94278089}{getGenre}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00073\ \ \ std::vector<Song>\ \mbox{\hyperlink{classArtist_a5544386f17ea13e7366bce00d2c0ffc6}{getSongs}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00079\ \ \ std::vector<Album>\ \mbox{\hyperlink{classArtist_a69dd8e8615c760f8c86b36bc28e3d98c}{getAlbums}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00085\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classArtist_a7fa5097c13fba16df891e108d3e590d9}{getSongsCount}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classArtist_a66c1f7e7192ed4e0e155e23c57495144}{getAlbumsCount}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classArtist_acdd21ece98798777ffefafd2f09e5f8a}{setName}}(\textcolor{keyword}{const}\ std::string\ \&name);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00103\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classArtist_aef5868a18794b832b5f09f73bb5afa23}{setGenre}}(\textcolor{keyword}{const}\ std::string\ \&genre);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00109\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classArtist_adf47398917c1dcb6f744b4c24a04706a}{setSong}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSong}{Song}}\ \&song);}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classArtist_aa9ff34041cd652969474c1c816565e55}{setAlbum}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classAlbum}{Album}}\ \&album);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00122\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classArtist_a2995f8317b4a2d0255dbb65708bfe25f}{removeSong}}(\textcolor{keywordtype}{unsigned}\ songId);}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00129\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classArtist_a5e45e05662d7314ea9a85fe75e0c131f}{removeAlbum}}(\textcolor{keywordtype}{unsigned}\ albumId);}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00136\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classSong}{Song}}\ *\mbox{\hyperlink{classArtist_a036140f5e5774411479769a6d8d6aafc}{findSongByName}}(\textcolor{keyword}{const}\ std::string\ \&songName);}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00143\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classAlbum}{Album}}\ *\mbox{\hyperlink{classArtist_afc38eb5a604403f4eb5783a22f87921b}{findAlbumByName}}(\textcolor{keyword}{const}\ std::string\ \&albumName);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00149\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classArtist_ac7607f8b2549ec54cb18fb5fdd2364ea}{getTotalDuration}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00155\ \ \ std::string\ \mbox{\hyperlink{classArtist_a504746416d6e05425a87e06a3ce56e9c}{getFormattedDuration}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00161\ \ \ std::string\ \mbox{\hyperlink{classArtist_a98723f62b415da73c61a71d70a030393}{toString}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00167\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classArtist_a5fe857986faca2af66a6108664f2ce16}{hasSong}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00173\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classArtist_a9aa20d54a605881c6001c586d6b370e4}{hasAlbum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00174\ \};}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ARTIST\_HPP}}
+
+\end{DoxyCode}

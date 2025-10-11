@@ -1,0 +1,380 @@
+\begin{theindex}
+
+  \item {/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Album.hpp}, 
+		\hyperpage{41, 42}
+  \item {/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Artist.hpp}, 
+		\hyperpage{43}, \hyperpage{45}
+  \item {/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/EntitiesFWD.hpp}, 
+		\hyperpage{45, 46}
+  \item {/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Entity.hpp}, 
+		\hyperpage{46, 47}
+  \item {/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Player.hpp}, 
+		\hyperpage{47, 48}
+  \item {/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Song.hpp}, 
+		\hyperpage{49}, \hyperpage{51}
+  \item {\_album}
+    \subitem {Song}, \hyperpage{39}
+  \item {\_albums}
+    \subitem {Artist}, \hyperpage{24}
+  \item {\_artist}
+    \subitem {Album}, \hyperpage{17}
+    \subitem {Song}, \hyperpage{39}
+  \item {\_currentIndex}
+    \subitem {Player}, \hyperpage{33}
+  \item {\_currentSong}
+    \subitem {Player}, \hyperpage{33}
+  \item {\_duration}
+    \subitem {Song}, \hyperpage{39}
+  \item {\_file\_path}
+    \subitem {Song}, \hyperpage{39}
+  \item {\_genre}
+    \subitem {Album}, \hyperpage{17}
+    \subitem {Artist}, \hyperpage{24}
+    \subitem {Song}, \hyperpage{39}
+  \item {\_id}
+    \subitem {Album}, \hyperpage{17}
+    \subitem {Artist}, \hyperpage{24}
+    \subitem {Song}, \hyperpage{40}
+  \item {\_isPlaying}
+    \subitem {Player}, \hyperpage{33}
+  \item {\_isStopped}
+    \subitem {Player}, \hyperpage{33}
+  \item {\_metadata\_loaded}
+    \subitem {Song}, \hyperpage{40}
+  \item {\_name}
+    \subitem {Album}, \hyperpage{17}
+    \subitem {Artist}, \hyperpage{24}
+  \item {\_playlist}
+    \subitem {Player}, \hyperpage{33}
+  \item {\_songs}
+    \subitem {Album}, \hyperpage{17}
+    \subitem {Artist}, \hyperpage{25}
+  \item {\_title}
+    \subitem {Song}, \hyperpage{40}
+  \item {\_volume}
+    \subitem {Player}, \hyperpage{33}
+  \item {\_year}
+    \subitem {Album}, \hyperpage{17}
+    \subitem {Song}, \hyperpage{40}
+  \item {\texorpdfstring{$\sim$}{\string~}Album}
+    \subitem {Album}, \hyperpage{11}
+  \item {\texorpdfstring{$\sim$}{\string~}Artist}
+    \subitem {Artist}, \hyperpage{19}
+  \item {\texorpdfstring{$\sim$}{\string~}Entity}
+    \subitem {core::Entity}, \hyperpage{25}
+
+  \indexspace
+
+  \item {addSong}
+    \subitem {Album}, \hyperpage{11}
+  \item {advanceToNext}
+    \subitem {Player}, \hyperpage{29}
+  \item {Album}, \hyperpage{9}
+    \subitem {\_artist}, \hyperpage{17}
+    \subitem {\_genre}, \hyperpage{17}
+    \subitem {\_id}, \hyperpage{17}
+    \subitem {\_name}, \hyperpage{17}
+    \subitem {\_songs}, \hyperpage{17}
+    \subitem {\_year}, \hyperpage{17}
+    \subitem {\texorpdfstring{$\sim$}{\string~}Album}, \hyperpage{11}
+    \subitem {addSong}, \hyperpage{11}
+    \subitem {Album}, \hyperpage{10, 11}
+    \subitem {calculateTotalDuration}, \hyperpage{12}
+    \subitem {findSongById}, \hyperpage{12}
+    \subitem {findSongByTitle}, \hyperpage{12}
+    \subitem {getArtist}, \hyperpage{12}
+    \subitem {getFormattedDuration}, \hyperpage{12}
+    \subitem {getGenre}, \hyperpage{13}
+    \subitem {getId}, \hyperpage{13}
+    \subitem {getName}, \hyperpage{13}
+    \subitem {getNextSong}, \hyperpage{13}
+    \subitem {getPreviousSong}, \hyperpage{14}
+    \subitem {getSongAt}, \hyperpage{14}
+    \subitem {getSongCount}, \hyperpage{14}
+    \subitem {getSongs}, \hyperpage{15}
+    \subitem {getYear}, \hyperpage{15}
+    \subitem {removeSong}, \hyperpage{15}
+    \subitem {removeSongAt}, \hyperpage{15}
+    \subitem {setArtist}, \hyperpage{16}
+    \subitem {setGenre}, \hyperpage{16}
+    \subitem {setYear}, \hyperpage{16}
+    \subitem {toString}, \hyperpage{16}
+  \item {Artist}, \hyperpage{17}
+    \subitem {\_albums}, \hyperpage{24}
+    \subitem {\_genre}, \hyperpage{24}
+    \subitem {\_id}, \hyperpage{24}
+    \subitem {\_name}, \hyperpage{24}
+    \subitem {\_songs}, \hyperpage{25}
+    \subitem {\texorpdfstring{$\sim$}{\string~}Artist}, \hyperpage{19}
+    \subitem {Artist}, \hyperpage{19}
+    \subitem {findAlbumByName}, \hyperpage{19}
+    \subitem {findSongByName}, \hyperpage{20}
+    \subitem {getAlbums}, \hyperpage{20}
+    \subitem {getAlbumsCount}, \hyperpage{20}
+    \subitem {getFormattedDuration}, \hyperpage{20}
+    \subitem {getGenre}, \hyperpage{21}
+    \subitem {getId}, \hyperpage{21}
+    \subitem {getName}, \hyperpage{21}
+    \subitem {getSongs}, \hyperpage{21}
+    \subitem {getSongsCount}, \hyperpage{21}
+    \subitem {getTotalDuration}, \hyperpage{22}
+    \subitem {hasAlbum}, \hyperpage{22}
+    \subitem {hasSong}, \hyperpage{22}
+    \subitem {removeAlbum}, \hyperpage{22}
+    \subitem {removeSong}, \hyperpage{23}
+    \subitem {setAlbum}, \hyperpage{23}
+    \subitem {setGenre}, \hyperpage{23}
+    \subitem {setName}, \hyperpage{24}
+    \subitem {setSong}, \hyperpage{24}
+    \subitem {toString}, \hyperpage{24}
+
+  \indexspace
+
+  \item {calculateTotalDuration}
+    \subitem {Album}, \hyperpage{12}
+  \item {clearPlaylist}
+    \subitem {Player}, \hyperpage{29}
+  \item {core}, \hyperpage{7}
+  \item {core::Entity}, \hyperpage{25}
+    \subitem {\texorpdfstring{$\sim$}{\string~}Entity}, \hyperpage{25}
+    \subitem {getId}, \hyperpage{26}
+    \subitem {id}, \hyperpage{26}
+    \subitem {operator==}, \hyperpage{26}
+    \subitem {setId}, \hyperpage{26}
+
+  \indexspace
+
+  \item {findAlbumByName}
+    \subitem {Artist}, \hyperpage{19}
+  \item {findSongById}
+    \subitem {Album}, \hyperpage{12}
+  \item {findSongByName}
+    \subitem {Artist}, \hyperpage{20}
+  \item {findSongByTitle}
+    \subitem {Album}, \hyperpage{12}
+
+  \indexspace
+
+  \item {getAlbum}
+    \subitem {Song}, \hyperpage{35}
+  \item {getAlbums}
+    \subitem {Artist}, \hyperpage{20}
+  \item {getAlbumsCount}
+    \subitem {Artist}, \hyperpage{20}
+  \item {getArtist}
+    \subitem {Album}, \hyperpage{12}
+    \subitem {Song}, \hyperpage{35}
+  \item {getCurrentSong}
+    \subitem {Player}, \hyperpage{29}
+  \item {getDuration}
+    \subitem {Song}, \hyperpage{36}
+  \item {getFilePath}
+    \subitem {Song}, \hyperpage{36}
+  \item {getFormattedDuration}
+    \subitem {Album}, \hyperpage{12}
+    \subitem {Artist}, \hyperpage{20}
+    \subitem {Song}, \hyperpage{36}
+  \item {getGenre}
+    \subitem {Album}, \hyperpage{13}
+    \subitem {Artist}, \hyperpage{21}
+    \subitem {Song}, \hyperpage{36}
+  \item {getId}
+    \subitem {Album}, \hyperpage{13}
+    \subitem {Artist}, \hyperpage{21}
+    \subitem {core::Entity}, \hyperpage{26}
+    \subitem {Song}, \hyperpage{36}
+  \item {getName}
+    \subitem {Album}, \hyperpage{13}
+    \subitem {Artist}, \hyperpage{21}
+  \item {getNextSong}
+    \subitem {Album}, \hyperpage{13}
+  \item {getPlaylist}
+    \subitem {Player}, \hyperpage{29}
+  \item {getPlaylistSize}
+    \subitem {Player}, \hyperpage{29}
+  \item {getPreviousSong}
+    \subitem {Album}, \hyperpage{14}
+  \item {getProgress}
+    \subitem {Player}, \hyperpage{29}
+  \item {getSongAt}
+    \subitem {Album}, \hyperpage{14}
+  \item {getSongCount}
+    \subitem {Album}, \hyperpage{14}
+  \item {getSongs}
+    \subitem {Album}, \hyperpage{15}
+    \subitem {Artist}, \hyperpage{21}
+  \item {getSongsCount}
+    \subitem {Artist}, \hyperpage{21}
+  \item {getTitle}
+    \subitem {Song}, \hyperpage{37}
+  \item {getTotalDuration}
+    \subitem {Artist}, \hyperpage{22}
+  \item {getVolume}
+    \subitem {Player}, \hyperpage{30}
+  \item {getYear}
+    \subitem {Album}, \hyperpage{15}
+    \subitem {Song}, \hyperpage{37}
+  \item {goToPrevious}
+    \subitem {Player}, \hyperpage{30}
+
+  \indexspace
+
+  \item {hasAlbum}
+    \subitem {Artist}, \hyperpage{22}
+  \item {hasNext}
+    \subitem {Player}, \hyperpage{30}
+  \item {hasPrevious}
+    \subitem {Player}, \hyperpage{30}
+  \item {hasSong}
+    \subitem {Artist}, \hyperpage{22}
+
+  \indexspace
+
+  \item {id}
+    \subitem {core::Entity}, \hyperpage{26}
+  \item {isPaused}
+    \subitem {Player}, \hyperpage{30}
+  \item {isPlaying}
+    \subitem {Player}, \hyperpage{31}
+
+  \indexspace
+
+  \item {loadAudio}
+    \subitem {Player}, \hyperpage{31}
+  \item {loadMetadata}
+    \subitem {Song}, \hyperpage{37}
+
+  \indexspace
+
+  \item {mute}
+    \subitem {Player}, \hyperpage{31}
+
+  \indexspace
+
+  \item {next}
+    \subitem {Player}, \hyperpage{31}
+
+  \indexspace
+
+  \item {operator==}
+    \subitem {core::Entity}, \hyperpage{26}
+
+  \indexspace
+
+  \item {pause}
+    \subitem {Player}, \hyperpage{31}
+  \item {play}
+    \subitem {Player}, \hyperpage{32}
+  \item {Player}, \hyperpage{27}
+    \subitem {\_currentIndex}, \hyperpage{33}
+    \subitem {\_currentSong}, \hyperpage{33}
+    \subitem {\_isPlaying}, \hyperpage{33}
+    \subitem {\_isStopped}, \hyperpage{33}
+    \subitem {\_playlist}, \hyperpage{33}
+    \subitem {\_volume}, \hyperpage{33}
+    \subitem {advanceToNext}, \hyperpage{29}
+    \subitem {clearPlaylist}, \hyperpage{29}
+    \subitem {getCurrentSong}, \hyperpage{29}
+    \subitem {getPlaylist}, \hyperpage{29}
+    \subitem {getPlaylistSize}, \hyperpage{29}
+    \subitem {getProgress}, \hyperpage{29}
+    \subitem {getVolume}, \hyperpage{30}
+    \subitem {goToPrevious}, \hyperpage{30}
+    \subitem {hasNext}, \hyperpage{30}
+    \subitem {hasPrevious}, \hyperpage{30}
+    \subitem {isPaused}, \hyperpage{30}
+    \subitem {isPlaying}, \hyperpage{31}
+    \subitem {loadAudio}, \hyperpage{31}
+    \subitem {mute}, \hyperpage{31}
+    \subitem {next}, \hyperpage{31}
+    \subitem {pause}, \hyperpage{31}
+    \subitem {play}, \hyperpage{32}
+    \subitem {Player}, \hyperpage{28}
+    \subitem {previous}, \hyperpage{32}
+    \subitem {resume}, \hyperpage{32}
+    \subitem {setVolume}, \hyperpage{32}
+    \subitem {unmute}, \hyperpage{33}
+  \item {previous}
+    \subitem {Player}, \hyperpage{32}
+
+  \indexspace
+
+  \item {removeAlbum}
+    \subitem {Artist}, \hyperpage{22}
+  \item {removeSong}
+    \subitem {Album}, \hyperpage{15}
+    \subitem {Artist}, \hyperpage{23}
+  \item {removeSongAt}
+    \subitem {Album}, \hyperpage{15}
+  \item {resume}
+    \subitem {Player}, \hyperpage{32}
+
+  \indexspace
+
+  \item {setAlbum}
+    \subitem {Artist}, \hyperpage{23}
+    \subitem {Song}, \hyperpage{37}
+  \item {setArtist}
+    \subitem {Album}, \hyperpage{16}
+    \subitem {Song}, \hyperpage{38}
+  \item {setDuration}
+    \subitem {Song}, \hyperpage{38}
+  \item {setGenre}
+    \subitem {Album}, \hyperpage{16}
+    \subitem {Artist}, \hyperpage{23}
+    \subitem {Song}, \hyperpage{38}
+  \item {setId}
+    \subitem {core::Entity}, \hyperpage{26}
+  \item {setName}
+    \subitem {Artist}, \hyperpage{24}
+  \item {setSong}
+    \subitem {Artist}, \hyperpage{24}
+  \item {setTitle}
+    \subitem {Song}, \hyperpage{38}
+  \item {setVolume}
+    \subitem {Player}, \hyperpage{32}
+  \item {setYear}
+    \subitem {Album}, \hyperpage{16}
+    \subitem {Song}, \hyperpage{39}
+  \item {Song}, \hyperpage{34}
+    \subitem {\_album}, \hyperpage{39}
+    \subitem {\_artist}, \hyperpage{39}
+    \subitem {\_duration}, \hyperpage{39}
+    \subitem {\_file\_path}, \hyperpage{39}
+    \subitem {\_genre}, \hyperpage{39}
+    \subitem {\_id}, \hyperpage{40}
+    \subitem {\_metadata\_loaded}, \hyperpage{40}
+    \subitem {\_title}, \hyperpage{40}
+    \subitem {\_year}, \hyperpage{40}
+    \subitem {getAlbum}, \hyperpage{35}
+    \subitem {getArtist}, \hyperpage{35}
+    \subitem {getDuration}, \hyperpage{36}
+    \subitem {getFilePath}, \hyperpage{36}
+    \subitem {getFormattedDuration}, \hyperpage{36}
+    \subitem {getGenre}, \hyperpage{36}
+    \subitem {getId}, \hyperpage{36}
+    \subitem {getTitle}, \hyperpage{37}
+    \subitem {getYear}, \hyperpage{37}
+    \subitem {loadMetadata}, \hyperpage{37}
+    \subitem {setAlbum}, \hyperpage{37}
+    \subitem {setArtist}, \hyperpage{38}
+    \subitem {setDuration}, \hyperpage{38}
+    \subitem {setGenre}, \hyperpage{38}
+    \subitem {setTitle}, \hyperpage{38}
+    \subitem {setYear}, \hyperpage{39}
+    \subitem {Song}, \hyperpage{35}
+    \subitem {toString}, \hyperpage{39}
+
+  \indexspace
+
+  \item {toString}
+    \subitem {Album}, \hyperpage{16}
+    \subitem {Artist}, \hyperpage{24}
+    \subitem {Song}, \hyperpage{39}
+
+  \indexspace
+
+  \item {unmute}
+    \subitem {Player}, \hyperpage{33}
+
+\end{theindex}

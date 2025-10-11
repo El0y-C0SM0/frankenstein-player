@@ -1,0 +1,173 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\babel@toc {portuges}{}\relax 
+\contentsline {chapter}{\numberline {1}Índice dos namespaces}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Lista de namespaces}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Índice dos componentes}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Lista de componentes}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Índice dos ficheiros}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Lista de ficheiros}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Documentação dos namespaces}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Referência ao namespace core}{7}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Documentação da classe}{9}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Referência à classe Album}{9}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Descrição detalhada}{10}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Documentação dos Construtores \& Destrutor}{10}{subsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.2.1}Album()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{10}{subsubsection.5.1.2.1}%
+\contentsline {subsubsection}{\numberline {5.1.2.2}Album()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{11}{subsubsection.5.1.2.2}%
+\contentsline {subsubsection}{\numberline {5.1.2.3}$\sim $Album()}{11}{subsubsection.5.1.2.3}%
+\contentsline {subsection}{\numberline {5.1.3}Documentação das funções}{11}{subsection.5.1.3}%
+\contentsline {subsubsection}{\numberline {5.1.3.1}addSong()}{11}{subsubsection.5.1.3.1}%
+\contentsline {subsubsection}{\numberline {5.1.3.2}calculateTotalDuration()}{12}{subsubsection.5.1.3.2}%
+\contentsline {subsubsection}{\numberline {5.1.3.3}findSongById()}{12}{subsubsection.5.1.3.3}%
+\contentsline {subsubsection}{\numberline {5.1.3.4}findSongByTitle()}{12}{subsubsection.5.1.3.4}%
+\contentsline {subsubsection}{\numberline {5.1.3.5}getArtist()}{12}{subsubsection.5.1.3.5}%
+\contentsline {subsubsection}{\numberline {5.1.3.6}getFormattedDuration()}{13}{subsubsection.5.1.3.6}%
+\contentsline {subsubsection}{\numberline {5.1.3.7}getGenre()}{13}{subsubsection.5.1.3.7}%
+\contentsline {subsubsection}{\numberline {5.1.3.8}getId()}{13}{subsubsection.5.1.3.8}%
+\contentsline {subsubsection}{\numberline {5.1.3.9}getName()}{13}{subsubsection.5.1.3.9}%
+\contentsline {subsubsection}{\numberline {5.1.3.10}getNextSong()}{13}{subsubsection.5.1.3.10}%
+\contentsline {subsubsection}{\numberline {5.1.3.11}getPreviousSong()}{14}{subsubsection.5.1.3.11}%
+\contentsline {subsubsection}{\numberline {5.1.3.12}getSongAt()}{14}{subsubsection.5.1.3.12}%
+\contentsline {subsubsection}{\numberline {5.1.3.13}getSongCount()}{14}{subsubsection.5.1.3.13}%
+\contentsline {subsubsection}{\numberline {5.1.3.14}getSongs()}{15}{subsubsection.5.1.3.14}%
+\contentsline {subsubsection}{\numberline {5.1.3.15}getYear()}{15}{subsubsection.5.1.3.15}%
+\contentsline {subsubsection}{\numberline {5.1.3.16}removeSong()}{15}{subsubsection.5.1.3.16}%
+\contentsline {subsubsection}{\numberline {5.1.3.17}removeSongAt()}{15}{subsubsection.5.1.3.17}%
+\contentsline {subsubsection}{\numberline {5.1.3.18}setArtist()}{16}{subsubsection.5.1.3.18}%
+\contentsline {subsubsection}{\numberline {5.1.3.19}setGenre()}{16}{subsubsection.5.1.3.19}%
+\contentsline {subsubsection}{\numberline {5.1.3.20}setYear()}{16}{subsubsection.5.1.3.20}%
+\contentsline {subsubsection}{\numberline {5.1.3.21}toString()}{16}{subsubsection.5.1.3.21}%
+\contentsline {subsection}{\numberline {5.1.4}Documentação dos dados membro}{17}{subsection.5.1.4}%
+\contentsline {subsubsection}{\numberline {5.1.4.1}\_artist}{17}{subsubsection.5.1.4.1}%
+\contentsline {subsubsection}{\numberline {5.1.4.2}\_genre}{17}{subsubsection.5.1.4.2}%
+\contentsline {subsubsection}{\numberline {5.1.4.3}\_id}{17}{subsubsection.5.1.4.3}%
+\contentsline {subsubsection}{\numberline {5.1.4.4}\_name}{17}{subsubsection.5.1.4.4}%
+\contentsline {subsubsection}{\numberline {5.1.4.5}\_songs}{17}{subsubsection.5.1.4.5}%
+\contentsline {subsubsection}{\numberline {5.1.4.6}\_year}{17}{subsubsection.5.1.4.6}%
+\contentsline {section}{\numberline {5.2}Referência à classe Artist}{17}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Descrição detalhada}{19}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Documentação dos Construtores \& Destrutor}{19}{subsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.2.1}Artist()}{19}{subsubsection.5.2.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2.2}$\sim $Artist()}{19}{subsubsection.5.2.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Documentação das funções}{19}{subsection.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.3.1}findAlbumByName()}{19}{subsubsection.5.2.3.1}%
+\contentsline {subsubsection}{\numberline {5.2.3.2}findSongByName()}{20}{subsubsection.5.2.3.2}%
+\contentsline {subsubsection}{\numberline {5.2.3.3}getAlbums()}{20}{subsubsection.5.2.3.3}%
+\contentsline {subsubsection}{\numberline {5.2.3.4}getAlbumsCount()}{20}{subsubsection.5.2.3.4}%
+\contentsline {subsubsection}{\numberline {5.2.3.5}getFormattedDuration()}{21}{subsubsection.5.2.3.5}%
+\contentsline {subsubsection}{\numberline {5.2.3.6}getGenre()}{21}{subsubsection.5.2.3.6}%
+\contentsline {subsubsection}{\numberline {5.2.3.7}getId()}{21}{subsubsection.5.2.3.7}%
+\contentsline {subsubsection}{\numberline {5.2.3.8}getName()}{21}{subsubsection.5.2.3.8}%
+\contentsline {subsubsection}{\numberline {5.2.3.9}getSongs()}{21}{subsubsection.5.2.3.9}%
+\contentsline {subsubsection}{\numberline {5.2.3.10}getSongsCount()}{22}{subsubsection.5.2.3.10}%
+\contentsline {subsubsection}{\numberline {5.2.3.11}getTotalDuration()}{22}{subsubsection.5.2.3.11}%
+\contentsline {subsubsection}{\numberline {5.2.3.12}hasAlbum()}{22}{subsubsection.5.2.3.12}%
+\contentsline {subsubsection}{\numberline {5.2.3.13}hasSong()}{22}{subsubsection.5.2.3.13}%
+\contentsline {subsubsection}{\numberline {5.2.3.14}removeAlbum()}{22}{subsubsection.5.2.3.14}%
+\contentsline {subsubsection}{\numberline {5.2.3.15}removeSong()}{23}{subsubsection.5.2.3.15}%
+\contentsline {subsubsection}{\numberline {5.2.3.16}setAlbum()}{23}{subsubsection.5.2.3.16}%
+\contentsline {subsubsection}{\numberline {5.2.3.17}setGenre()}{23}{subsubsection.5.2.3.17}%
+\contentsline {subsubsection}{\numberline {5.2.3.18}setName()}{24}{subsubsection.5.2.3.18}%
+\contentsline {subsubsection}{\numberline {5.2.3.19}setSong()}{24}{subsubsection.5.2.3.19}%
+\contentsline {subsubsection}{\numberline {5.2.3.20}toString()}{24}{subsubsection.5.2.3.20}%
+\contentsline {subsection}{\numberline {5.2.4}Documentação dos dados membro}{24}{subsection.5.2.4}%
+\contentsline {subsubsection}{\numberline {5.2.4.1}\_albums}{24}{subsubsection.5.2.4.1}%
+\contentsline {subsubsection}{\numberline {5.2.4.2}\_genre}{24}{subsubsection.5.2.4.2}%
+\contentsline {subsubsection}{\numberline {5.2.4.3}\_id}{24}{subsubsection.5.2.4.3}%
+\contentsline {subsubsection}{\numberline {5.2.4.4}\_name}{25}{subsubsection.5.2.4.4}%
+\contentsline {subsubsection}{\numberline {5.2.4.5}\_songs}{25}{subsubsection.5.2.4.5}%
+\contentsline {section}{\numberline {5.3}Referência à classe core\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Entity}{25}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Descrição detalhada}{25}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Documentação dos Construtores \& Destrutor}{25}{subsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.1}$\sim $Entity()}{25}{subsubsection.5.3.2.1}%
+\contentsline {subsection}{\numberline {5.3.3}Documentação das funções}{26}{subsection.5.3.3}%
+\contentsline {subsubsection}{\numberline {5.3.3.1}getId()}{26}{subsubsection.5.3.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.3.2}operator==()}{26}{subsubsection.5.3.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.3.3}setId()}{26}{subsubsection.5.3.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Documentação dos dados membro}{26}{subsection.5.3.4}%
+\contentsline {subsubsection}{\numberline {5.3.4.1}id}{26}{subsubsection.5.3.4.1}%
+\contentsline {section}{\numberline {5.4}Referência à classe Player}{27}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Descrição detalhada}{28}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Documentação dos Construtores \& Destrutor}{28}{subsection.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.2.1}Player()}{28}{subsubsection.5.4.2.1}%
+\contentsline {subsection}{\numberline {5.4.3}Documentação das funções}{29}{subsection.5.4.3}%
+\contentsline {subsubsection}{\numberline {5.4.3.1}advanceToNext()}{29}{subsubsection.5.4.3.1}%
+\contentsline {subsubsection}{\numberline {5.4.3.2}clearPlaylist()}{29}{subsubsection.5.4.3.2}%
+\contentsline {subsubsection}{\numberline {5.4.3.3}getCurrentSong()}{29}{subsubsection.5.4.3.3}%
+\contentsline {subsubsection}{\numberline {5.4.3.4}getPlaylist()}{29}{subsubsection.5.4.3.4}%
+\contentsline {subsubsection}{\numberline {5.4.3.5}getPlaylistSize()}{29}{subsubsection.5.4.3.5}%
+\contentsline {subsubsection}{\numberline {5.4.3.6}getProgress()}{30}{subsubsection.5.4.3.6}%
+\contentsline {subsubsection}{\numberline {5.4.3.7}getVolume()}{30}{subsubsection.5.4.3.7}%
+\contentsline {subsubsection}{\numberline {5.4.3.8}goToPrevious()}{30}{subsubsection.5.4.3.8}%
+\contentsline {subsubsection}{\numberline {5.4.3.9}hasNext()}{30}{subsubsection.5.4.3.9}%
+\contentsline {subsubsection}{\numberline {5.4.3.10}hasPrevious()}{30}{subsubsection.5.4.3.10}%
+\contentsline {subsubsection}{\numberline {5.4.3.11}isPaused()}{31}{subsubsection.5.4.3.11}%
+\contentsline {subsubsection}{\numberline {5.4.3.12}isPlaying()}{31}{subsubsection.5.4.3.12}%
+\contentsline {subsubsection}{\numberline {5.4.3.13}loadAudio()}{31}{subsubsection.5.4.3.13}%
+\contentsline {subsubsection}{\numberline {5.4.3.14}mute()}{31}{subsubsection.5.4.3.14}%
+\contentsline {subsubsection}{\numberline {5.4.3.15}next()}{31}{subsubsection.5.4.3.15}%
+\contentsline {subsubsection}{\numberline {5.4.3.16}pause()}{32}{subsubsection.5.4.3.16}%
+\contentsline {subsubsection}{\numberline {5.4.3.17}play()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{32}{subsubsection.5.4.3.17}%
+\contentsline {subsubsection}{\numberline {5.4.3.18}play()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{32}{subsubsection.5.4.3.18}%
+\contentsline {subsubsection}{\numberline {5.4.3.19}previous()}{32}{subsubsection.5.4.3.19}%
+\contentsline {subsubsection}{\numberline {5.4.3.20}resume()}{32}{subsubsection.5.4.3.20}%
+\contentsline {subsubsection}{\numberline {5.4.3.21}setVolume()}{32}{subsubsection.5.4.3.21}%
+\contentsline {subsubsection}{\numberline {5.4.3.22}unmute()}{33}{subsubsection.5.4.3.22}%
+\contentsline {subsection}{\numberline {5.4.4}Documentação dos dados membro}{33}{subsection.5.4.4}%
+\contentsline {subsubsection}{\numberline {5.4.4.1}\_currentIndex}{33}{subsubsection.5.4.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.4.2}\_currentSong}{33}{subsubsection.5.4.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.4.3}\_isPlaying}{33}{subsubsection.5.4.4.3}%
+\contentsline {subsubsection}{\numberline {5.4.4.4}\_isStopped}{33}{subsubsection.5.4.4.4}%
+\contentsline {subsubsection}{\numberline {5.4.4.5}\_playlist}{33}{subsubsection.5.4.4.5}%
+\contentsline {subsubsection}{\numberline {5.4.4.6}\_volume}{33}{subsubsection.5.4.4.6}%
+\contentsline {section}{\numberline {5.5}Referência à classe Song}{34}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Descrição detalhada}{35}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Documentação dos Construtores \& Destrutor}{35}{subsection.5.5.2}%
+\contentsline {subsubsection}{\numberline {5.5.2.1}Song()}{35}{subsubsection.5.5.2.1}%
+\contentsline {subsection}{\numberline {5.5.3}Documentação das funções}{35}{subsection.5.5.3}%
+\contentsline {subsubsection}{\numberline {5.5.3.1}getAlbum()}{35}{subsubsection.5.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.5.3.2}getArtist()}{36}{subsubsection.5.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.5.3.3}getDuration()}{36}{subsubsection.5.5.3.3}%
+\contentsline {subsubsection}{\numberline {5.5.3.4}getFilePath()}{36}{subsubsection.5.5.3.4}%
+\contentsline {subsubsection}{\numberline {5.5.3.5}getFormattedDuration()}{36}{subsubsection.5.5.3.5}%
+\contentsline {subsubsection}{\numberline {5.5.3.6}getGenre()}{36}{subsubsection.5.5.3.6}%
+\contentsline {subsubsection}{\numberline {5.5.3.7}getId()}{37}{subsubsection.5.5.3.7}%
+\contentsline {subsubsection}{\numberline {5.5.3.8}getTitle()}{37}{subsubsection.5.5.3.8}%
+\contentsline {subsubsection}{\numberline {5.5.3.9}getYear()}{37}{subsubsection.5.5.3.9}%
+\contentsline {subsubsection}{\numberline {5.5.3.10}loadMetadata()}{37}{subsubsection.5.5.3.10}%
+\contentsline {subsubsection}{\numberline {5.5.3.11}setAlbum()}{37}{subsubsection.5.5.3.11}%
+\contentsline {subsubsection}{\numberline {5.5.3.12}setArtist()}{38}{subsubsection.5.5.3.12}%
+\contentsline {subsubsection}{\numberline {5.5.3.13}setDuration()}{38}{subsubsection.5.5.3.13}%
+\contentsline {subsubsection}{\numberline {5.5.3.14}setGenre()}{38}{subsubsection.5.5.3.14}%
+\contentsline {subsubsection}{\numberline {5.5.3.15}setTitle()}{38}{subsubsection.5.5.3.15}%
+\contentsline {subsubsection}{\numberline {5.5.3.16}setYear()}{39}{subsubsection.5.5.3.16}%
+\contentsline {subsubsection}{\numberline {5.5.3.17}toString()}{39}{subsubsection.5.5.3.17}%
+\contentsline {subsection}{\numberline {5.5.4}Documentação dos dados membro}{39}{subsection.5.5.4}%
+\contentsline {subsubsection}{\numberline {5.5.4.1}\_album}{39}{subsubsection.5.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.5.4.2}\_artist}{39}{subsubsection.5.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.5.4.3}\_duration}{39}{subsubsection.5.5.4.3}%
+\contentsline {subsubsection}{\numberline {5.5.4.4}\_file\_path}{39}{subsubsection.5.5.4.4}%
+\contentsline {subsubsection}{\numberline {5.5.4.5}\_genre}{40}{subsubsection.5.5.4.5}%
+\contentsline {subsubsection}{\numberline {5.5.4.6}\_id}{40}{subsubsection.5.5.4.6}%
+\contentsline {subsubsection}{\numberline {5.5.4.7}\_metadata\_loaded}{40}{subsubsection.5.5.4.7}%
+\contentsline {subsubsection}{\numberline {5.5.4.8}\_title}{40}{subsubsection.5.5.4.8}%
+\contentsline {subsubsection}{\numberline {5.5.4.9}\_year}{40}{subsubsection.5.5.4.9}%
+\contentsline {chapter}{\numberline {6}Documentação do ficheiro}{41}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Referência ao ficheiro /home/joao/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Desktop/trabalho\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pds/2025-\/2-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TW-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TE-\/grupo06/include/core/entities/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Album.hpp}{41}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Descrição detalhada}{42}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}Album.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{42}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Referência ao ficheiro /home/joao/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Desktop/trabalho\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pds/2025-\/2-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TW-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TE-\/grupo06/include/core/entities/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Artist.hpp}{43}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Descrição detalhada}{44}{subsection.6.3.1}%
+\contentsline {section}{\numberline {6.4}Artist.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{45}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Referência ao ficheiro /home/joao/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Desktop/trabalho\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pds/2025-\/2-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TW-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TE-\/grupo06/include/core/entities/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}FWD.hpp}{45}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}FWD.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{46}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Referência ao ficheiro /home/joao/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Desktop/trabalho\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pds/2025-\/2-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TW-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TE-\/grupo06/include/core/entities/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Entity.hpp}{46}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}Descrição detalhada}{46}{subsection.6.7.1}%
+\contentsline {section}{\numberline {6.8}Entity.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{47}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Referência ao ficheiro /home/joao/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Desktop/trabalho\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pds/2025-\/2-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TW-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TE-\/grupo06/include/core/entities/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Player.hpp}{47}{section.6.9}%
+\contentsline {subsection}{\numberline {6.9.1}Descrição detalhada}{48}{subsection.6.9.1}%
+\contentsline {section}{\numberline {6.10}Player.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{48}{section.6.10}%
+\contentsline {section}{\numberline {6.11}Referência ao ficheiro /home/joao/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Desktop/trabalho\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pds/2025-\/2-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TW-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TE-\/grupo06/include/core/entities/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Song.hpp}{49}{section.6.11}%
+\contentsline {subsection}{\numberline {6.11.1}Descrição detalhada}{50}{subsection.6.11.1}%
+\contentsline {section}{\numberline {6.12}Song.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{51}{section.6.12}%
+\contentsline {chapter}{\'Indice}{53}{section*.26}%

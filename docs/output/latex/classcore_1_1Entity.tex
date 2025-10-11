@@ -1,0 +1,102 @@
+\doxysection{Referência à classe core\+::Entity}
+\hypertarget{classcore_1_1Entity}{}\label{classcore_1_1Entity}\index{core::Entity@{core::Entity}}
+
+
+Interface para entidades do sistema Interface que define caracteristicas essenciais para entidades do sistema.  
+
+
+
+
+{\ttfamily \#include $<$Entity.\+hpp$>$}
+
+\doxysubsubsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classcore_1_1Entity_add4956ad2dfabbc7334ebbd0f56acdf6}{\texorpdfstring{$\sim$}{\string~}\+Entity}} ()=default
+\item 
+unsigned \mbox{\hyperlink{classcore_1_1Entity_a0e684842ed659f0d8de62db0f54c473e}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o ID da entidade. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcore_1_1Entity_a4a4d9c74c71f4b414b58e586d9e2fb5f}{set\+Id}} (unsigned \mbox{\hyperlink{classcore_1_1Entity_a9c93febb690e6894fd195454a3e27e14}{id}})
+\begin{DoxyCompactList}\small\item\em Define o ID da entidade. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classcore_1_1Entity_a8051c0e7ca3c02e7980072636b029f90}{operator==}} (const \mbox{\hyperlink{classcore_1_1Entity}{Entity}} \&other) const =0
+\begin{DoxyCompactList}\small\item\em Compara duas entidades. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos Protegidos}
+\begin{DoxyCompactItemize}
+\item 
+unsigned \mbox{\hyperlink{classcore_1_1Entity_a9c93febb690e6894fd195454a3e27e14}{id}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+Interface para entidades do sistema Interface que define caracteristicas essenciais para entidades do sistema. 
+
+\doxysubsection{Documentação dos Construtores \& Destrutor}
+\Hypertarget{classcore_1_1Entity_add4956ad2dfabbc7334ebbd0f56acdf6}\label{classcore_1_1Entity_add4956ad2dfabbc7334ebbd0f56acdf6} 
+\index{core::Entity@{core::Entity}!````~Entity@{\texorpdfstring{$\sim$}{\string~}Entity}}
+\index{````~Entity@{\texorpdfstring{$\sim$}{\string~}Entity}!core::Entity@{core::Entity}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Entity()}{\string~Entity()}}
+{\footnotesize\ttfamily virtual core\+::\+Entity\+::\texorpdfstring{$\sim$}{\string~}\+Entity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{classcore_1_1Entity_a0e684842ed659f0d8de62db0f54c473e}\label{classcore_1_1Entity_a0e684842ed659f0d8de62db0f54c473e} 
+\index{core::Entity@{core::Entity}!getId@{getId}}
+\index{getId@{getId}!core::Entity@{core::Entity}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily unsigned core\+::\+Entity\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Obtém o ID da entidade. 
+
+\begin{DoxyReturn}{Retorna}
+ID da entidade 
+\end{DoxyReturn}
+\Hypertarget{classcore_1_1Entity_a8051c0e7ca3c02e7980072636b029f90}\label{classcore_1_1Entity_a8051c0e7ca3c02e7980072636b029f90} 
+\index{core::Entity@{core::Entity}!operator==@{operator==}}
+\index{operator==@{operator==}!core::Entity@{core::Entity}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily virtual bool core\+::\+Entity\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classcore_1_1Entity}{Entity}} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compara duas entidades. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em other} & Entidade a ser comparada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+true se as entidades forem iguais, false caso contrário 
+\end{DoxyReturn}
+\Hypertarget{classcore_1_1Entity_a4a4d9c74c71f4b414b58e586d9e2fb5f}\label{classcore_1_1Entity_a4a4d9c74c71f4b414b58e586d9e2fb5f} 
+\index{core::Entity@{core::Entity}!setId@{setId}}
+\index{setId@{setId}!core::Entity@{core::Entity}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily void core\+::\+Entity\+::set\+Id (\begin{DoxyParamCaption}\item[{unsigned}]{id }\end{DoxyParamCaption})}
+
+
+
+Define o ID da entidade. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em id} & Novo ID da entidade \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcore_1_1Entity_a9c93febb690e6894fd195454a3e27e14}\label{classcore_1_1Entity_a9c93febb690e6894fd195454a3e27e14} 
+\index{core::Entity@{core::Entity}!id@{id}}
+\index{id@{id}!core::Entity@{core::Entity}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily unsigned core\+::\+Entity\+::id = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+ID da entidade 
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+/home/joao/\+Desktop/trabalho\+Pds/2025-\/2-\/\+TW-\/\+TE-\/grupo06/include/core/entities/\mbox{\hyperlink{Entity_8hpp}{Entity.\+hpp}}\end{DoxyCompactItemize}

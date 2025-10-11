@@ -1,0 +1,71 @@
+\doxysection{Player.\+hpp}
+\hypertarget{Player_8hpp_source}{}\label{Player_8hpp_source}\index{/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Player.hpp@{/home/joao/Desktop/trabalhoPds/2025-\/2-\/TW-\/TE-\/grupo06/include/core/entities/Player.hpp}}
+\mbox{\hyperlink{Player_8hpp}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ PLAYER\_HPP}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ PLAYER\_HPP}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Song_8hpp}{Song.hpp}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classPlayer}{Player}}\ \{}
+\DoxyCodeLine{00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ std::vector<Song>\ \mbox{\hyperlink{classPlayer_aaf7478e55fb533420f9e683134e6ce1b}{\_playlist}};}
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{classSong}{Song}}\ *\mbox{\hyperlink{classPlayer_a8cfff3f5e68de70de7e0177a6bc1afcc}{\_currentSong}};}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classPlayer_a6ed929c38c890d55e5f9ce4538203543}{\_currentIndex}};}
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPlayer_a90ed15c9bbd20cb5d91bdad2981f08c2}{\_isPlaying}};}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPlayer_a29fb0dfd5fe17d797e3ac1921086d08e}{\_isStopped}};}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classPlayer_a7320ddba1469a57964bf0318649352bc}{\_volume}};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \mbox{\hyperlink{classPlayer_affe0cc3cb714f6deb4e62f0c0d3f1fd8}{Player}}();}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_a06994be0d7a0dd229d29af3431c94ed0}{play}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSong}{Song}}\ \&song);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_aff0a05679ec3c67c08f94d94b2965f08}{play}}(\textcolor{keyword}{const}\ std::vector<Song>\ \&songs);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_aa7749254cf909d029127d4622670c522}{pause}}();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_aa286cb87328b067ffd2e722d0d389755}{resume}}();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_a8f334d2272dc9b11d025ddaf87639300}{next}}();}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_a4e03cd27ab338de7af3acd32752f7675}{previous}}();}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00089\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_aa461f07ca66643167a38434fdfd1d6ef}{setVolume}}(\textcolor{keywordtype}{float}\ \&volume);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00095\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classPlayer_a88d0cdff237f4b723b9229017d353881}{getVolume}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00102\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_a8dac2984ceb6956ac84ab34d9603e946}{mute}}();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00109\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_ac22f7553677980bcc767ecfc9fe78495}{unmute}}();}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00115\ \ \ \mbox{\hyperlink{classSong}{Song}}\ \mbox{\hyperlink{classPlayer_a0c603a639a4037fb1f15fcd624dcc04a}{getCurrentSong}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00121\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPlayer_a06b5d53d568f357f77df80d0859fe8db}{isPlaying}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00127\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPlayer_afb7c2072406efa1183df91a154c465e9}{isPaused}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00133\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classPlayer_aa141e0df8de93f681d9f875ab7434eee}{getProgress}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00139\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classPlayer_a8b360601b0ae223e8da7d57687ffc03c}{getPlaylistSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00146\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_a0e0e947dc4a2b8df38db464e5dda13e2}{clearPlaylist}}();}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00152\ \ \ std::vector<Song>\ \mbox{\hyperlink{classPlayer_ae013efadc2b4a4adf6437027d840651a}{getPlaylist}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00158\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_a92fb6f4f4531917116f0116a9d5fe083}{advanceToNext}}();}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00164\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_aa6cde9241baed136b94efa38f30eb8a2}{goToPrevious}}();}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00171\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPlayer_a332cfe72e07a36dc899da77cf530a0a8}{hasNext}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00178\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPlayer_a0b604b29f053f7566ced41a1d6d0f2ea}{hasPrevious}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00185\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPlayer_a5497476faa9f176987941a2bdca07ac9}{loadAudio}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSong}{Song}}\ \&song);}
+\DoxyCodeLine{00186\ \};}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ PLAYER\_HPP}}
+
+\end{DoxyCode}
