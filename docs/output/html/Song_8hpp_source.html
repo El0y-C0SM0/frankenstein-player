@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sistema Digital de Música: Código-Fonte de /home/joao/Desktop/trabalhoPds/2025-2-TW-TE-grupo06/include/core/entities/Song.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sistema Digital de Música
+   </div>
+   <div id="projectbrief">Um reprodutor de música locais</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrada</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3d69f64eaf81436fe2b22361382717e5.html">core</a></li><li class="navelem"><a class="el" href="dir_273937e07772855c017201842e973bc7.html">entities</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">Song.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Song_8hpp.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#ifndef SONG_HPP</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#define SONG_HPP</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classSong.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="classSong.html">Song</a> {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classSong.html#abdeb871d396d1422b23850971f4f0865">   29</a></span>  <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="classSong.html#abdeb871d396d1422b23850971f4f0865">_id</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classSong.html#a14b627c557cc90cd68ca2b57f0f99195">   30</a></span>  std::string <a class="code hl_variable" href="classSong.html#a14b627c557cc90cd68ca2b57f0f99195">_file_path</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classSong.html#a367c769c2e55cf72ce3b8c6b959f662f">   31</a></span>  std::string <a class="code hl_variable" href="classSong.html#a367c769c2e55cf72ce3b8c6b959f662f">_title</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classSong.html#a77cd1bace3147dbb285fa5343fbef3d4">   32</a></span>  std::string <a class="code hl_variable" href="classSong.html#a77cd1bace3147dbb285fa5343fbef3d4">_artist</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classSong.html#a0a21893e959fe35ce161a0da07eca5bf">   33</a></span>  std::string <a class="code hl_variable" href="classSong.html#a0a21893e959fe35ce161a0da07eca5bf">_album</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classSong.html#a748ff535febc300ea66be7696a9cd4d9">   34</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classSong.html#a748ff535febc300ea66be7696a9cd4d9">_duration</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classSong.html#a8b77f1ed7ef861705434f4f2ea16763d">   35</a></span>  std::string <a class="code hl_variable" href="classSong.html#a8b77f1ed7ef861705434f4f2ea16763d">_genre</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classSong.html#a6ee39eb5d140f14355d528730f075a7f">   36</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classSong.html#a6ee39eb5d140f14355d528730f075a7f">_year</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classSong.html#a019f5afc9c7d39779ca02771c733c5f1">   37</a></span>  <span class="keywordtype">bool</span> <a class="code hl_variable" href="classSong.html#a019f5afc9c7d39779ca02771c733c5f1">_metadata_loaded</a>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classSong.html#a035474a80c90dd7b8b01b9c5f1c6552c">   47</a></span>  <a class="code hl_function" href="classSong.html#a035474a80c90dd7b8b01b9c5f1c6552c">Song</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> std::string &amp;file_path, <span class="keyword">const</span> std::string &amp;title,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>       <span class="keyword">const</span> std::string &amp;artist);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <span class="comment">// Getters</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classSong.html#a7528cd815af216ef71861765305a1d67">   55</a></span>  <span class="keywordtype">int</span> <a class="code hl_function" href="classSong.html#a7528cd815af216ef71861765305a1d67">getId</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classSong.html#a0e465a02bdcd7db758a6cb8eae1f1073">   61</a></span>  std::string <a class="code hl_function" href="classSong.html#a0e465a02bdcd7db758a6cb8eae1f1073">getFilePath</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classSong.html#ab7d1e83dd86f4220183d92149b108c0a">   66</a></span>  std::string <a class="code hl_function" href="classSong.html#ab7d1e83dd86f4220183d92149b108c0a">getTitle</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classSong.html#a0e3ea38ab798043d79426829e9774cc4">   71</a></span>  std::string <a class="code hl_function" href="classSong.html#a0e3ea38ab798043d79426829e9774cc4">getArtist</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classSong.html#ab79ee4719b4b0041d9b64823ede0f3c5">   76</a></span>  std::string <a class="code hl_function" href="classSong.html#ab79ee4719b4b0041d9b64823ede0f3c5">getAlbum</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classSong.html#ae305917a759e91936bce1faf4afae886">   81</a></span>  <span class="keywordtype">int</span> <a class="code hl_function" href="classSong.html#ae305917a759e91936bce1faf4afae886">getDuration</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classSong.html#a88695c24f547090eee57e64e186971e3">   86</a></span>  std::string <a class="code hl_function" href="classSong.html#a88695c24f547090eee57e64e186971e3">getGenre</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classSong.html#a95b95f2110f0561b5abc223f82cb5e69">   91</a></span>  <span class="keywordtype">int</span> <a class="code hl_function" href="classSong.html#a95b95f2110f0561b5abc223f82cb5e69">getYear</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <span class="comment">// Setters</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classSong.html#a85cb00358b139b444372078303eb8735">   97</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classSong.html#a85cb00358b139b444372078303eb8735">setTitle</a>(<span class="keyword">const</span> std::string &amp;title);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classSong.html#a9e140657fdb7f37ca6ac4fd4749b35ad">  102</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classSong.html#a9e140657fdb7f37ca6ac4fd4749b35ad">setArtist</a>(<span class="keyword">const</span> std::string &amp;artist);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classSong.html#adc9d5aa0dabf0ab206d13d5cb7b7085b">  107</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classSong.html#adc9d5aa0dabf0ab206d13d5cb7b7085b">setAlbum</a>(<span class="keyword">const</span> std::string &amp;album);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classSong.html#a3d93e209dfd59ae1feffdb0dd3d2cfcd">  112</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classSong.html#a3d93e209dfd59ae1feffdb0dd3d2cfcd">setDuration</a>(<span class="keywordtype">int</span> duration);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="classSong.html#a5628d5343039ca2d5c3d20a33bed77f5">  117</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classSong.html#a5628d5343039ca2d5c3d20a33bed77f5">setGenre</a>(<span class="keyword">const</span> std::string &amp;genre);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="classSong.html#affde873f6c694eec5049fcb520ebb546">  122</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classSong.html#affde873f6c694eec5049fcb520ebb546">setYear</a>(<span class="keywordtype">int</span> year);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <span class="comment">// Métodos</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="classSong.html#a0822ca9d429e5092b234d9455d7c54b0">  130</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classSong.html#a0822ca9d429e5092b234d9455d7c54b0">loadMetadata</a>();</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="classSong.html#a3517d09a53601bdf0be128b5ec55d5dd">  136</a></span>  std::string <a class="code hl_function" href="classSong.html#a3517d09a53601bdf0be128b5ec55d5dd">getFormattedDuration</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="classSong.html#a2ec0f008c1e3e163a768b62e58eac2af">  142</a></span>  std::string <a class="code hl_function" href="classSong.html#a2ec0f008c1e3e163a768b62e58eac2af">toString</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  <span class="comment">// Operações no banco de dados será responsabilidade da classe?</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>};</div>
+</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="preprocessor">#endif </span><span class="comment">// SONG_HPP</span></div>
+<div class="ttc" id="aclassSong_html"><div class="ttname"><a href="classSong.html">Song</a></div><div class="ttdoc">Representa uma música com seus metadados.</div><div class="ttdef"><b>Definição</b> Song.hpp:27</div></div>
+<div class="ttc" id="aclassSong_html_a019f5afc9c7d39779ca02771c733c5f1"><div class="ttname"><a href="classSong.html#a019f5afc9c7d39779ca02771c733c5f1">Song::_metadata_loaded</a></div><div class="ttdeci">bool _metadata_loaded</div><div class="ttdef"><b>Definição</b> Song.hpp:37</div></div>
+<div class="ttc" id="aclassSong_html_a035474a80c90dd7b8b01b9c5f1c6552c"><div class="ttname"><a href="classSong.html#a035474a80c90dd7b8b01b9c5f1c6552c">Song::Song</a></div><div class="ttdeci">Song(int id, const std::string &amp;file_path, const std::string &amp;title, const std::string &amp;artist)</div><div class="ttdoc">Construtor da classe Song.</div></div>
+<div class="ttc" id="aclassSong_html_a0822ca9d429e5092b234d9455d7c54b0"><div class="ttname"><a href="classSong.html#a0822ca9d429e5092b234d9455d7c54b0">Song::loadMetadata</a></div><div class="ttdeci">bool loadMetadata()</div><div class="ttdoc">Carrega metadados do arquivo de áudio.</div></div>
+<div class="ttc" id="aclassSong_html_a0a21893e959fe35ce161a0da07eca5bf"><div class="ttname"><a href="classSong.html#a0a21893e959fe35ce161a0da07eca5bf">Song::_album</a></div><div class="ttdeci">std::string _album</div><div class="ttdef"><b>Definição</b> Song.hpp:33</div></div>
+<div class="ttc" id="aclassSong_html_a0e3ea38ab798043d79426829e9774cc4"><div class="ttname"><a href="classSong.html#a0e3ea38ab798043d79426829e9774cc4">Song::getArtist</a></div><div class="ttdeci">std::string getArtist() const</div><div class="ttdoc">Obtém o artista.</div></div>
+<div class="ttc" id="aclassSong_html_a0e465a02bdcd7db758a6cb8eae1f1073"><div class="ttname"><a href="classSong.html#a0e465a02bdcd7db758a6cb8eae1f1073">Song::getFilePath</a></div><div class="ttdeci">std::string getFilePath() const</div><div class="ttdoc">Obtém o caminho do arquivo.</div></div>
+<div class="ttc" id="aclassSong_html_a14b627c557cc90cd68ca2b57f0f99195"><div class="ttname"><a href="classSong.html#a14b627c557cc90cd68ca2b57f0f99195">Song::_file_path</a></div><div class="ttdeci">std::string _file_path</div><div class="ttdef"><b>Definição</b> Song.hpp:30</div></div>
+<div class="ttc" id="aclassSong_html_a2ec0f008c1e3e163a768b62e58eac2af"><div class="ttname"><a href="classSong.html#a2ec0f008c1e3e163a768b62e58eac2af">Song::toString</a></div><div class="ttdeci">std::string toString() const</div><div class="ttdoc">Converte a música para string.</div></div>
+<div class="ttc" id="aclassSong_html_a3517d09a53601bdf0be128b5ec55d5dd"><div class="ttname"><a href="classSong.html#a3517d09a53601bdf0be128b5ec55d5dd">Song::getFormattedDuration</a></div><div class="ttdeci">std::string getFormattedDuration() const</div><div class="ttdoc">Obtém a duração formatada.</div></div>
+<div class="ttc" id="aclassSong_html_a367c769c2e55cf72ce3b8c6b959f662f"><div class="ttname"><a href="classSong.html#a367c769c2e55cf72ce3b8c6b959f662f">Song::_title</a></div><div class="ttdeci">std::string _title</div><div class="ttdef"><b>Definição</b> Song.hpp:31</div></div>
+<div class="ttc" id="aclassSong_html_a3d93e209dfd59ae1feffdb0dd3d2cfcd"><div class="ttname"><a href="classSong.html#a3d93e209dfd59ae1feffdb0dd3d2cfcd">Song::setDuration</a></div><div class="ttdeci">void setDuration(int duration)</div><div class="ttdoc">Define a duração.</div></div>
+<div class="ttc" id="aclassSong_html_a5628d5343039ca2d5c3d20a33bed77f5"><div class="ttname"><a href="classSong.html#a5628d5343039ca2d5c3d20a33bed77f5">Song::setGenre</a></div><div class="ttdeci">void setGenre(const std::string &amp;genre)</div><div class="ttdoc">Define o gênero.</div></div>
+<div class="ttc" id="aclassSong_html_a6ee39eb5d140f14355d528730f075a7f"><div class="ttname"><a href="classSong.html#a6ee39eb5d140f14355d528730f075a7f">Song::_year</a></div><div class="ttdeci">int _year</div><div class="ttdef"><b>Definição</b> Song.hpp:36</div></div>
+<div class="ttc" id="aclassSong_html_a748ff535febc300ea66be7696a9cd4d9"><div class="ttname"><a href="classSong.html#a748ff535febc300ea66be7696a9cd4d9">Song::_duration</a></div><div class="ttdeci">int _duration</div><div class="ttdef"><b>Definição</b> Song.hpp:34</div></div>
+<div class="ttc" id="aclassSong_html_a7528cd815af216ef71861765305a1d67"><div class="ttname"><a href="classSong.html#a7528cd815af216ef71861765305a1d67">Song::getId</a></div><div class="ttdeci">int getId() const</div><div class="ttdoc">Obtém o ID da música.</div></div>
+<div class="ttc" id="aclassSong_html_a77cd1bace3147dbb285fa5343fbef3d4"><div class="ttname"><a href="classSong.html#a77cd1bace3147dbb285fa5343fbef3d4">Song::_artist</a></div><div class="ttdeci">std::string _artist</div><div class="ttdef"><b>Definição</b> Song.hpp:32</div></div>
+<div class="ttc" id="aclassSong_html_a85cb00358b139b444372078303eb8735"><div class="ttname"><a href="classSong.html#a85cb00358b139b444372078303eb8735">Song::setTitle</a></div><div class="ttdeci">void setTitle(const std::string &amp;title)</div><div class="ttdoc">Define o título da música.</div></div>
+<div class="ttc" id="aclassSong_html_a88695c24f547090eee57e64e186971e3"><div class="ttname"><a href="classSong.html#a88695c24f547090eee57e64e186971e3">Song::getGenre</a></div><div class="ttdeci">std::string getGenre() const</div><div class="ttdoc">Obtém o gênero.</div></div>
+<div class="ttc" id="aclassSong_html_a8b77f1ed7ef861705434f4f2ea16763d"><div class="ttname"><a href="classSong.html#a8b77f1ed7ef861705434f4f2ea16763d">Song::_genre</a></div><div class="ttdeci">std::string _genre</div><div class="ttdef"><b>Definição</b> Song.hpp:35</div></div>
+<div class="ttc" id="aclassSong_html_a95b95f2110f0561b5abc223f82cb5e69"><div class="ttname"><a href="classSong.html#a95b95f2110f0561b5abc223f82cb5e69">Song::getYear</a></div><div class="ttdeci">int getYear() const</div><div class="ttdoc">Obtém o ano de lançamento.</div></div>
+<div class="ttc" id="aclassSong_html_a9e140657fdb7f37ca6ac4fd4749b35ad"><div class="ttname"><a href="classSong.html#a9e140657fdb7f37ca6ac4fd4749b35ad">Song::setArtist</a></div><div class="ttdeci">void setArtist(const std::string &amp;artist)</div><div class="ttdoc">Define o artista.</div></div>
+<div class="ttc" id="aclassSong_html_ab79ee4719b4b0041d9b64823ede0f3c5"><div class="ttname"><a href="classSong.html#ab79ee4719b4b0041d9b64823ede0f3c5">Song::getAlbum</a></div><div class="ttdeci">std::string getAlbum() const</div><div class="ttdoc">Obtém o álbum.</div></div>
+<div class="ttc" id="aclassSong_html_ab7d1e83dd86f4220183d92149b108c0a"><div class="ttname"><a href="classSong.html#ab7d1e83dd86f4220183d92149b108c0a">Song::getTitle</a></div><div class="ttdeci">std::string getTitle() const</div><div class="ttdoc">Obtém o título da música.</div></div>
+<div class="ttc" id="aclassSong_html_abdeb871d396d1422b23850971f4f0865"><div class="ttname"><a href="classSong.html#abdeb871d396d1422b23850971f4f0865">Song::_id</a></div><div class="ttdeci">unsigned _id</div><div class="ttdef"><b>Definição</b> Song.hpp:29</div></div>
+<div class="ttc" id="aclassSong_html_adc9d5aa0dabf0ab206d13d5cb7b7085b"><div class="ttname"><a href="classSong.html#adc9d5aa0dabf0ab206d13d5cb7b7085b">Song::setAlbum</a></div><div class="ttdeci">void setAlbum(const std::string &amp;album)</div><div class="ttdoc">Define o álbum.</div></div>
+<div class="ttc" id="aclassSong_html_ae305917a759e91936bce1faf4afae886"><div class="ttname"><a href="classSong.html#ae305917a759e91936bce1faf4afae886">Song::getDuration</a></div><div class="ttdeci">int getDuration() const</div><div class="ttdoc">Obtém a duração.</div></div>
+<div class="ttc" id="aclassSong_html_affde873f6c694eec5049fcb520ebb546"><div class="ttname"><a href="classSong.html#affde873f6c694eec5049fcb520ebb546">Song::setYear</a></div><div class="ttdeci">void setYear(int year)</div><div class="ttdoc">Define o ano de lançamento.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

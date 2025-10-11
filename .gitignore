@@ -67,6 +67,10 @@ notas*
 # diretórios de persistência
 data/
 
+docs/html/search/
+docs/html/.gitignore
+*.tmp
+
 # data
 *.db
 user_data/

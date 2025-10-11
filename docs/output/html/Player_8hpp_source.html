@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sistema Digital de Música: Código-Fonte de /home/joao/Desktop/trabalhoPds/2025-2-TW-TE-grupo06/include/core/entities/Player.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sistema Digital de Música
+   </div>
+   <div id="projectbrief">Um reprodutor de música locais</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrada</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3d69f64eaf81436fe2b22361382717e5.html">core</a></li><li class="navelem"><a class="el" href="dir_273937e07772855c017201842e973bc7.html">entities</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">Player.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Player_8hpp.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#ifndef PLAYER_HPP</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#define PLAYER_HPP</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="Song_8hpp.html">Song.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classPlayer.html">   26</a></span><span class="keyword">class </span><a class="code hl_class" href="classPlayer.html">Player</a> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classPlayer.html#aaf7478e55fb533420f9e683134e6ce1b">   28</a></span>  std::vector&lt;Song&gt; <a class="code hl_variable" href="classPlayer.html#aaf7478e55fb533420f9e683134e6ce1b">_playlist</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classPlayer.html#a8cfff3f5e68de70de7e0177a6bc1afcc">   29</a></span>  <a class="code hl_class" href="classSong.html">Song</a> *<a class="code hl_variable" href="classPlayer.html#a8cfff3f5e68de70de7e0177a6bc1afcc">_currentSong</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classPlayer.html#a6ed929c38c890d55e5f9ce4538203543">   30</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classPlayer.html#a6ed929c38c890d55e5f9ce4538203543">_currentIndex</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classPlayer.html#a90ed15c9bbd20cb5d91bdad2981f08c2">   31</a></span>  <span class="keywordtype">bool</span> <a class="code hl_variable" href="classPlayer.html#a90ed15c9bbd20cb5d91bdad2981f08c2">_isPlaying</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classPlayer.html#a29fb0dfd5fe17d797e3ac1921086d08e">   32</a></span>  <span class="keywordtype">bool</span> <a class="code hl_variable" href="classPlayer.html#a29fb0dfd5fe17d797e3ac1921086d08e">_isStopped</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classPlayer.html#a7320ddba1469a57964bf0318649352bc">   33</a></span>  <span class="keywordtype">float</span> <a class="code hl_variable" href="classPlayer.html#a7320ddba1469a57964bf0318649352bc">_volume</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classPlayer.html#affe0cc3cb714f6deb4e62f0c0d3f1fd8">   41</a></span>  <a class="code hl_function" href="classPlayer.html#affe0cc3cb714f6deb4e62f0c0d3f1fd8">Player</a>();</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classPlayer.html#a06994be0d7a0dd229d29af3431c94ed0">   47</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#a06994be0d7a0dd229d29af3431c94ed0">play</a>(<span class="keyword">const</span> <a class="code hl_class" href="classSong.html">Song</a> &amp;song);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classPlayer.html#aff0a05679ec3c67c08f94d94b2965f08">   53</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#aff0a05679ec3c67c08f94d94b2965f08">play</a>(<span class="keyword">const</span> std::vector&lt;Song&gt; &amp;songs);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classPlayer.html#aa7749254cf909d029127d4622670c522">   60</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#aa7749254cf909d029127d4622670c522">pause</a>();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classPlayer.html#aa286cb87328b067ffd2e722d0d389755">   67</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#aa286cb87328b067ffd2e722d0d389755">resume</a>();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classPlayer.html#a8f334d2272dc9b11d025ddaf87639300">   75</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#a8f334d2272dc9b11d025ddaf87639300">next</a>();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classPlayer.html#a4e03cd27ab338de7af3acd32752f7675">   83</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#a4e03cd27ab338de7af3acd32752f7675">previous</a>();</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="classPlayer.html#aa461f07ca66643167a38434fdfd1d6ef">   89</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#aa461f07ca66643167a38434fdfd1d6ef">setVolume</a>(<span class="keywordtype">float</span> &amp;volume);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classPlayer.html#a88d0cdff237f4b723b9229017d353881">   95</a></span>  <span class="keywordtype">float</span> <a class="code hl_function" href="classPlayer.html#a88d0cdff237f4b723b9229017d353881">getVolume</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classPlayer.html#a8dac2984ceb6956ac84ab34d9603e946">  102</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#a8dac2984ceb6956ac84ab34d9603e946">mute</a>();</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classPlayer.html#ac22f7553677980bcc767ecfc9fe78495">  109</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#ac22f7553677980bcc767ecfc9fe78495">unmute</a>();</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classPlayer.html#a0c603a639a4037fb1f15fcd624dcc04a">  115</a></span>  <a class="code hl_class" href="classSong.html">Song</a> <a class="code hl_function" href="classPlayer.html#a0c603a639a4037fb1f15fcd624dcc04a">getCurrentSong</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="classPlayer.html#a06b5d53d568f357f77df80d0859fe8db">  121</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classPlayer.html#a06b5d53d568f357f77df80d0859fe8db">isPlaying</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classPlayer.html#afb7c2072406efa1183df91a154c465e9">  127</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classPlayer.html#afb7c2072406efa1183df91a154c465e9">isPaused</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="classPlayer.html#aa141e0df8de93f681d9f875ab7434eee">  133</a></span>  <span class="keywordtype">float</span> <a class="code hl_function" href="classPlayer.html#aa141e0df8de93f681d9f875ab7434eee">getProgress</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classPlayer.html#a8b360601b0ae223e8da7d57687ffc03c">  139</a></span>  <span class="keywordtype">int</span> <a class="code hl_function" href="classPlayer.html#a8b360601b0ae223e8da7d57687ffc03c">getPlaylistSize</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classPlayer.html#a0e0e947dc4a2b8df38db464e5dda13e2">  146</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#a0e0e947dc4a2b8df38db464e5dda13e2">clearPlaylist</a>();</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="classPlayer.html#ae013efadc2b4a4adf6437027d840651a">  152</a></span>  std::vector&lt;Song&gt; <a class="code hl_function" href="classPlayer.html#ae013efadc2b4a4adf6437027d840651a">getPlaylist</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="classPlayer.html#a92fb6f4f4531917116f0116a9d5fe083">  158</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#a92fb6f4f4531917116f0116a9d5fe083">advanceToNext</a>();</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="classPlayer.html#aa6cde9241baed136b94efa38f30eb8a2">  164</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#aa6cde9241baed136b94efa38f30eb8a2">goToPrevious</a>();</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="classPlayer.html#a332cfe72e07a36dc899da77cf530a0a8">  171</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classPlayer.html#a332cfe72e07a36dc899da77cf530a0a8">hasNext</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classPlayer.html#a0b604b29f053f7566ced41a1d6d0f2ea">  178</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classPlayer.html#a0b604b29f053f7566ced41a1d6d0f2ea">hasPrevious</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="classPlayer.html#a5497476faa9f176987941a2bdca07ac9">  185</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPlayer.html#a5497476faa9f176987941a2bdca07ac9">loadAudio</a>(<span class="keyword">const</span> <a class="code hl_class" href="classSong.html">Song</a> &amp;song);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>};</div>
+</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="preprocessor">#endif </span><span class="comment">// PLAYER_HPP</span></div>
+<div class="ttc" id="aSong_8hpp_html"><div class="ttname"><a href="Song_8hpp.html">Song.hpp</a></div><div class="ttdoc">Definição da classe Song para representar uma música no sistema.</div></div>
+<div class="ttc" id="aclassPlayer_html"><div class="ttname"><a href="classPlayer.html">Player</a></div><div class="ttdoc">Controlador de reprodução de áudio com funcionalidades básicas.</div><div class="ttdef"><b>Definição</b> Player.hpp:26</div></div>
+<div class="ttc" id="aclassPlayer_html_a06994be0d7a0dd229d29af3431c94ed0"><div class="ttname"><a href="classPlayer.html#a06994be0d7a0dd229d29af3431c94ed0">Player::play</a></div><div class="ttdeci">void play(const Song &amp;song)</div><div class="ttdoc">Reproduz uma música específica.</div></div>
+<div class="ttc" id="aclassPlayer_html_a06b5d53d568f357f77df80d0859fe8db"><div class="ttname"><a href="classPlayer.html#a06b5d53d568f357f77df80d0859fe8db">Player::isPlaying</a></div><div class="ttdeci">bool isPlaying() const</div><div class="ttdoc">Verifica se o player está reproduzindo.</div></div>
+<div class="ttc" id="aclassPlayer_html_a0b604b29f053f7566ced41a1d6d0f2ea"><div class="ttname"><a href="classPlayer.html#a0b604b29f053f7566ced41a1d6d0f2ea">Player::hasPrevious</a></div><div class="ttdeci">bool hasPrevious() const</div><div class="ttdoc">Verifica se existe música anterior na playlist.</div></div>
+<div class="ttc" id="aclassPlayer_html_a0c603a639a4037fb1f15fcd624dcc04a"><div class="ttname"><a href="classPlayer.html#a0c603a639a4037fb1f15fcd624dcc04a">Player::getCurrentSong</a></div><div class="ttdeci">Song getCurrentSong() const</div><div class="ttdoc">Obtém a música atualmente em reprodução.</div></div>
+<div class="ttc" id="aclassPlayer_html_a0e0e947dc4a2b8df38db464e5dda13e2"><div class="ttname"><a href="classPlayer.html#a0e0e947dc4a2b8df38db464e5dda13e2">Player::clearPlaylist</a></div><div class="ttdeci">void clearPlaylist()</div><div class="ttdoc">Limpa toda a playlist.</div></div>
+<div class="ttc" id="aclassPlayer_html_a29fb0dfd5fe17d797e3ac1921086d08e"><div class="ttname"><a href="classPlayer.html#a29fb0dfd5fe17d797e3ac1921086d08e">Player::_isStopped</a></div><div class="ttdeci">bool _isStopped</div><div class="ttdef"><b>Definição</b> Player.hpp:32</div></div>
+<div class="ttc" id="aclassPlayer_html_a332cfe72e07a36dc899da77cf530a0a8"><div class="ttname"><a href="classPlayer.html#a332cfe72e07a36dc899da77cf530a0a8">Player::hasNext</a></div><div class="ttdeci">bool hasNext() const</div><div class="ttdoc">Verifica se existe próxima música na playlist.</div></div>
+<div class="ttc" id="aclassPlayer_html_a4e03cd27ab338de7af3acd32752f7675"><div class="ttname"><a href="classPlayer.html#a4e03cd27ab338de7af3acd32752f7675">Player::previous</a></div><div class="ttdeci">void previous()</div><div class="ttdoc">Volta para a música anterior na playlist.</div></div>
+<div class="ttc" id="aclassPlayer_html_a5497476faa9f176987941a2bdca07ac9"><div class="ttname"><a href="classPlayer.html#a5497476faa9f176987941a2bdca07ac9">Player::loadAudio</a></div><div class="ttdeci">void loadAudio(const Song &amp;song)</div><div class="ttdoc">Carrega o áudio de uma música para reprodução.</div></div>
+<div class="ttc" id="aclassPlayer_html_a6ed929c38c890d55e5f9ce4538203543"><div class="ttname"><a href="classPlayer.html#a6ed929c38c890d55e5f9ce4538203543">Player::_currentIndex</a></div><div class="ttdeci">int _currentIndex</div><div class="ttdef"><b>Definição</b> Player.hpp:30</div></div>
+<div class="ttc" id="aclassPlayer_html_a7320ddba1469a57964bf0318649352bc"><div class="ttname"><a href="classPlayer.html#a7320ddba1469a57964bf0318649352bc">Player::_volume</a></div><div class="ttdeci">float _volume</div><div class="ttdef"><b>Definição</b> Player.hpp:33</div></div>
+<div class="ttc" id="aclassPlayer_html_a88d0cdff237f4b723b9229017d353881"><div class="ttname"><a href="classPlayer.html#a88d0cdff237f4b723b9229017d353881">Player::getVolume</a></div><div class="ttdeci">float getVolume() const</div><div class="ttdoc">Obtém o nível de volume atual.</div></div>
+<div class="ttc" id="aclassPlayer_html_a8b360601b0ae223e8da7d57687ffc03c"><div class="ttname"><a href="classPlayer.html#a8b360601b0ae223e8da7d57687ffc03c">Player::getPlaylistSize</a></div><div class="ttdeci">int getPlaylistSize() const</div><div class="ttdoc">Obtém o tamanho da playlist atual.</div></div>
+<div class="ttc" id="aclassPlayer_html_a8cfff3f5e68de70de7e0177a6bc1afcc"><div class="ttname"><a href="classPlayer.html#a8cfff3f5e68de70de7e0177a6bc1afcc">Player::_currentSong</a></div><div class="ttdeci">Song * _currentSong</div><div class="ttdef"><b>Definição</b> Player.hpp:29</div></div>
+<div class="ttc" id="aclassPlayer_html_a8dac2984ceb6956ac84ab34d9603e946"><div class="ttname"><a href="classPlayer.html#a8dac2984ceb6956ac84ab34d9603e946">Player::mute</a></div><div class="ttdeci">void mute()</div><div class="ttdoc">Silencia o player.</div></div>
+<div class="ttc" id="aclassPlayer_html_a8f334d2272dc9b11d025ddaf87639300"><div class="ttname"><a href="classPlayer.html#a8f334d2272dc9b11d025ddaf87639300">Player::next</a></div><div class="ttdeci">void next()</div><div class="ttdoc">Avança para a próxima música na playlist.</div></div>
+<div class="ttc" id="aclassPlayer_html_a90ed15c9bbd20cb5d91bdad2981f08c2"><div class="ttname"><a href="classPlayer.html#a90ed15c9bbd20cb5d91bdad2981f08c2">Player::_isPlaying</a></div><div class="ttdeci">bool _isPlaying</div><div class="ttdef"><b>Definição</b> Player.hpp:31</div></div>
+<div class="ttc" id="aclassPlayer_html_a92fb6f4f4531917116f0116a9d5fe083"><div class="ttname"><a href="classPlayer.html#a92fb6f4f4531917116f0116a9d5fe083">Player::advanceToNext</a></div><div class="ttdeci">void advanceToNext()</div><div class="ttdoc">Avança para a próxima música na sequência.</div></div>
+<div class="ttc" id="aclassPlayer_html_aa141e0df8de93f681d9f875ab7434eee"><div class="ttname"><a href="classPlayer.html#aa141e0df8de93f681d9f875ab7434eee">Player::getProgress</a></div><div class="ttdeci">float getProgress() const</div><div class="ttdoc">Obtém o progresso atual da reprodução.</div></div>
+<div class="ttc" id="aclassPlayer_html_aa286cb87328b067ffd2e722d0d389755"><div class="ttname"><a href="classPlayer.html#aa286cb87328b067ffd2e722d0d389755">Player::resume</a></div><div class="ttdeci">void resume()</div><div class="ttdoc">Retoma a reprodução pausada.</div></div>
+<div class="ttc" id="aclassPlayer_html_aa461f07ca66643167a38434fdfd1d6ef"><div class="ttname"><a href="classPlayer.html#aa461f07ca66643167a38434fdfd1d6ef">Player::setVolume</a></div><div class="ttdeci">void setVolume(float &amp;volume)</div><div class="ttdoc">Define o nível de volume do player.</div></div>
+<div class="ttc" id="aclassPlayer_html_aa6cde9241baed136b94efa38f30eb8a2"><div class="ttname"><a href="classPlayer.html#aa6cde9241baed136b94efa38f30eb8a2">Player::goToPrevious</a></div><div class="ttdeci">void goToPrevious()</div><div class="ttdoc">Retrocede para a música anterior na sequência.</div></div>
+<div class="ttc" id="aclassPlayer_html_aa7749254cf909d029127d4622670c522"><div class="ttname"><a href="classPlayer.html#aa7749254cf909d029127d4622670c522">Player::pause</a></div><div class="ttdeci">void pause()</div><div class="ttdoc">Pausa a reprodução atual.</div></div>
+<div class="ttc" id="aclassPlayer_html_aaf7478e55fb533420f9e683134e6ce1b"><div class="ttname"><a href="classPlayer.html#aaf7478e55fb533420f9e683134e6ce1b">Player::_playlist</a></div><div class="ttdeci">std::vector&lt; Song &gt; _playlist</div><div class="ttdef"><b>Definição</b> Player.hpp:28</div></div>
+<div class="ttc" id="aclassPlayer_html_ac22f7553677980bcc767ecfc9fe78495"><div class="ttname"><a href="classPlayer.html#ac22f7553677980bcc767ecfc9fe78495">Player::unmute</a></div><div class="ttdeci">void unmute()</div><div class="ttdoc">Restaura o volume anterior.</div></div>
+<div class="ttc" id="aclassPlayer_html_ae013efadc2b4a4adf6437027d840651a"><div class="ttname"><a href="classPlayer.html#ae013efadc2b4a4adf6437027d840651a">Player::getPlaylist</a></div><div class="ttdeci">std::vector&lt; Song &gt; getPlaylist() const</div><div class="ttdoc">Obtém uma cópia da playlist atual.</div></div>
+<div class="ttc" id="aclassPlayer_html_afb7c2072406efa1183df91a154c465e9"><div class="ttname"><a href="classPlayer.html#afb7c2072406efa1183df91a154c465e9">Player::isPaused</a></div><div class="ttdeci">bool isPaused() const</div><div class="ttdoc">Verifica se o player está pausado.</div></div>
+<div class="ttc" id="aclassPlayer_html_aff0a05679ec3c67c08f94d94b2965f08"><div class="ttname"><a href="classPlayer.html#aff0a05679ec3c67c08f94d94b2965f08">Player::play</a></div><div class="ttdeci">void play(const std::vector&lt; Song &gt; &amp;songs)</div><div class="ttdoc">Reproduz uma lista de músicas.</div></div>
+<div class="ttc" id="aclassPlayer_html_affe0cc3cb714f6deb4e62f0c0d3f1fd8"><div class="ttname"><a href="classPlayer.html#affe0cc3cb714f6deb4e62f0c0d3f1fd8">Player::Player</a></div><div class="ttdeci">Player()</div><div class="ttdoc">Construtor da classe Player.</div></div>
+<div class="ttc" id="aclassSong_html"><div class="ttname"><a href="classSong.html">Song</a></div><div class="ttdoc">Representa uma música com seus metadados.</div><div class="ttdef"><b>Definição</b> Song.hpp:27</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>
