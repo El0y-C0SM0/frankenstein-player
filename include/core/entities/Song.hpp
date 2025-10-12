@@ -10,10 +10,13 @@
  * @date 2025-10-09
  */
 
-#ifndef SONG_HPP
-#define SONG_HPP
+#pragma once
 
 #include <string>
+
+#include "core/interfaces/IPlayable.hpp"
+#include "core/interfaces/IPlayableObject.hpp"
+#include "core/entities/Entity.hpp"
 
 /**
  * @class Song
@@ -24,7 +27,7 @@
  * para extração automática de metadados de arquivos de áudio. Ademais, deve ser
  *implementado a interface IPlayable
  */
-class Song {
+class Song : public core::Entity, public core::IPlayable, public core::IPlayableObject {
 private:
   unsigned _id;
   std::string _file_path;
@@ -143,5 +146,3 @@ public:
 
   // Operações no banco de dados será responsabilidade da classe?
 };
-
-#endif // SONG_HPP
