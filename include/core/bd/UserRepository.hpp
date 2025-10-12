@@ -9,14 +9,15 @@
  * @date 2025-10-09
  */
 
-#pragma onde
+#pragma once
 
 #include <vector>
 
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-#include "core/entities/EntitiesFWD.hpp"
+// #include "core/entities/User.hpp"
+#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario
 
 namespace core {
 

@@ -51,8 +51,13 @@ namespace core {
          */
         void addToHistory(const Song& song);
     public:
-        PlaybackQueue(size_t max_size = MAX_SIZE_DEFAULT);
-        PlaybackQueue(const IPlayable& playable, size_t max_size = MAX_SIZE_DEFAULT);
+        PlaybackQueue(std::shared_ptr<User> current_user,
+            const IPlayable& playable,
+            std::shared_ptr<HistoryPlaybackRepository> history_repo,
+            size_t max_size = MAX_SIZE_DEFAULT);
+        PlaybackQueue(std::shared_ptr<User> current_user,
+            std::shared_ptr<HistoryPlaybackRepository> history_repo,
+            size_t max_size = MAX_SIZE_DEFAULT);
 
         ~PlaybackQueue();
 
