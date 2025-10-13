@@ -19,7 +19,7 @@ namespace core {
  */
 class Entity {
 protected:
-  unsigned id = 0; /**< ID da entidade */
+  unsigned _id = 0; /**< ID da entidade */
 
 public:
   virtual ~Entity() = default;

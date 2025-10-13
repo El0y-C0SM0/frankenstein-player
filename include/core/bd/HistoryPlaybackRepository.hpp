@@ -9,7 +9,7 @@
  * @date 2025-10-09
  */
 
-#pragma onde
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -17,7 +17,9 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-#include "core/entities/EntitiesFWD.hpp"
+#include "core/entities/HistoryPlayback.hpp"
+// #include "core/entities/User.hpp"
+#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario
 
 namespace core {
 
@@ -91,12 +93,11 @@ namespace core {
         bool insertHistoryPlayback(const std::vector<HistoryPlayback>& entities);
 
         /**
-         * @brief Conta o número de reproduções de uma música por um usuário específico
+         * @brief Conta o número de reproduções de uma música
          * @param user Usuário cujas reproduções serão contadas
-         * @param song Música cujas reproduções serão contadas
          * @return Número de reproduções da música pelo usuário
         */
-        unsigned countPlaybacksByUserAndSong(const User& user, const Song& song) const;
+        unsigned countPlaybacksByUserAndSong(const Song& song) const;
     };
 
 }

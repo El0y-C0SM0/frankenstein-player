@@ -9,7 +9,7 @@
  * @date 2025-10-09
  */
 
-#pragma onde
+#pragma once
 
 #include <vector>
 #include <string>
@@ -18,7 +18,10 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-#include "core/entities/EntitiesFWD.hpp"
+// #include "core/entities/Playlist.hpp"
+#include "core/entities/Song.hpp"
+// #include "core/entities/User.hpp"
+#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario e playlist
 
 namespace core {
 
@@ -92,5 +95,28 @@ namespace core {
          * @return Ponteiro para a playlist encontrada, ou nullptr se não encontrada
          */
         std::shared_ptr<Playlist> findById(unsigned id) const override;
+
+        /**
+         * @brief Adiciona uma música a uma playlist
+         * @param playlist Playlist onde a música será adicionada
+         * @param song Música a ser adicionada
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        bool addSongToPlaylist(const Playlist& playlist, const Song& song);
+
+        /**
+         * @brief Remove uma música de uma playlist
+         * @param playlist Playlist de onde a música será removida
+         * @param song Música a ser removida
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        bool removeSongFromPlaylist(const Playlist& playlist, const Song& song);
+
+        /**
+         * @brief Obtém as músicas de uma playlist
+         * @param playlist Playlist cujas músicas serão obtidas
+         * @return Vetor contendo as músicas da playlist
+         */
+        std::vector<std::shared_ptr<Song>> getSongs(const Playlist& playlist) const;
     };
 }

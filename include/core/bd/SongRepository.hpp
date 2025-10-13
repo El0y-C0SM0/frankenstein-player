@@ -9,7 +9,7 @@
  * @date 2025-10-09
  */
 
-#pragma onde
+#pragma once
 
 #include <vector>
 #include <string>
@@ -18,8 +18,12 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-#include "core/entities/EntitiesFWD.hpp"
-// #include "model/Song.hpp"
+#include "core/entities/Song.hpp"
+#include "core/entities/Artist.hpp"
+#include "core/entities/Album.hpp"
+// #include "core/entities/User.hpp"
+// #include "core/entities/Playlist.hpp"
+#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario e playlist
 
 namespace core {
 
@@ -106,6 +110,27 @@ namespace core {
          * @return Ponteiro para a musica encontrada, ou nullptr se não encontrada
          */
         std::shared_ptr<Song> findById(unsigned id) const override;
+
+        /**
+         * @brief Obtém o album de uma musica
+         * @param song Musica cujo album será obtido
+         * @return Ponteiro compartilhado para o album da musica
+         */
+        std::shared_ptr<Album> getAlbum(const Song& song) const;
+
+        /**
+         * @brief Obtém o artista de uma musica
+         * @param song Musica cujo artista será obtido
+         * @return Ponteiro compartilhado para o artista da musica
+         */
+        std::shared_ptr<Artist> getArtist(const Song& song) const;
+
+        /**
+         * @brief Obtém os artistas colaboradores de uma musica
+         * @param song Musica cujos artistas colaboradores serão obtidos
+         * @return Vetor contendo os artistas colaboradores da musica
+         */
+        std::vector<std::shared_ptr<Artist>> getFeaturingArtists(const Song& song) const;
     };
 
 }

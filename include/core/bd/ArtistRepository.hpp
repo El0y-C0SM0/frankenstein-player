@@ -9,7 +9,7 @@
  * @date 2025-10-09
  */
 
-#pragma onde
+#pragma once
 
 #include <vector>
 #include <string>
@@ -18,7 +18,11 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-#include "core/entities/EntitiesFWD.hpp"
+#include "core/entities/Artist.hpp"
+#include "core/entities/Album.hpp"
+#include "core/entities/Song.hpp"
+// #include "core/entities/User.hpp"
+#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario
 
 namespace core {
 
@@ -91,6 +95,20 @@ namespace core {
          * @return Ponteiro para o artista encontrado, ou nullptr se não encontrado
          */
         std::shared_ptr<Artist> findById(unsigned id) const override;
+
+        /**
+         * @brief Obtém os albuns de um artista
+         * @param artist Artista cujos albuns serão obtidos
+         * @return Vetor contendo os albuns do artista fornecido
+         */
+        std::vector<std::shared_ptr<Album>> getAlbums(const Artist& artist) const;
+
+        /**
+         * @brief Obtém as músicas de um artista
+         * @param artist Artista cujas músicas serão obtidas
+         * @return Vetor contendo as músicas do artista fornecido
+         */
+        std::vector<std::shared_ptr<Song>> getSongs(const Artist& artist) const;
     };
 
 }
