@@ -8,11 +8,10 @@
  * @author Joao Tavares
  * @date 2025-11-09
  */
+#pragma once
 
-#ifndef PLAYER_HPP
-#define PLAYER_HPP
-
-#include "Song.hpp"
+#include "../interfaces/IPlayable.hpp"
+#include <memory>
 #include <vector>
 
 /**
@@ -25,8 +24,8 @@
  */
 class Player {
 private:
-  std::vector<Song> _playlist;
-  Song *_currentSong;
+  std::vector<std::shared_ptr<core::IPlayable>> _playlist;
+  std::shared_ptr<core::IPlayable> _currentSong;
   int _currentIndex;
   bool _isPlaying;
   bool _isStopped;
@@ -42,15 +41,15 @@ public:
 
   /**
    * @brief Reproduz uma música específica
-   * @param song Música a ser reproduzida
+   * @param IPlayableObject a ser reproduzida
    */
-  void play(const Song &song);
+  void play(const core::IPlayableObject &song);
 
   /**
    * @brief Reproduz uma lista de músicas
-   * @param songs Vector de músicas a serem reproduzidas em sequência
+   * @param vector de IPlayable de músicas a serem reproduzidas em sequência
    */
-  void play(const std::vector<Song> &songs);
+  void play(const std::vector<core::IPlayable> &songs);
 
   /**
    * @brief Pausa a reprodução atual
@@ -110,9 +109,9 @@ public:
 
   /**
    * @brief Obtém a música atualmente em reprodução
-   * @return Música atual ou música inválida se não houver reprodução
+   * @return IPlayableObject atual inválida se não houver reprodução
    */
-  Song getCurrentSong() const;
+  core::IPlayableObject getCurrentSong() const;
 
   /**
    * @brief Verifica se o player está reproduzindo
@@ -147,9 +146,9 @@ public:
 
   /**
    * @brief Obtém uma cópia da playlist atual
-   * @return Vector com todas as músicas da playlist
+   * @return Vector com todos IPlayables da playlist
    */
-  std::vector<Song> getPlaylist() const;
+  std::vector<core::IPlayable> getPlaylist() const;
 
   /**
    * @brief Avança para a próxima música na sequência
@@ -178,11 +177,11 @@ public:
   bool hasPrevious() const;
 
   /**
-   * @brief Carrega o áudio de uma música para reprodução
+   * @brief Carrega o áudio de um IPlayable para reprodução
    * @param song Música a ser carregada
    * @internal Método interno para carregamento de áudio
    */
-  void loadAudio(const Song &song);
+  void loadAudio(const core::IPlayableObject &song);
 };
 
-#endif // PLAYER_HPP
+#pragma once

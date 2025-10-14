@@ -2,7 +2,8 @@
  * @file IPlayable.hpp
  * @brief Arquivo de interface IPlayable
  *
- * Interface que define métodos para objetos que podem ser reproduzidos, como músicas ou vídeos.
+ * Interface que define métodos para objetos que podem ser reproduzidos, como
+ * músicas ou vídeos.
  *
  * @ingroup interfaces
  * @author Eloy Maciel
@@ -11,30 +12,34 @@
 
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
-#include "core/interfaces/IPlayableObject.hpp"
+#include "IPlayableObject.hpp"
 
 namespace core {
 
-    /**
-     * @brief Interface para objetos que podem ser reproduzidos
-     *
-     * Define que uma classe reproduzível deve fornecer um método para
-     * obter uma lista de objetos reproduzíveis.
-     */
-    class IPlayable {
-    public:
-        virtual ~IPlayable() = default;
+/**
+ * @brief Interface para objetos que podem ser reproduzidos
+ *
+ * Define que uma classe reproduzível deve fornecer um método para
+ * obter uma lista de objetos reproduzíveis.
+ */
+class IPlayable {
+public:
+  virtual ~IPlayable() = default;
 
-        /**
-         * @brief Obtém os objetos reproduzíveis
-         * @return Vetor de ponteiros compartilhados para objetos reproduzíveis
-         */
-        virtual std::vector<std::shared_ptr<IPlayableObject>> getPlayableObjects() const = 0;
-    };
+  /**
+   * @brief Obtém os objetos reproduzíveis
+   * @return Vetor de ponteiros compartilhados para objetos reproduzíveis
+   */
+  virtual std::vector<std::shared_ptr<IPlayableObject>>
+  getPlayableObjects() const = 0;
+  virtual void play() = 0;
+  virtual void pause() = 0;
+  virtual void stop() = 0;
+};
 
-}
+} // namespace core
 
 #pragma once
