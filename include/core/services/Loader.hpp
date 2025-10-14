@@ -8,6 +8,10 @@
  * @author Pedro Gabriel
  */
 
+#pragma once
+
+#include <filesystem>
+
 #include "core/interfaces/IPlayable.hpp"
 #include "core/entities/Song.hpp"
 #include "core/entities/EntitiesFWD.hpp"
@@ -51,10 +55,10 @@
         /**
          * @brief Carregar uma música do sistema 
          * @param filePath o caminho do diretório em que a música está armazenado
-         * @return shared_ptr para o objeto da música ou null_ptr caso não exista
+         * @return ponteiro para o objeto da música ou null_ptr caso não exista
          * 
          */
-        std::shared_ptr<IPlayable> download(std::string filePath);
+        void* download(std::string filePath);
 
 
         /**
@@ -69,3 +73,5 @@
     };
 
  }
+
+#pragma once

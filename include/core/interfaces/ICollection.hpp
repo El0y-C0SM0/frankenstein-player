@@ -21,82 +21,88 @@ namespace core {
     class ICollection {
 
         /**
+         * @brief Obtém a lista de músicas da coleção
+         * @return Vector com as músicas da coleção em ordem
+         */
+        virtual std::vector<const std::shared_ptr<IPlayable>> getSongs()  = 0;
+
+        /**
          * @brief Define a função para carregar as músicas da coleção
          * @param loader Função que retorna um vetor de músicas
          */
-        void setSongsLoader(
-            const std::function<std::vector<std::shared_ptr<IPlayable>>()> &loader);
+        virtual void setSongsLoader(
+            const std::function<std::vector<std::shared_ptr<IPlayable>>()> &loader) = 0;
 
         /**
-         * @brief Adiciona uma música ao final da playlist
+         * @brief Adiciona uma música ao final da coleção
          * @param song Música a ser adicionada
          */
-        void addSong(const IPlayable &song);
+        virtual void addSong(const IPlayable &song) = 0;
 
         /**
-         * @brief Troca uma música de posição na playlist
+         * @brief Troca uma música de posição na coleção
          * @param id ID da música a ser adicionada
          * @param index index para o qual a música será transferida
-         * @return true caso a mudança seja bem sucedida e false caso o id ou o index seja inválido na playlist
+         * @return true caso a mudança seja bem sucedida e false caso o id ou o index seja inválido na coleção
          * 
          * @note As outras músicas devem ser realocadas 1 posição para alguma direção, caso seja necessário
          */
-        bool switchSong(unsigned id, unsigned index);
+        virtual bool switchSong(unsigned id, unsigned index) = 0;
 
         /**
-         * @brief Remove uma música da playlist
+         * @brief Remove uma música da coleção
          * @param id ID da música a ser removida
          * @return true se a música foi removida, false se não encontrada
          */
-        bool removeSong(unsigned id);
+        virtual bool removeSong(unsigned id) = 0;
 
         /**
-         * @brief Busca uma música na Playlist por ID
+         * @brief Busca uma música na coleção por ID
          * @param songId ID da música a buscar
          * @return Ponteiro para a música encontrada ou nullptr se não encontrada
          */
-        const IPlayable *findSongById(unsigned songId) const;
+        virtual const IPlayable *findSongById(unsigned songId) = 0;
 
         /**
-         * @brief Busca uma música na playlist por título
+         * @brief Busca uma música na coleção por título
          * @param title Título da música a buscar
          * @return Ponteiro para a música encontrada ou nullptr se não encontrada
          */
-        const IPlayable *findSongByTitle(const std::string &title) const;
+        virtual const IPlayable *findSongByTitle(const std::string &title) = 0;
 
         /**
-         * @brief Calcula a duração total da Playlist
+         * @brief Calcula a duração total da coleção
          * @return Duração total em segundos
          */
-        int calculateTotalDuration() const;
+        virtual int calculateTotalDuration() = 0;
 
         /**
          * @brief Obtém a duração total formatada
          * @return String com duração no formato "HH:MM:SS" ou "MM:SS"
          */
-        std::string getFormattedDuration() const;
+        virtual std::string getFormattedDuration() = 0;
     
         /**
-         * @brief Obtém a próxima música na sequência da playlist
+         * @brief Obtém a próxima música na sequência da coleção
          * @param current Música atual
          * @return Próxima música ou a primeira se for a última
          */
-        IPlayable getNextSong(const IPlayable &current) const;
+        virtual IPlayable getNextSong(const IPlayable &current) = 0;
 
         /**
          * @brief Obtém a música anterior na sequência do álbum
          * @param current Música atual
          * @return Música anterior ou a última se for a primeira
          */
-        IPlayable getPreviousSong(const IPlayable &current) const;
+        virtual IPlayable getPreviousSong(const IPlayable &current) = 0;
 
         /**
-         * @brief Obtém uma música por sua posição na playlist
+         * @brief Obtém uma música por sua posição na coleção
          * @param index Índice da música (0-based)
          * @return Música na posição especificada
          * @throws std::out_of_range se índice inválido
          */
-        IPlayable getSongAt(int index) const;
+        virtual IPlayable getSongAt(int index) = 0;
     };
 
 }

@@ -20,6 +20,7 @@
 #include "../entities/Entity.hpp"
 #include "../interfaces/IPlayable.hpp"
 #include "../interfaces/IPlayableObject.hpp"
+#include "../interfaces/ICollection.hpp"
 
 namespace core {
 // Forward declaration
