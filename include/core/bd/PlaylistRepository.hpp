@@ -18,7 +18,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-// #include "core/entities/Playlist.hpp"
+#include "core/entities/Playlist.hpp"
 #include "core/entities/Song.hpp"
 // #include "core/entities/User.hpp"
 #include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario e playlist

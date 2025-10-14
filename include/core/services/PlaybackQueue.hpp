@@ -22,7 +22,7 @@
 #include "core/entities/Artist.hpp"
 #include "core/entities/Album.hpp"
 // #include "core/entities/User.hpp"
-// #include "core/entities/Playlist.hpp"
+#include "core/entities/Playlist.hpp"
 #include "core/entities/EntitiesFWD.hpp" // TODO incluir playlist
 
 #define MAX_SIZE_DEFAULT 200
