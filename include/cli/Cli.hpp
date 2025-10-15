@@ -31,6 +31,12 @@ namespace cli
          */
         void play(std::string &playabel);
 
+                /**
+         * @brief recomeça a musica atual
+         *
+         */
+        void replay();
+
         /**
          * @brief pausar / tocar música
          *
@@ -101,6 +107,18 @@ namespace cli
          */
         std::vector<std::string> getPlaylist() const;
 
+        /**
+         * @brief Coloca a playlist atual no modo aleatório.
+         *
+         */
+        void Shuffle();
+
+        /**
+         * @brief adicionar a musica atual a playlist de músicas curtidas
+         *
+         */
+        void like();
+
     public:
         /** /**
          * @brief Construtor de um novo objeto Cli
@@ -119,7 +137,7 @@ namespace cli
         /**
          * @brief Recebe e realiza um comando específico
          *
-         * @param command comando e seus parâmetros
+         * @param command comando digitado e seus parâmetros
          * @return booleano representando se o comando foi realizado com sucesso
          */
         bool doComand(std::string command);
