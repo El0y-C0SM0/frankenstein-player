@@ -28,7 +28,7 @@ namespace core {
      * Representa a entidade Playlist.
      * 
      */
-    class Playlist : public Entity, ICollection {
+    class Playlist : public Entity, ICollection, IPlayable {
         private:
         std::string _titulo;
         core::Datetime _dataCriacao;

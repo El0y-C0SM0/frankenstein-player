@@ -20,7 +20,6 @@
 
 #include "Song.hpp"
 
-
 namespace core {
 
 /**
@@ -31,7 +30,7 @@ namespace core {
  * a lista de músicas contidas no álbum. Mantém a ordem original
  * das faixas para reprodução sequencial.
  */
-class Album : public IPlayable {
+class Album : public IPlayable, ICollection {
 private:
   std::string _name;
   unsigned _artist_id;
@@ -98,12 +97,6 @@ public:
   std::vector<std::shared_ptr<const Artist>> getFeaturingArtists() const;
 
   /**
-   * @brief Obtém a lista de músicas do álbum
-   * @return Vector com as músicas do álbum em ordem
-   */
-  std::vector<const std::shared_ptr<Song>> getSongs() const;
-
-  /**
    * @brief Obtém o gênero do álbum
    * @return Gênero musical principal
    */
@@ -148,13 +141,6 @@ public:
   void setYear(int year);
 
   /**
-   * @brief Define a função para carregar as músicas do álbum
-   * @param loader Função que retorna um vetor de músicas
-   */
-  void setSongsLoader(
-      const std::function<std::vector<std::shared_ptr<Song>>()> &loader);
-
-  /**
    * @brief Define a função para carregar o artista do álbum
    * @param loader Função que retorna um ponteiro compartilhado para o artista
    */
@@ -169,80 +155,11 @@ public:
       const std::function<std::vector<std::shared_ptr<Artist>>()> &loader);
 
   /**
-   * @brief Adiciona uma música ao álbum
-   * @param song Música a ser adicionada
-   */
-  void addSong(const Song &song);
-
-  /**
-   * @brief Remove uma música do álbum
-   * @param songId ID da música a ser removida
-   * @return true se a música foi removida, false se não encontrada
-   */
-  bool removeSong(unsigned songId);
-
-  /**
-   * @brief Remove uma música do álbum por índice
-   * @param index Índice da música a ser removida
-   * @return true se a música foi removida, false se índice inválido
-   */
-  bool removeSongAt(int index);
-
-  /**
-   * @brief Busca uma música no álbum por ID
-   * @param songId ID da música a buscar
-   * @return Ponteiro para a música encontrada ou nullptr se não encontrada
-   */
-  const Song *findSongById(unsigned songId) const;
-
-  /**
-   * @brief Busca uma música no álbum por título
-   * @param title Título da música a buscar
-   * @return Ponteiro para a música encontrada ou nullptr se não encontrada
-   */
-  const Song *findSongByTitle(const std::string &title) const;
-
-  // Metodos
-
-  /**
-   * @brief Calcula a duração total do álbum
-   * @return Duração total em segundos
-   */
-  int calculateTotalDuration() const;
-
-  /**
-   * @brief Obtém a duração total formatada
-   * @return String com duração no formato "HH:MM:SS" ou "MM:SS"
-   */
-  std::string getFormattedDuration() const;
-
-  /**
    * @brief Obtém informações do álbum em formato de string
    * @return String com nome, artista, ano e quantidade de músicas
    */
   std::string toString() const;
 
-  /**
-   * @brief Obtém a próxima música na sequência do álbum
-   * @param current Música atual
-   * @return Próxima música ou a primeira se for a última
-   */
-  Song getNextSong(const Song &current) const;
-
-  /**
-   * @brief Obtém a música anterior na sequência do álbum
-   * @param current Música atual
-   * @return Música anterior ou a última se for a primeira
-   */
-  Song getPreviousSong(const Song &current) const;
-
-  /**
-   * @brief Obtém uma música por sua posição no álbum
-   * @param index Índice da música (0-based)
-   * @return Música na posição especificada
-   * @throws std::out_of_range se índice inválido
-   */
-  Song getSongAt(int index) const;
 };
 
 } // namespace core
