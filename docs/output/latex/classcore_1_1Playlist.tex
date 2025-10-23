@@ -1,0 +1,163 @@
+\doxysection{Referência à classe core\+::Playlist}
+\hypertarget{classcore_1_1Playlist}{}\label{classcore_1_1Playlist}\index{core::Playlist@{core::Playlist}}
+
+
+Representa uma playlist de músicas.  
+
+
+
+
+{\ttfamily \#include $<$Playlist.\+hpp$>$}
+
+
+
+Diagrama de heranças da classe core\+::Playlist
+% FIG 0
+
+
+Diagrama de colaboração para core\+::Playlist\+:
+% FIG 1
+\doxysubsubsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcore_1_1Playlist_a9e5a4e32013640fec3e5bb1c73d1aa8c}{Playlist}} ()
+\begin{DoxyCompactList}\small\item\em Construtor padrão da classe \doxylink{classcore_1_1Playlist}{Playlist}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcore_1_1Playlist_a6ee345890c1530dd30d7aadd79389fe9}{Playlist}} (const unsigned id, const const std\+::string titulo)
+\begin{DoxyCompactList}\small\item\em Construtor de classe \doxylink{classcore_1_1Playlist}{Playlist}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcore_1_1Playlist_a73048403097df8777ab0199ab1e3c49c}{\texorpdfstring{$\sim$}{\string~}\+Playlist}} ()
+\begin{DoxyCompactList}\small\item\em Destrutor padrão da classe \doxylink{classcore_1_1Playlist}{Playlist}. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classcore_1_1Playlist_adf0368c36c63601a56ebd126e6f407f6}{get\+Titulo}} ()
+\item 
+void \mbox{\hyperlink{classcore_1_1Playlist_a8ed87ec7e2bb25b694bc57115f0a469c}{set\+Titulo}} (const std\+::string nome)
+\end{DoxyCompactItemize}
+\doxysubsection*{Membros públicos herdados de \mbox{\hyperlink{classcore_1_1Entity}{core\+::\+Entity}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classcore_1_1Entity_add4956ad2dfabbc7334ebbd0f56acdf6}{\texorpdfstring{$\sim$}{\string~}\+Entity}} ()=default
+\item 
+unsigned \mbox{\hyperlink{classcore_1_1Entity_a0e684842ed659f0d8de62db0f54c473e}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Obtém o ID da entidade. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcore_1_1Entity_a4a4d9c74c71f4b414b58e586d9e2fb5f}{set\+Id}} (unsigned id)
+\begin{DoxyCompactList}\small\item\em Define o ID da entidade. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classcore_1_1Entity_a8051c0e7ca3c02e7980072636b029f90}{operator==}} (const \mbox{\hyperlink{classcore_1_1Entity}{Entity}} \&other) const =0
+\begin{DoxyCompactList}\small\item\em Compara duas entidades. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos Privados}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{classcore_1_1Playlist_a9c621a62ecef30b001a414beb29419df}{\+\_\+titulo}}
+\item 
+core\+::\+Datetime \mbox{\hyperlink{classcore_1_1Playlist_a9583ce157c18aa1c5c62af314debc632}{\+\_\+data\+Criacao}}
+\item 
+unsigned \mbox{\hyperlink{classcore_1_1Playlist_afa6dd8b5a082938b46643ac2812b5407}{\+\_\+user\+\_\+id}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classcore_1_1User}{User}} $>$ \mbox{\hyperlink{classcore_1_1Playlist_aadd4a4c22f95e1f1c876b85e9adb38f7}{\+\_\+user}}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classcore_1_1Song}{Song}} $>$ $>$ \mbox{\hyperlink{classcore_1_1Playlist_a614fd5cf7b7e01ebc6b34a95d3045400}{\+\_\+songs}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Outros membros herdados}
+\doxysubsection*{Atributos Protegidos herdados de \mbox{\hyperlink{classcore_1_1Entity}{core\+::\+Entity}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned \mbox{\hyperlink{classcore_1_1Entity_acef4a8e0ceb9edd3596b71ba47f823fe}{\+\_\+id}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+Representa uma playlist de músicas. 
+
+Representa a entidade \doxylink{classcore_1_1Playlist}{Playlist}. 
+
+\doxysubsection{Documentação dos Construtores \& Destrutor}
+\Hypertarget{classcore_1_1Playlist_a9e5a4e32013640fec3e5bb1c73d1aa8c}\label{classcore_1_1Playlist_a9e5a4e32013640fec3e5bb1c73d1aa8c} 
+\index{core::Playlist@{core::Playlist}!Playlist@{Playlist}}
+\index{Playlist@{Playlist}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{Playlist()}{Playlist()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily core\+::\+Playlist\+::\+Playlist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construtor padrão da classe \doxylink{classcore_1_1Playlist}{Playlist}. 
+
+\Hypertarget{classcore_1_1Playlist_a6ee345890c1530dd30d7aadd79389fe9}\label{classcore_1_1Playlist_a6ee345890c1530dd30d7aadd79389fe9} 
+\index{core::Playlist@{core::Playlist}!Playlist@{Playlist}}
+\index{Playlist@{Playlist}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{Playlist()}{Playlist()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily core\+::\+Playlist\+::\+Playlist (\begin{DoxyParamCaption}\item[{const unsigned}]{id,  }\item[{const const std\+::string}]{titulo }\end{DoxyParamCaption})}
+
+
+
+Construtor de classe \doxylink{classcore_1_1Playlist}{Playlist}. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em id} & Identificador único \\
+\hline
+{\em titulo} & Título da \doxylink{classcore_1_1Playlist}{Playlist} \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcore_1_1Playlist_a73048403097df8777ab0199ab1e3c49c}\label{classcore_1_1Playlist_a73048403097df8777ab0199ab1e3c49c} 
+\index{core::Playlist@{core::Playlist}!````~Playlist@{\texorpdfstring{$\sim$}{\string~}Playlist}}
+\index{````~Playlist@{\texorpdfstring{$\sim$}{\string~}Playlist}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Playlist()}{\string~Playlist()}}
+{\footnotesize\ttfamily core\+::\+Playlist\+::\texorpdfstring{$\sim$}{\string~}\+Playlist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destrutor padrão da classe \doxylink{classcore_1_1Playlist}{Playlist}. 
+
+\begin{DoxyNote}{Nota}
+Libera a memória dos vetores alocados 
+\end{DoxyNote}
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{classcore_1_1Playlist_adf0368c36c63601a56ebd126e6f407f6}\label{classcore_1_1Playlist_adf0368c36c63601a56ebd126e6f407f6} 
+\index{core::Playlist@{core::Playlist}!getTitulo@{getTitulo}}
+\index{getTitulo@{getTitulo}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{getTitulo()}{getTitulo()}}
+{\footnotesize\ttfamily std\+::string core\+::\+Playlist\+::get\+Titulo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classcore_1_1Playlist_a8ed87ec7e2bb25b694bc57115f0a469c}\label{classcore_1_1Playlist_a8ed87ec7e2bb25b694bc57115f0a469c} 
+\index{core::Playlist@{core::Playlist}!setTitulo@{setTitulo}}
+\index{setTitulo@{setTitulo}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{setTitulo()}{setTitulo()}}
+{\footnotesize\ttfamily void core\+::\+Playlist\+::set\+Titulo (\begin{DoxyParamCaption}\item[{const std\+::string}]{nome }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcore_1_1Playlist_a9583ce157c18aa1c5c62af314debc632}\label{classcore_1_1Playlist_a9583ce157c18aa1c5c62af314debc632} 
+\index{core::Playlist@{core::Playlist}!\_dataCriacao@{\_dataCriacao}}
+\index{\_dataCriacao@{\_dataCriacao}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{\_dataCriacao}{\_dataCriacao}}
+{\footnotesize\ttfamily core\+::\+Datetime core\+::\+Playlist\+::\+\_\+data\+Criacao\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classcore_1_1Playlist_a614fd5cf7b7e01ebc6b34a95d3045400}\label{classcore_1_1Playlist_a614fd5cf7b7e01ebc6b34a95d3045400} 
+\index{core::Playlist@{core::Playlist}!\_songs@{\_songs}}
+\index{\_songs@{\_songs}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{\_songs}{\_songs}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classcore_1_1Song}{Song}}$>$ $>$ core\+::\+Playlist\+::\+\_\+songs\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}
+
+\Hypertarget{classcore_1_1Playlist_a9c621a62ecef30b001a414beb29419df}\label{classcore_1_1Playlist_a9c621a62ecef30b001a414beb29419df} 
+\index{core::Playlist@{core::Playlist}!\_titulo@{\_titulo}}
+\index{\_titulo@{\_titulo}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{\_titulo}{\_titulo}}
+{\footnotesize\ttfamily std\+::string core\+::\+Playlist\+::\+\_\+titulo\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classcore_1_1Playlist_aadd4a4c22f95e1f1c876b85e9adb38f7}\label{classcore_1_1Playlist_aadd4a4c22f95e1f1c876b85e9adb38f7} 
+\index{core::Playlist@{core::Playlist}!\_user@{\_user}}
+\index{\_user@{\_user}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{\_user}{\_user}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classcore_1_1User}{User}}$>$ core\+::\+Playlist\+::\+\_\+user\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classcore_1_1Playlist_afa6dd8b5a082938b46643ac2812b5407}\label{classcore_1_1Playlist_afa6dd8b5a082938b46643ac2812b5407} 
+\index{core::Playlist@{core::Playlist}!\_user\_id@{\_user\_id}}
+\index{\_user\_id@{\_user\_id}!core::Playlist@{core::Playlist}}
+\doxysubsubsection{\texorpdfstring{\_user\_id}{\_user\_id}}
+{\footnotesize\ttfamily unsigned core\+::\+Playlist\+::\+\_\+user\+\_\+id\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+/mnt/c/\+Users/bruno/\+One\+Drive/\+Documentos/2025-\/2-\/\+TW-\/\+TE-\/grupo06/include/core/entities/\mbox{\hyperlink{Playlist_8hpp}{Playlist.\+hpp}}\end{DoxyCompactItemize}
