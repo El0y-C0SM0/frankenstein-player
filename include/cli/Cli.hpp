@@ -13,8 +13,11 @@
 #include <string>
 #include <memory>
 
-#include "core/entities/EntitiesFWD.hpp" // TODO incluir user
-#include "../core/entities/Player.hpp"
+// #include "core/entities/EntitiesFWD.hpp" // TODO incluir user
+#include "core/services/ConfigManager.hpp"
+#include "core/entities/User.hpp"
+#include "core/services/Player.hpp"
+
 namespace cli
 {
 
@@ -120,13 +123,13 @@ namespace cli
         void like();
 
     public:
-        /** /**
+        /**
          * @brief Construtor de um novo objeto Cli
          *
          * @param user Usuario que ira utilizar o cli
          * @param player Player de musica que sera controlado pelo cli
          */
-        Cli(const core::User &user, const Player &player);
+        Cli(core::ConfigManager &config_manager);
 
         /**
          * @brief Destrutor de um objeto Cli

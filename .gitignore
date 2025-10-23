@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# Config files
+*.config.json
+
 # Object files
 objects*/
 build*/

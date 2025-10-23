@@ -128,25 +128,25 @@ namespace core {
          * @brief Avança para a próxima música na fila
          * @return Próxima música ou nullptr se a fila estiver vazia
          */
-        std::shared_ptr<const Song> next() const;
+        std::shared_ptr<const Song> next();
 
         /**
          * @brief Avança para a próxima música na fila
          * @return Próxima música ou nullptr se a fila estiver vazia
          */
-        std::shared_ptr<const Song> operator++() const;
+        std::shared_ptr<const Song> operator++();
 
         /**
          * @brief Retorna para a música anterior na fila
          * @return Música anterior ou nullptr se a fila estiver vazia
          */
-        std::shared_ptr<const Song> previous() const;
+        std::shared_ptr<const Song> previous();
 
         /**
          * @brief Retorna para a música anterior na fila
          * @return Música anterior ou nullptr se a fila estiver vazia
          */
-        std::shared_ptr<const Song> operator--() const;
+        std::shared_ptr<const Song> operator--();
 
         /**
          * @brief Obtém uma visualização de parte da fila a partir

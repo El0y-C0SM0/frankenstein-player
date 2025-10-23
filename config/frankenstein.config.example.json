@@ -1,0 +1,15 @@
+{
+  "environment": "development",
+  "database": {
+    "filename": "frankenstein_dev.db",
+    "schema": "frankenstein_schema.sql"
+  },
+  "paths": {
+    "public_user": "/opt/frankenstein/",
+    "user": "~/Musicas/frankenstein/",
+    "logs": "/var/log/frankenstein/"
+  },
+  "features": {
+    "auto_scan_library": false
+  }
+}
