@@ -1,6 +1,10 @@
 # Prerequisites
 *.d
 
+# Config files
+*.config.json
+!*test.config.json
+
 # Object files
 objects*/
 build*/

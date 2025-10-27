@@ -8,20 +8,32 @@
  */
 
 #pragma once
+
 #include <string>
-#include <memory>
-#include <vector>
-#include "../entities/Entity.hpp"
-#include "../entities/Playlist.hpp"
+#include <sys/types.h>
+
+#include "core/entities/Entity.hpp"
+#include "core/entities/Playlist.hpp"
+
 namespace core
 {
-    class User : public core::Entity
+    #ifdef _WIN32
+        using userid = std::string; /*!< Tipo para representar o ID do usuário no OS */
+    #else
+        using userid = uid_t;       /*!< Tipo para representar o ID do usuário no OS */
+    #endif
+
+    /**
+     * @brief Classe que representa um usuário do sistema
+     *
+     */
+    class User : public Entity
     {
     private:
-        std::string _username;
-        std::string file_path;
-        std::vector<std::shared_ptr<core::Playlist>> _playlists;
-        std::unique_ptr<core::Playlist> _likedSongs;
+        std::string _username;  /*!< Nome do usuário */
+        std::string _home_path; /*!< Caminho do diretório home do usuário */
+        userid _uid;            /*!< ID do usuário no OS */
+        bool _is_current_user;  /*!< Indica se é o usuário atual do sistema */
 
     public:
         /**
@@ -38,34 +50,6 @@ namespace core
         ~User();
 
         /**
-         * @brief Adiciona uma playlist do usuário
-         *
-         * @param playlist PLaylist a ser adicionada
-         */
-        void addPlaylist(const std::shared_ptr<core::Playlist> &playlist);
-
-        /**
-         * @brief Remove uma playlist do usuário
-         *
-         * @param playlist_id ID da playlist a ser removida
-         */
-        void removePlaylist(const unsigned playlist_id);
-
-        /**
-         * @brief Obtém as playlists do usuário
-         *
-         * @return Vector com as playlists do usuário
-         */
-        std::vector<std::shared_ptr<core::Playlist>> getPlaylists() const;
-
-        /**
-         * @brief Obtém a playlist de músicas curtidas do usuário
-         *
-         * @return Playlist de músicas curtidas do usuário
-         */
-        std::shared_ptr<core::Playlist> getLiked() const;
-
-        /**
          * @brief Obtém o nome do usuário
          *
          * @return String com o nome do usuário
@@ -78,6 +62,55 @@ namespace core
          * @param username Novo nome do usuário
          */
         void setUsername(const std::string &username);
+
+        /**
+         * @brief Obtém o caminho do diretório home do usuário
+         *
+         * @return String com o caminho do diretório home
+         */
+        std::string getHomePath() const;
+
+        /**
+         * @brief Seta o caminho do diretório home do usuário
+         *
+         * @param home_path Novo caminho do diretório home
+         */
+        void setHomePath(const std::string &home_path);
+
+        /**
+         * @brief Obtém o ID do usuário no OS
+         *
+         * @return ID do usuário
+         */
+        userid getUID() const;
+
+        /**
+         * @brief Seta o ID do usuário no OS
+         *
+         * @param uid Novo ID do usuário
+         */
+        void setUID(const userid &uid);
+
+        /**
+         * @brief Verifica se é o usuário atual do sistema
+
+         * @return true se for o usuário atual, false caso contrário
+         */
+        bool isCurrentUser() const;
+
+        /**
+         * @brief Compara dois usuários
+         * @param other Outro usuário para comparação
+         * @return true se forem iguais, false caso contrário
+         */
+        bool operator==(const Entity &other) const override;
+
+        /**
+         * @brief Compara dois usuários para desigualdade
+         * @param other Outro usuário para comparação
+         * @return true se forem diferentes, false caso contrário
+         */
+        bool operator!=(const Entity &other) const override;
     };
 
 }

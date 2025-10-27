@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../interfaces/IPlayable.hpp"
-#include "../services/PlaybackQueue.hpp"
+#include "PlaybackQueue.hpp"
 #include "Song.hpp"
 #include <memory>
 #include <vector>

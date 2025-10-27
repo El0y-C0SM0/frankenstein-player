@@ -48,6 +48,17 @@ namespace core {
         SQLite::Statement prepare(const std::string& sql) const;
 
         /**
+         * @brief Busca entidades por um campo específico
+         * @param field Nome do campo a ser filtrado
+         * @param value Valor do campo para filtro
+         * @return Vetor contendo as entidades que correspondem ao critério
+         */
+        virtual std::vector<std::shared_ptr<T>> findBy(
+            const std::string& field,
+            const std::string& value
+        ) const override;
+
+        /**
          * @brief Obtém o ID da última inserção
          * @copydoc IRepository::getLastInsertId
          * @return ID da última inserção
@@ -60,7 +71,7 @@ namespace core {
          * @param id ID a ser verificado
          * @return true se existe, false caso contrário
          */
-        bool exists(unsigned id) const;
+        bool exists(unsigned id) const override;
 
         /**
          * @brief Obtém o nome da tabela

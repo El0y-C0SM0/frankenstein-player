@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <vector>
 
 #include <SQLiteCpp/SQLiteCpp.h>
@@ -18,6 +19,7 @@
 #include "core/bd/SQLiteRepositoryBase.hpp"
 // #include "core/entities/User.hpp"
 #include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario
+#include "core/entities/User.hpp"
 
 namespace core {
 
@@ -78,12 +80,10 @@ namespace core {
         std::vector<std::shared_ptr<User>> findByUsername(const std::string& username) const;
 
         /**
-         * @brief Busca um usuario pelo ID
-         * @copydoc IRepository::findById
-         * @param id ID do usuario a ser buscado
-         * @return Ponteiro compartilhado para o usuario encontrado, ou nullptr se não encontrado
+         * @brief Conta o número total de usuarios no repositório
+         * @return Número total de usuarios
          */
-        std::shared_ptr<User> findById(unsigned id) const override;
+        size_t count() const override;
     };
 
 }

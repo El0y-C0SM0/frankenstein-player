@@ -9,45 +9,74 @@
 
 #pragma once
 
-#include "Loader.hpp"
 #include "core/interfaces/IPlayable.hpp"
+#include "core/bd/SongRepository.hpp"
+#include "core/bd/ArtistRepository.hpp"
+#include "core/bd/AlbumRepository.hpp"
 
+#include <boost/filesystem.hpp>
+#include <tag.h>
+#include <fileref.h>
+
+namespace fs = boost::filesystem;
 
 namespace core {
 
     class Manager {
     private:
-        const Loader loader;
+
+        /**
+         * @brief Move um arquivo de um diretório para o outro
+         * 
+         * @param filePath path para o arquivo original
+         * @param newFilePath diretório para o qual o arquivo será transferido - incluí o novo nome do arquivo
+         * 
+         */
+        void move(std::string filePath, std::string newFilePath);
+
+        /**
+         * @brief Lê os metadados do arquivo
+         * 
+         * Lê todos os metadados do arquivo e trata todas as informações segundo as regras
+         * de negócio (nomeação de diretórios com base em nome de artistas)
+         * 
+         * @return Retorna uma instância do objeto com os dados de título, artista e path tratados
+         * 
+         */
+        Song* readMetadata(TagLib::FileRef file);
+
+        /**
+         * @brief Verifica ou cria o diretório antes de salvar uma música
+         * 
+         * Verifica se um diretório existe e caso não exista cria o diretório
+         */
+        void verifyDir(std::string path);
 
     public:
 
-        /**
-         * @brief Adiciona uma música
+        /***
+         * @brief Atualiza toda a organização das músicas com base no diretório temporário
          * 
-         * Essa classe é responsável por usar a entidade música para definir em qual
-         * diretório a música deve ser salva 
-         * 
-         * @return true caso a música seja salva e false caso nenhuma operação seja feita (erro ou música já existe)
+         * Responsável pela lógica de organizar as músicas do diretório temporário
+         *  
          */
-        bool save(IPlayable &song);
+        void update();
 
         /**
-         * @brief Carrega uma música salva no sistema
+         * @brief Verifica se há arquivos a serem carregados no diretório temporário
          * 
-         * Usa os dados da objeto song para carregar a música
-         * 
-         * @return retorna um ponteiro para o arquivo carregado ou null_ptr caso a música não seja encontrada
+         * @return true se não houver nenhuma atualização a ser feita e false caso exista alguma música no diretório temporário
          */
-        void* load(IPlayable &song);
+        bool isUpdated();
 
         /**
-         * @brief Verifica que existe 
+         * @brief Define artista para músicas deconhecidas 
          * 
-         * @param song instância da música no sistema
-         * @return true caso seja encontrado no sistema
-         * @return false caso exista o arquivo da música no sistema
+         * Atribui artista para uma música cuja o artista não foi identificado
+         * Verifica se s música não tem nenhum artista definido
+         * 
          */
-        bool exist(IPlayable &song);
+        void defineArtist(int songId, int artistId);
 
     };
 

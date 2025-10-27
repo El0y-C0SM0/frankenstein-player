@@ -14,6 +14,7 @@
 
 #include "Album.hpp"
 #include "Song.hpp"
+#include "core/entities/User.hpp"
 #include <string>
 #include <vector>
 #include <memory>
@@ -28,12 +29,13 @@ namespace core {
     * mantém referências para todas as suas músicas e álbuns associados.
     * Permite operações de busca, adição e remoção de itens do catálogo.
     */
-    class Artist {
+    class Artist : public core::Entity, public core::ICollection, public core::IPlayable {
     private:
     std::string _name;
     std::string _genre;
     std::vector<std::shared_ptr<Song>> _songs;
     std::vector<std::shared_ptr<Album>> _albums;
+    std::shared_ptr<User> user;
 
     std::function<std::vector<std::shared_ptr<Song>>()> songsLoader;
     std::function<std::vector<std::shared_ptr<Album>>()> albumsLoader;
@@ -44,7 +46,7 @@ namespace core {
     * @param name Nome do artista
     * @param genre Gênero musical do artista
     */
-    Artist(const std::string &name, std::string &genre);
+    Artist(const std::string &name, const std::string &genre);
 
     /**
     * @brief Destrutor da classe Artist
