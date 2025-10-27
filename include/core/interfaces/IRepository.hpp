@@ -52,7 +52,7 @@ namespace core {
          * @param entity Entidade a ser salva
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        virtual bool save(const T &entity) = 0;
+        virtual bool save(T &entity) = 0;
 
         /**
          * @brief Remove uma entidade do repositório pelo ID
@@ -97,5 +97,11 @@ namespace core {
          * @return Quantidade de entidades
          */
         virtual size_t count() const = 0;
+
+        /**
+         * @brief Remove todas as entidades do repositório
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        virtual bool removeAll() = 0;
     };
 }

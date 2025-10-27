@@ -55,7 +55,7 @@ namespace core {
          * @param entity Playlist a ser salva ou atualizada
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        bool save(const Playlist& entity) override;
+        bool save(Playlist& entity) override;
 
         /**
          * @brief Remove uma playlist do repositório pelo ID

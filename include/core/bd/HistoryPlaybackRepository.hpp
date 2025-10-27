@@ -18,8 +18,7 @@
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
 #include "core/entities/HistoryPlayback.hpp"
-// #include "core/entities/User.hpp"
-#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario
+#include "core/entities/User.hpp"
 
 namespace core {
 
@@ -54,7 +53,7 @@ namespace core {
          * @param entity Historico de reproducao a ser salvo ou atualizado
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        bool save(const HistoryPlayback& entity) override;
+        bool save(HistoryPlayback& entity) override;
 
         /**
          * @brief Remove um historico de reproducao do repositório pelo ID

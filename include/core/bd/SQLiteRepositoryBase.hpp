@@ -58,6 +58,15 @@ namespace core {
             const std::string& value
         ) const override;
 
+
+
+        /**
+         * @brief Obtém o nome da tabela
+         * @return Nome da tabela
+         */
+        const std::string& getTableName() const;
+
+    public:
         /**
          * @brief Obtém o ID da última inserção
          * @copydoc IRepository::getLastInsertId
@@ -74,10 +83,11 @@ namespace core {
         bool exists(unsigned id) const override;
 
         /**
-         * @brief Obtém o nome da tabela
-         * @return Nome da tabela
+         * @brief Remove todas as entidades da tabela
+         * @copydoc IRepository::removeAll
+         * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        const std::string& getTableName() const;
+        bool removeAll() override;
     };
 
 }

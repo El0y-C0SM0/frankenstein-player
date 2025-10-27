@@ -57,7 +57,7 @@ namespace core {
          * @param entity Album a ser salvo ou atualizado
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        bool save(const Album& entity) override;
+        bool save(Album& entity) override;
 
         /**
          * @brief Remove um album do repositório pelo ID
@@ -124,5 +124,11 @@ namespace core {
          * @return Ponteiro compartilhado para o artista principal do álbum
          */
         std::shared_ptr<Artist> getArtist(const Album& album) const;
+
+        /**
+         * @brief Conta o número total de albuns no repositório
+         * @return Número total de albuns
+         */
+        virtual size_t count() const override;
     };
 }

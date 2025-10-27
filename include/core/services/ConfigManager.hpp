@@ -90,6 +90,18 @@ namespace core {
         std::string publicMusicDirectory() const;
 
         /**
+         * @brief Obtém o diretório de entrada de músicas a partir das configuracoes
+         * @return Diretório de entrada de músicas
+         */
+        std::string inputPublicPath() const;
+
+        /**
+         * @brief Obtém o diretório de entrada de músicas de usuário a partir das configuracoes
+         * @return Diretório de entrada de músicas de usuário
+         */
+        std::string inputUserPath() const;
+
+        /**
          * @brief Obtém o ambiente de execução a partir das configuracoes
          * @return Ambiente de execução (DEVELOPMENT ou PRODUCTION)
          */

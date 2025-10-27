@@ -5,8 +5,8 @@
 #include "core/entities/Artist.hpp"
 #include "core/services/Player.hpp"
 
-#include "../tests/fixtures/ConfigFixture.hpp" // TODO corrigir include
-#include "../tests/fixtures/MediaFixture.hpp"
+#include "fixtures/ConfigFixture.hpp" // TODO corrigir include
+#include "fixtures/MediaFixture.hpp"
 
 
 TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {

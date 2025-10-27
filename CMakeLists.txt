@@ -10,7 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 cmake_policy(SET CMP0076 NEW)
 
 # Opções de configuração
-option(BUILD_TESTING "Build tests" OFF)
+option(BUILD_TESTING "Build tests" ON)
 
 # ============================================================================
 # DEPENDÊNCIAS EXTERNAS
@@ -20,9 +20,10 @@ option(BUILD_TESTING "Build tests" OFF)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/SQLiteCpp)
 # add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/TagLibCpp)
 
+include(FetchContent)
+
 # 2. Doctest (FetchContent para testes)
 if(BUILD_TESTING)
-    include(FetchContent)
 
     FetchContent_Declare(
         doctest
@@ -32,8 +33,7 @@ if(BUILD_TESTING)
     FetchContent_MakeAvailable(doctest)
 endif()
 
-# 3. JSON (nlohmann/json - FetchContent)
-include(FetchContent)
+# 3. JSON (nlohmann/json - FetchContent
 
 FetchContent_Declare(
     nlohmann_json
@@ -51,7 +51,6 @@ if(TAGLIB_INCLUDE_DIR AND TAGLIB_LIB)
     set(TAGLIB_LINK_TARGET ${TAGLIB_LIB})
 else()
     message(STATUS "Taglib NÃO encontrada no sistema. Usando FetchContent.")
-    include(FetchContent)
     FetchContent_Declare(
         taglib
         GIT_REPOSITORY https://github.com/taglib/taglib.git
@@ -63,6 +62,10 @@ endif()
 
 # 5. SFML (find_package)
 find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
+
+# 6. Boost Filesystem (find_package)
+find_package(Boost 1.65 COMPONENTS filesystem)
+
 
 # ============================================================================
 # BIBLIOTECA CORE
@@ -77,20 +80,22 @@ target_sources(frankenstein_core PRIVATE
     # Adicione outros arquivos .cpp do core aqui
 )
 
-# Configura includes - CORREÇÃO CRÍTICA
+# Configura includes
 target_include_directories(frankenstein_core PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${taglib_SOURCE_DIR}/taglib>/taglib
 )
+
 target_include_directories(frankenstein_core PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
 )
 
-# Dependências do core - CORRIGIDO
+# Dependências do core
 target_link_libraries(frankenstein_core PUBLIC
     SQLiteCpp
     nlohmann_json::nlohmann_json
     ${TAGLIB_LINK_TARGET}
+    Boost::filesystem
 )
 
 # Adiciona SFML se disponível
@@ -124,27 +129,29 @@ if(BUILD_TESTING)
 
     message(STATUS "Configuração de testes ativada.")
     # Testes de aceitação
-    # add_executable(test_acceptance
-    # tests/acceptance/test_music_organization.cpp
-    # tests/acceptance/test_music_playback.cpp
-    # tests/fixtures/AcceptanceFixture.h
-    # )
+    add_executable(frankentein_tests
+        tests/acceptance/test_music_play_acceptance.cpp
+    )
 
-    target_link_libraries(test_acceptance PRIVATE
+    target_link_libraries(frankentein_tests PRIVATE
          frankenstein_core
          doctest
     )
 
+    target_include_directories(frankentein_tests PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/tests>
+    )
+
     # Registrar todos os testes no CTest
-    add_test(NAME acceptance_tests COMMAND test_acceptance)
+    add_test(NAME acceptance_tests COMMAND frankentein_tests)
 
     # Configurar propriedades dos testes
     set_tests_properties(acceptance_tests PROPERTIES TIMEOUT 120)
 
     # Alvo personalizado para rodar todos os testes
     add_custom_target(run_all_tests
-         COMMAND test_acceptance
-         DEPENDS test_acceptance
+         COMMAND frankentein_tests
+         DEPENDS frankentein_tests
          COMMENT "Running all test suites"
     )
 endif()

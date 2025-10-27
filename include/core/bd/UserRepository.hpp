@@ -55,7 +55,7 @@ namespace core {
          * @param entity Usuario a ser salvo ou atualizado
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        bool save(const User& entity) override;
+        bool save(User& entity) override;
 
         /**
          * @brief Remove um usuario do repositório pelo ID

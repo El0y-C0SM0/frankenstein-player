@@ -32,6 +32,7 @@ namespace core
     private:
         std::string _username;  /*!< Nome do usuário */
         std::string _home_path; /*!< Caminho do diretório home do usuário */
+        std::string _input_path; /*!< Caminho do diretório de entrada de músicas do usuário */
         userid _uid;            /*!< ID do usuário no OS */
         bool _is_current_user;  /*!< Indica se é o usuário atual do sistema */
 
@@ -42,6 +43,11 @@ namespace core
          * @param _username Nome do usuário
          */
         User(const std::string &_username);
+
+        User(const std::string &_username,
+             const std::string &_home_path,
+             const std::string &_input_path,
+             const userid &_uid);
 
         /**
          * @brief Destrutor de um usuário
@@ -76,6 +82,20 @@ namespace core
          * @param home_path Novo caminho do diretório home
          */
         void setHomePath(const std::string &home_path);
+
+        /**
+         * @brief Obtém o caminho do diretório de entrada de músicas do usuário
+         *
+         * @return String com o caminho do diretório de entrada
+         */
+        std::string getInputPath() const;
+
+        /**
+         * @brief Seta o caminho do diretório de entrada de músicas do usuário
+         *
+         * @param input_path Novo caminho do diretório de entrada
+         */
+        void setInputPath(const std::string &input_path);
 
         /**
          * @brief Obtém o ID do usuário no OS
