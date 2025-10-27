@@ -18,9 +18,9 @@
 #include <vector>
 
 #include "../entities/Entity.hpp"
+#include "../interfaces/ICollection.hpp"
 #include "../interfaces/IPlayable.hpp"
 #include "../interfaces/IPlayableObject.hpp"
-#include "../interfaces/ICollection.hpp"
 
 namespace core {
 // Forward declaration
@@ -47,7 +47,7 @@ private:
   std::weak_ptr<Artist> _artist;
   std::vector<unsigned> _featuring_artists_ids;
   unsigned _album_id;
-  std::weak_ptr<Album> _album;
+  mutable std::weak_ptr<Album> _album;
   int _duration;
   std::string _genre;
   int _year;
@@ -73,7 +73,7 @@ public:
    * @brief Obtém o ID da música
    * @return Identificador único da música
    */
-  int getId() const;
+  int getId() const; // Entity e Iplayable com mesmo metodo
 
   /**
    * @brief Obtém o caminho do arquivo

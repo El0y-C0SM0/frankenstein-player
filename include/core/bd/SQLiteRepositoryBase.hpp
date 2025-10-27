@@ -13,7 +13,7 @@
 
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/SQLiteCpp.h>
-
+#include <memory>
 #include "core/interfaces/IRepository.hpp"
 
 namespace core {
