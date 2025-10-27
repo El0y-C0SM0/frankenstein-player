@@ -31,7 +31,6 @@ namespace core {
     class Playlist : public Entity, ICollection, IPlayable {
         private:
         std::string _titulo;
-        core::Datetime _dataCriacao;
         unsigned _user_id;
         std::shared_ptr<User> _user;
         mutable std::vector<std::shared_ptr<Song>> _songs;
