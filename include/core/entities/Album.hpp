@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 
+#include "Entity.hpp"
 #include "Song.hpp"
 
 namespace core {
@@ -30,7 +31,7 @@ namespace core {
  * a lista de músicas contidas no álbum. Mantém a ordem original
  * das faixas para reprodução sequencial.
  */
-class Album : public IPlayable, ICollection {
+class Album : public Entity, IPlayable, ICollection {
 private:
   std::string _name;
   unsigned _artist_id;
@@ -45,6 +46,11 @@ private:
   std::function<std::vector<std::shared_ptr<Artist>>()> featuringArtistsLoader;
 
 public:
+  /**
+   * @brief Construtor vazio
+   */
+  Album();
+
   /**
    * @brief Construtor da classe Album
    * @param name Nome do álbum
@@ -76,7 +82,8 @@ public:
    * @brief Obtém o ID do álbum
    * @return Identificador único do álbum
    */
-  unsigned getId() const;
+  unsigned
+  getId() const; // Sem override pois vem getId de Iplayable e Entity.hpp
 
   /**
    * @brief Obtém o nome do álbum
@@ -159,7 +166,6 @@ public:
    * @return String com nome, artista, ano e quantidade de músicas
    */
   std::string toString() const;
-
 };
 
 } // namespace core
