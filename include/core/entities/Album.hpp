@@ -47,6 +47,11 @@ private:
 
 public:
   /**
+   * @brief Construtor vazio
+   */
+  Album();
+
+  /**
    * @brief Construtor da classe Album
    * @param name Nome do álbum
    * @param artist Nome do artista do álbum

@@ -59,6 +59,10 @@ private:
 
 public:
   /**
+   * @brief Construtor vazio
+   */
+  Song();
+  /**
    * @brief Construtor da classe Song
    * @param id Identificador único da música
    * @param file_path Caminho do arquivo de áudio
@@ -69,12 +73,6 @@ public:
        const std::string &artist);
 
   // Getters
-  /**
-   * @brief Obtém o ID da música
-   * @return Identificador único da música
-   */
-  int getId() const; // Entity e Iplayable com mesmo metodo
-
   /**
    * @brief Obtém o caminho do arquivo
    * @return Caminho completo do arquivo de áudio
@@ -190,6 +188,30 @@ public:
   std::string toString() const;
 
   // Operações no banco de dados será responsabilidade da classe? não
+  //
+
+  /**
+   * @brief Obtém os objetos reproduzíveis (a própria música)
+   * @return Vetor contendo esta música como IPlayableObject
+   */
+  std::vector<std::shared_ptr<IPlayableObject>> getPlayableObjects() const;
+
+  /**
+   * @brief Inicia a reprodução da música
+   */
+  void play() override;
+
+  /**
+   * @brief Pausa a reprodução da música
+   */
+  void pause() override;
+
+  /**
+   * @brief Para a reprodução da música
+   */
+  void stop() override;
+
+  int getId() const override;
 };
 
 } // namespace core

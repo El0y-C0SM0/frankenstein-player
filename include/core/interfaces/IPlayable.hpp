@@ -38,7 +38,7 @@ public:
   virtual void play() = 0;
   virtual void pause() = 0;
   virtual void stop() = 0;
-  virtual int getId() = 0;
+  virtual int getId() const = 0;
 };
 
 } // namespace core
