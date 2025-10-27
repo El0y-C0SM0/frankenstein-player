@@ -11,6 +11,8 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
+#include "core/util/Datetime.hpp"
+
 namespace core {
 
 /**
@@ -20,6 +22,7 @@ namespace core {
 class Entity {
 protected:
   unsigned _id = 0; /**< ID da entidade */
+  Datetime _dataCriacao; /** Data de criação */
 
 public:
   virtual ~Entity() = default;
@@ -34,6 +37,18 @@ public:
    * @param id Novo ID da entidade
    */
   void setId(unsigned id);
+
+  /**
+   * @brief Obtém a data de criação
+   * @return a data de criação da entidade
+   */
+  const Datetime getDataCriacao() const;
+
+  /**
+   * @brief Define a data de criação da entidade
+   * @param date Data de criação
+   */
+  void setDataCriacao(Datetime date);
 
   /**
    * @brief Compara duas entidades
