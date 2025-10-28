@@ -76,15 +76,6 @@ public:
    */
   ~Album();
 
-  // Getters
-
-  /**
-   * @brief Obtém o ID do álbum
-   * @return Identificador único do álbum
-   */
-  unsigned
-  getId() const; // Sem override pois vem getId de Iplayable e Entity.hpp
-
   /**
    * @brief Obtém o nome do álbum
    * @return Nome do álbum

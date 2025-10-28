@@ -5,15 +5,14 @@
  * @date 2025-10-27
  */
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "../../../include/core/bd/HistoryPlaybackRepository.hpp"
-#include "../../../include/core/entities/Playlist.hpp"
-#include "../../../include/core/entities/Song.hpp"
-#include "../../../include/core/entities/User.hpp"
-#include "../../../include/core/interfaces/IPlayable.hpp"
-#include "../../../include/core/services/PlaybackQueue.hpp"
+#include "core/bd/HistoryPlaybackRepository.hpp"
+#include "core/entities/Playlist.hpp"
+#include "core/entities/Song.hpp"
+#include "core/entities/User.hpp"
+#include "core/interfaces/IPlayable.hpp"
+#include "core/services/PlaybackQueue.hpp"
 
 #include <memory>
 #include <vector>

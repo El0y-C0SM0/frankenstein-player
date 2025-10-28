@@ -62,12 +62,6 @@ public:
   ~Artist();
 
   /**
-   * @brief Obtém o ID do artista
-   * @return Identificador único do artista
-   */
-  unsigned getId() const;
-
-  /**
    * @brief Obtém o nome do artista
    * @return Nome do artista/banda
    */
