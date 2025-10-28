@@ -15,6 +15,7 @@
 #include "Album.hpp"
 #include "Song.hpp"
 #include "core/entities/User.hpp"
+#include "core/interfaces/IPlayable.hpp"
 #include <functional>
 #include <memory>
 #include <string>
@@ -62,12 +63,6 @@ public:
   ~Artist();
 
   /**
-   * @brief Obtém o ID do artista
-   * @return Identificador único do artista
-   */
-  unsigned getId() const;
-
-  /**
    * @brief Obtém o nome do artista
    * @return Nome do artista/banda
    */
@@ -108,7 +103,7 @@ public:
    * @param loader Função que retorna um vetor de músicas
    */
   void setSongsLoader(
-      const std::function<std::vector<std::shared_ptr<Song>>()> &loader);
+      const std::function<std::vector<std::shared_ptr<IPlayable>>()> &loader);
 
   /**
    * @brief Define a função para carregar os álbuns do artista

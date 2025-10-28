@@ -10,9 +10,9 @@
  */
 #pragma once
 
-#include "../interfaces/IPlayable.hpp"
-#include "PlaybackQueue.hpp"
-#include "Song.hpp"
+#include "core/interfaces/IPlayable.hpp"
+#include "core/services/PlaybackQueue.hpp"
+#include "core/entities/Song.hpp"
 #include <memory>
 #include <vector>
 
@@ -98,15 +98,28 @@ public:
   void resume();
 
   /**
+   * @brief Reinicia a música atual
+   */
+    void restart();
+
+  /**
    * @brief Retrocede alguns segundos da musica atual
    */
 
-  void rewind();
+  void rewind(unsigned int seconds);
+
+  void seek(int seconds);
 
   /**
    * @brief Avança alguns segundos da musica atual
    */
-  void fastForward();
+  void fastForward(unsigned int seconds);
+
+  /**
+   * @brief Obtém tempo decorrido da música atual em segundos
+   * @return Tempo decorrido em segundos
+   */
+    unsigned int getElapsedTime() const;
 
   /**
    * @brief Avança para a próxima música na playlist
@@ -199,6 +212,8 @@ public:
    * @return Número de músicas na playlist
    */
   int getPlaylistSize() const;
+
+  const std::shared_ptr<PlaybackQueue> getPlaybackQueue() const;
 
   /**
    * @brief Limpa toda a playlist

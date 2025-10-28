@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "core/entities/Entity.hpp"
+#include "core/entities/User.hpp"
 #include "core/interfaces/IPlayable.hpp"
 #include "core/interfaces/IPlayableObject.hpp"
 #include "core/interfaces/ICollection.hpp"
@@ -70,6 +71,15 @@ public:
    */
   Song(int id, const std::string &file_path, const std::string &title,
        const std::string &artist);
+  /**
+   * @brief Construtor da classe Song
+   * @param id Identificador único da música
+   * @param file_path Caminho do arquivo de áudio
+   * @param title Título da música
+   * @param artist Artista/banda
+   */
+  Song(const std::string &title, const Album &album,
+       const Artist &artist, const User &user);
 
   // Getters
   /**
@@ -114,10 +124,15 @@ public:
   int getYear() const;
   // Setters
   /**
+   * @brief Define o usuário dono da música
+   * @param user Novo usuário
+   */
+   void setUser(const User &user);
+  /**
    * @brief Define o título da música
    * @param title Novo título
    */
-  void setTitle(const std::string &title);
+   void setTitle(const std::string &title);
   /**
    * @brief Define o artista principal
    * @param artist Novo artista
