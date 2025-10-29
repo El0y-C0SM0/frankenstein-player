@@ -9,7 +9,7 @@
 #include "core/bd/UserRepository.hpp"
 #include "core/entities/User.hpp"
 
-#include "../tests/fixtures/ConfigFixture.hpp"
+#include "fixtures/ConfigFixture.hpp"
 
 TEST_SUITE("Unit Tests - UserRepository") {
     std::unique_ptr<core::DatabaseManager> createTempDB() {

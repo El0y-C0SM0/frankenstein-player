@@ -58,7 +58,7 @@ namespace core {
          * @param entity Artista a ser salvo ou atualizado
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        bool save(const Artist& entity) override;
+        bool save(Artist& entity) override;
 
         /**
          * @brief Remove um artista do repositório pelo ID
@@ -109,6 +109,12 @@ namespace core {
          * @return Vetor contendo as músicas do artista fornecido
          */
         std::vector<std::shared_ptr<Song>> getSongs(const Artist& artist) const;
+
+        /**
+         * @brief Conta o número total de artistas no repositório
+         * @return Número total de artistas
+         */
+        virtual size_t count() const override;
     };
 
 }

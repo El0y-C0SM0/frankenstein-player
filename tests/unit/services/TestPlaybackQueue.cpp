@@ -7,62 +7,21 @@
 
 #include <doctest/doctest.h>
 
-#include "core/bd/HistoryPlaybackRepository.hpp"
-#include "core/entities/Playlist.hpp"
-#include "core/entities/Song.hpp"
-#include "core/entities/User.hpp"
-#include "core/interfaces/IPlayable.hpp"
-#include "core/services/PlaybackQueue.hpp"
+#include "core/include/core/entities/Playlist.hpp"
+#include "core/include/core/entities/Song.hpp"
+#include "core/include/core/entities/User.hpp"
+#include "core/include/core/interfaces/IPlayable.hpp"
+#include "core/include/core/services/PlaybackQueue.hpp"
+#include "fixture/PlaybackQueueFixture.hpp"
+#include "mocks/MockPlayable.hpp"
 
 #include <memory>
 #include <vector>
 
-/**
- * @brief Fixture para criar objetos de teste
- */
-class PlaybackQueueFixture {
-public:
-  std::shared_ptr<core::User> user;
-  std::shared_ptr<core::HistoryPlaybackRepository> history_repo;
-
-  PlaybackQueueFixture() {
-    user = std::make_shared<core::User>("username");
-    history_repo = std::make_shared<core::HistoryPlaybackRepository>();
-  };
-
-  std::shared_ptr<core::Song> createSong(const std::string &title) {
-    auto song = std::make_shared<core::Song>();
-    song->setTitle(title);
-    song->setDuration(200);
-    return song;
-  }
-};
-
-class MockPlayable : public core::IPlayable {
-private:
-  std::vector<std::shared_ptr<core::Song>> _songs;
-  int _id;
-
-public:
-  MockPlayable(const std::vector<std::shared_ptr<core::Song>> &songs,
-               int id = 1)
-      : _songs(songs), _id(id) {}
-
-  std::vector<std::shared_ptr<core::IPlayableObject>>
-  getPlayableObjects() const {
-    std::vector<std::shared_ptr<core::IPlayableObject>> playableObjects;
-    for (const auto &song : _songs) {
-      playableObjects.push_back(
-          std::static_pointer_cast<core::IPlayableObject>(song));
-    }
-    return playableObjects;
-  }
-};
-
 // CONSTRUTORES
 TEST_CASE_FIXTURE(PlaybackQueueFixture,
                   "PlaybackQueue - Construtor sem músicas cria fila vazia") {
-  core::PlaybackQueue queue(user, history_repo);
+  auto queue(user, history_repo);
 
   CHECK(queue.empty());
   CHECK(queue.size() == 0);

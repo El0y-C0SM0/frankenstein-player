@@ -15,10 +15,11 @@
 #include <memory>
 #include <string>
 
-#include "Entity.hpp"
-#include "Song.hpp"
-// #include "core/entities/User.hpp"
 #include "EntitiesFWD.hpp" // TODO incluir user
+#include "Entity.hpp"
+#include "core/entities/Entity.hpp"
+#include "core/entities/Song.hpp"
+#include "core/entities/User.hpp"
 
 namespace core {
 
@@ -82,6 +83,20 @@ public:
    * @return String representando o histórico de reprodução
    */
   std::string toString() const;
+
+  /**
+   * @brief Compara duas HistoryPlayback
+   * @param other HistoryPlayback a ser comparada
+   * @return true se as entidades forem iguais, false caso contrário
+   */
+  virtual bool operator==(const Entity &other) const override;
+
+  /**
+   * @brief Compara duas HistoryPlayback para desigualdade
+   * @param other HistoryPlayback a ser comparada
+   * @return true se as entidades forem diferentes, false caso contrário
+   */
+  virtual bool operator!=(const Entity &other) const override;
 };
 
 } // namespace core

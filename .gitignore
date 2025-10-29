@@ -71,6 +71,9 @@ notas*
 # diretórios de persistência
 data/
 
+#Geração do Lattex 
+*tex
+
 docs/html/search/
 docs/html/.gitignore
 *.tmp

@@ -11,16 +11,17 @@
  */
 
 #pragma once
-
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 
+#include "Entity.hpp"
 #include "core/entities/Entity.hpp"
+#include "core/entities/User.hpp"
+#include "core/interfaces/ICollection.hpp"
 #include "core/interfaces/IPlayable.hpp"
 #include "core/interfaces/IPlayableObject.hpp"
-#include "core/interfaces/ICollection.hpp"
 
 namespace core {
 // Forward declaration
@@ -71,6 +72,15 @@ public:
    */
   Song(int id, const std::string &file_path, const std::string &title,
        const std::string &artist);
+  /**
+   * @brief Construtor da classe Song
+   * @param id Identificador único da música
+   * @param file_path Caminho do arquivo de áudio
+   * @param title Título da música
+   * @param artist Artista/banda
+   */
+  Song(const std::string &title, const Album &album, const Artist &artist,
+       const User &user);
 
   // Getters
   /**
@@ -114,6 +124,11 @@ public:
    */
   int getYear() const;
   // Setters
+  /**
+   * @brief Define o usuário dono da música
+   * @param user Novo usuário
+   */
+  void setUser(const User &user);
   /**
    * @brief Define o título da música
    * @param title Novo título
@@ -195,6 +210,22 @@ public:
    * @return Vetor contendo esta música como IPlayableObject
    */
   std::vector<std::shared_ptr<IPlayableObject>> getPlayableObjects() const;
+
+  // Métodos Entity
+
+  /**
+   * @brief Compara dois Song
+   * @param other Song a ser comparada
+   * @return true se as entidades forem iguais, false caso contrário
+   */
+  virtual bool operator==(const Entity &other) const override;
+
+  /**
+   * @brief Compara duas Song para desigualdade
+   * @param other Song a ser comparada
+   * @return true se as entidades forem diferentes, false caso contrário
+   */
+  virtual bool operator!=(const Entity &other) const override;
 
 }; // namespace core
 } // namespace core

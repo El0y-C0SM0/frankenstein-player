@@ -18,6 +18,7 @@
 #include "core/bd/SongRepository.hpp"
 #include "core/bd/PlaylistRepository.hpp"
 #include "core/bd/HistoryPlaybackRepository.hpp"
+#include "core/bd/UserRepository.hpp"
 
 
 namespace core {
@@ -70,6 +71,12 @@ namespace core {
          * @return Ponteiro para o repositório de histórico de reproduções
          */
         virtual std::unique_ptr<HistoryPlaybackRepository> createHistoryPlaybackRepository();
+
+        /**
+         * @brief Cria um repositório de usuários
+         * @return Ponteiro para o repositório de usuários
+         */
+        virtual std::unique_ptr<UserRepository> createUserRepository();
     };
 
 }

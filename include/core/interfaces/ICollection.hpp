@@ -19,6 +19,7 @@
 namespace core {
 
     class ICollection {
+    public:
 
         /**
          * @brief Obtém a lista de músicas da coleção
@@ -44,7 +45,7 @@ namespace core {
          * @param id ID da música a ser adicionada
          * @param index index para o qual a música será transferida
          * @return true caso a mudança seja bem sucedida e false caso o id ou o index seja inválido na coleção
-         * 
+         *
          * @note As outras músicas devem ser realocadas 1 posição para alguma direção, caso seja necessário
          */
         virtual bool switchSong(unsigned id, unsigned index) = 0;
@@ -81,7 +82,7 @@ namespace core {
          * @return String com duração no formato "HH:MM:SS" ou "MM:SS"
          */
         virtual std::string getFormattedDuration() = 0;
-    
+
         /**
          * @brief Obtém a próxima música na sequência da coleção
          * @param current Música atual
