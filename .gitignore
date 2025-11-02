@@ -81,3 +81,7 @@ docs/html/.gitignore
 # data
 *.db
 user_data/
+
+# nvim tavares
+.clang-format
+.clangd

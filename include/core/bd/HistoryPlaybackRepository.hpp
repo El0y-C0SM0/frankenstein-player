@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include <SQLiteCpp/SQLiteCpp.h>
 
@@ -24,9 +24,11 @@ namespace core {
 
     /**
      * @brief Repositorio de historico de reproducoes
-     * Repositorio para gerenciar operacoes de CRUD para a entidade HistoryPlayback.
+     * Repositorio para gerenciar operacoes de CRUD para a entidade
+     * HistoryPlayback.
      */
-    class HistoryPlaybackRepository : public SQLiteRepositoryBase<HistoryPlayback> {
+    class HistoryPlaybackRepository
+        : public SQLiteRepositoryBase<HistoryPlayback> {
     protected:
         /**
          * @brief Insere um novo historico de reproducao no repositório
@@ -43,7 +45,9 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool update(const HistoryPlayback& entity) override;
+
     public:
+        HistoryPlaybackRepository();
         HistoryPlaybackRepository(std::shared_ptr<SQLite::Database> db);
         ~HistoryPlaybackRepository() override = default;
 
@@ -73,9 +77,11 @@ namespace core {
         /**
          * @brief Busca historicos de reproducoes pelo usuário
          * @param user Usuário cujos historicos de reproducoes serão buscados
-         * @return Vetor contendo os historicos de reproducoes do usuário fornecido
+         * @return Vetor contendo os historicos de reproducoes do usuário
+         * fornecido
          */
-        std::vector<std::shared_ptr<HistoryPlayback>> findByUser(const User& user) const;
+        std::vector<std::shared_ptr<HistoryPlayback>>
+        findByUser(const User& user) const;
 
         /**
          * @brief Insere um historico de reproducao no repositório
@@ -86,17 +92,19 @@ namespace core {
 
         /**
          * @brief Insere multiplos historicos de reproducoes no repositório
-         * @param entities Vetor contendo os historicos de reproducoes a serem inseridos
+         * @param entities Vetor contendo os historicos de reproducoes a serem
+         * inseridos
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        bool insertHistoryPlayback(const std::vector<HistoryPlayback>& entities);
+        bool
+        insertHistoryPlayback(const std::vector<HistoryPlayback>& entities);
 
         /**
          * @brief Conta o número de reproduções de uma música
          * @param user Usuário cujas reproduções serão contadas
          * @return Número de reproduções da música pelo usuário
-        */
+         */
         unsigned countPlaybacksByUserAndSong(const Song& song) const;
     };
 
-}
+}  // namespace core

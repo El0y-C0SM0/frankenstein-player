@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <SQLiteCpp/SQLiteCpp.h>
+#include "core/interfaces/IRepository.hpp"
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <memory>
-#include "core/interfaces/IRepository.hpp"
 
 namespace core {
 
@@ -32,10 +31,9 @@ namespace core {
         std::shared_ptr<SQLite::Database> _db;
         std::string _table_name;
 
-        SQLiteRepositoryBase(
-            std::shared_ptr<SQLite::Database> db,
-            const std::string& table_name
-        ) : _db(db), _table_name(table_name) {}
+        SQLiteRepositoryBase(std::shared_ptr<SQLite::Database> db,
+                             const std::string& table_name)
+            : _db(db), _table_name(table_name) {}
 
         virtual ~SQLiteRepositoryBase() = default;
 
@@ -53,12 +51,9 @@ namespace core {
          * @param value Valor do campo para filtro
          * @return Vetor contendo as entidades que correspondem ao critério
          */
-        virtual std::vector<std::shared_ptr<T>> findBy(
-            const std::string& field,
-            const std::string& value
-        ) const override;
-
-
+        std::vector<std::shared_ptr<T>>
+        findBy(const std::string& field,
+               const std::string& value) const override;
 
         /**
          * @brief Obtém o nome da tabela
@@ -90,4 +85,4 @@ namespace core {
         bool removeAll() override;
     };
 
-}
+}  // namespace core

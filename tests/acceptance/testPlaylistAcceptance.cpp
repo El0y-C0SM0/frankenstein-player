@@ -3,7 +3,8 @@
  * @brief Testes de aceitação para a história de usuário Playlist
  *
  *  "Como usuário, gostaria de criar e organizar minhas playlists,
- *         para agilizar o acesso a conjuntos de músicas organizados previamente."
+ *         para agilizar o acesso a conjuntos de músicas organizados
+ * previamente."
  *
  * Critérios de aceitação cobertos:
  *  - Criar uma playlist e atribuir um nome a ela.
@@ -21,22 +22,20 @@
 #include "core/entities/User.hpp"
 
 #include <memory>
-#include <vector>
 #include <string>
+#include <vector>
 
-TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists")
-{
+TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists") {
 
-    std::shared_ptr<core::Song> createSong(const std::string &title)
-    {
+    std::shared_ptr<core::Song> createSong(const std::string& title) {
         auto song = std::make_shared<core::Song>();
         song->setTitle(title);
         song->setDuration(200);
         return song;
     }
 
-    TEST_CASE("Usuário cria playlist, adiciona/ remove músicas e lista playlists")
-    {
+    TEST_CASE(
+        "Usuário cria playlist, adiciona/ remove músicas e lista playlists") {
 
         core::User user("Usuario Teste");
 
@@ -53,42 +52,39 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists")
 
         myPlaylists.push_back(playlist);
 
-        SUBCASE("Criar uma playlist e atribuir um nome a ela")
-        {
+        SUBCASE("Criar uma playlist e atribuir um nome a ela") {
 
             CHECK(myPlaylists.size() == 1);
             CHECK(myPlaylists[0]->getTitulo() == PlaylistTesteTitulo);
         }
 
-        SUBCASE("Adicionar e remover músicas de uma playlist existente")
-        {
-            playlist->addSong(*songA);
-            playlist->addSong(*songB);
-            playlist->addSong(*songC);
+        SUBCASE("Adicionar e remover músicas de uma playlist existente") {
+            playlist->addSong(std::make_shared<core::Song>(*songA));
+            playlist->addSong(std::make_shared<core::Song>(*songB));
+            playlist->addSong(std::make_shared<core::Song>(*songC));
 
-            auto songs = playlist.getSongs();
+            auto songs = playlist->getSongs();
             CHECK(songs.size() == 3);
 
-            CHECK(playlist->removeSong(songToRemoveId));
+            // Observações, talvez nao ter um metodo de removeSong, e deixar p
+            // removar iterando pela playlists
 
-            auto songs_after = playlist.getSongs();
+            CHECK(playlist->removeSong(songB->getId()));
+
+            auto songs_after = playlist->getSongs();
             CHECK(songs_after.size() == 2);
         }
 
-        SUBCASE("Visualizar todas as playlists disponíveis")
-        {
+        SUBCASE("Visualizar todas as playlists disponíveis") {
 
             std::vector<std::string> playlistTitles;
-            for (const auto &pl : myPlaylists)
-            {
+            for (const auto& pl : myPlaylists) {
                 playlistTitles.push_back(pl->getTitulo());
             }
 
             bool found = false;
-            for (const auto &t : playlistTitles)
-            {
-                if (t == PlaylistTesteTitulo)
-                {
+            for (const auto& t : playlistTitles) {
+                if (t == PlaylistTesteTitulo) {
                     found = true;
                     break;
                 }
