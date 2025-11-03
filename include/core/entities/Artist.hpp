@@ -135,13 +135,13 @@ public:
    */
   void addAlbum(const Album &album);
 
-  virtual bool switchSong(unsigned id, unsigned index);
+  virtual bool switchSong(unsigned id, unsigned index) override;
 
-  const IPlayable *findSongByTitle(const std::string &title);
+  std::shared_ptr<IPlayable>findSongByTitle(const std::string &title) override;
 
-  const IPlayable *findSongById(unsigned songId);
+  std::shared_ptr<IPlayable>findSongById(unsigned songId) override;
 
-  int calculateTotalDuration();
+  int calculateTotalDuration() override;
 
   /**
    * @brief Remove um álbum do artista
@@ -194,7 +194,7 @@ public:
    */
   bool hasAlbum() const;
 
-  std::vector<std::shared_ptr<IPlayableObject>> getPlayableObjects() const;
+  std::vector<std::shared_ptr<IPlayableObject>> getPlayableObjects() const override;
 
   // Métodos Entity
 
@@ -217,19 +217,12 @@ public:
       const std::function<std::vector<std::shared_ptr<IPlayable>>()> &loader)
       override;
   void addSong(std::shared_ptr<IPlayable> song) override;
-  bool switchSong(unsigned id, unsigned index) override;
   bool removeSong(unsigned id) override;
-  std::shared_ptr<IPlayable> findSongById(unsigned songId) override;
-  std::shared_ptr<IPlayable> findSongByTitle(const std::string &title) override;
-  int calculateTotalDuration() override;
   std::string getFormattedDuration() override;
   std::shared_ptr<IPlayable>
   getNextSong(std::shared_ptr<IPlayable> current) override;
   std::shared_ptr<IPlayable>
   getPreviousSong(std::shared_ptr<IPlayable> current) override;
   std::shared_ptr<IPlayable> getSongAt(int index) override;
-
-  virtual std::vector<std::shared_ptr<IPlayableObject>>
-  getPlayableObjects() const override;
 };
 } // namespace core

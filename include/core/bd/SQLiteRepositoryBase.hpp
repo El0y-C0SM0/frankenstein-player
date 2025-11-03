@@ -98,7 +98,7 @@ namespace core {
          * @brief Obtém o número total de entidades no repositório
          * @return Quantidade de entidades
          */
-        virtual size_t count() const;
+        virtual size_t count() const override;
     };
 
 }  // namespace core

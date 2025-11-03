@@ -13,9 +13,32 @@ cmake_policy(SET CMP0076 NEW)
 option(BUILD_TESTING "Build tests" ON)
 
 # ============================================================================
+# CONFIGURAÇÕES DE COBERTURA DE CÓDIGO
+# ===========================================================================
+if(BUILD_TESTING)
+    # Verifica se o compilador suporta cobertura
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        message(STATUS "Configuring code coverage...")
+        # Flags de cobertura (usar listas)
+        set(COVERAGE_CXX_FLAGS -g -O0 -fprofile-arcs -ftest-coverage -fno-inline -fno-omit-frame-pointer)
+        set(COVERAGE_LINK_FLAGS --coverage)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/coverage)
+        add_compile_options(${COVERAGE_CXX_FLAGS})
+        if(POLICY CMP0068) # add_link_options suportado
+            add_link_options(${COVERAGE_LINK_FLAGS})
+        else()
+            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
+            set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
+        endif()
+        message(STATUS "Code coverage enabled")
+    else()
+        message(WARNING "Code coverage only supported for GCC/Clang")
+    endif()
+endif()
+
+# ============================================================================
 # DEPENDÊNCIAS EXTERNAS
 # ============================================================================
-
 # 1. Submódulos
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/SQLiteCpp)
 
@@ -68,7 +91,7 @@ find_package(Boost 1.65 COMPONENTS filesystem)
 # ============================================================================
 
 # Primeiro, verifica se existem arquivos .cpp no src/core
-file(GLOB CORE_SOURCES 
+file(GLOB CORE_SOURCES
     "src/core/*.cpp"
     "src/*.cpp"
 )
@@ -116,6 +139,12 @@ target_link_libraries(frankenstein_core PUBLIC
     Boost::filesystem
 )
 
+# Aplica flags de cobertura ao core quando apropriado
+if(BUILD_TESTING AND (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"))
+    target_compile_options(frankenstein_core PRIVATE ${COVERAGE_CXX_FLAGS})
+    target_link_options(frankenstein_core PRIVATE ${COVERAGE_LINK_FLAGS})
+endif()
+
 # Adiciona SFML se disponível
 if(SFML_FOUND AND TARGET SFML::audio)
     message(STATUS "SFML encontrada. Habilitando suporte a áudio.")
@@ -127,7 +156,7 @@ endif()
 target_compile_features(frankenstein_core PUBLIC cxx_std_11)
 
 # ============================================================================
-# EXECUTÁVEL PRINCIPAL  
+# EXECUTÁVEL PRINCIPAL
 # ============================================================================
 
 # Verifica se src/main.cpp existe, senão cria um temporário
@@ -146,38 +175,51 @@ target_link_libraries(frankenstein_player PRIVATE frankenstein_core)
 # ============================================================================
 # TESTES (apenas se BUILD_TESTING=ON)
 # ============================================================================
-
 if(BUILD_TESTING)
     enable_testing()
-
     message(STATUS "Configuração de testes ativada.")
-    # Testes de aceitação
-    add_executable(frankentein_tests
-        tests/acceptance/test_music_play_acceptance.cpp
+
+    file(GLOB_RECURSE ACCEPTANCE_TEST_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/acceptance/*.cpp"
+    )
+    file(GLOB_RECURSE UNIT_TEST_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/**/*.cpp"
     )
 
-    target_link_libraries(frankentein_tests PRIVATE
-         frankenstein_core
-         doctest
-    )
+    set(ALL_TEST_SOURCES ${ACCEPTANCE_TEST_SOURCES} ${UNIT_TEST_SOURCES})
 
-    target_include_directories(frankentein_tests PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/tests>
-    )
+    foreach(testfile IN LISTS ALL_TEST_SOURCES)
+        get_filename_component(testname ${testfile} NAME_WE)
+        string(REGEX REPLACE "[^A-Za-z0-9_]" "_" testname_sanitized ${testname})
+        set(test_target "test_${testname_sanitized}")
 
-    # Registrar todos os testes no CTest
-    add_test(NAME acceptance_tests COMMAND frankentein_tests)
+        add_executable(${test_target} ${testfile})
+        target_link_libraries(${test_target} PRIVATE frankenstein_core doctest)
 
-    # Configurar propriedades dos testes
-    set_tests_properties(acceptance_tests PROPERTIES TIMEOUT 120)
+        target_include_directories(${test_target} PUBLIC
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/tests>
+        )
 
-    # Alvo personalizado para rodar todos os testes
+        if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+            target_compile_options(${test_target} PRIVATE ${COVERAGE_CXX_FLAGS})
+            target_link_options(${test_target} PRIVATE ${COVERAGE_LINK_FLAGS})
+        endif()
+
+        add_test(NAME ${test_target} COMMAND ${test_target})
+        set_tests_properties(${test_target} PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} TIMEOUT 120)
+    endforeach()
+
+    # Alvo auxiliar para rodar todos os testes localmente
     add_custom_target(run_all_tests
-         COMMAND frankentein_tests
-         DEPENDS frankentein_tests
-         COMMENT "Running all test suites"
+         COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+         DEPENDS ${ALL_TEST_SOURCES}
+         COMMENT "Running all test suites via ctest"
     )
-endif()# ============================================================================
+endif()
+
+# ============================================================================
 # CONFIGURAÇÕES ESPECÍFICAS POR PLATAFORMA
 # ============================================================================
 
@@ -196,16 +238,6 @@ endif()
 # ============================================================================
 # CONFIGURAÇÕES DE COMPILAÇÃO
 # ============================================================================
-
-if(BUILD_TESTING)
-    # Adiciona flags de cobertura para GCC/Clang
-    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        set(COVERAGE_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_FLAGS}")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_FLAGS}")
-    endif()
-endif()
-
 # Avisos rigorosos
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(frankenstein_core PRIVATE -Wall -Wextra -Wpedantic)
