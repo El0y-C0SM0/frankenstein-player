@@ -18,13 +18,11 @@ option(BUILD_TESTING "Build tests" ON)
 
 # 1. Submódulos
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/SQLiteCpp)
-# add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/TagLibCpp)
 
 include(FetchContent)
 
 # 2. Doctest (FetchContent para testes)
 if(BUILD_TESTING)
-
     FetchContent_Declare(
         doctest
         GIT_REPOSITORY https://github.com/doctest/doctest.git
@@ -33,8 +31,7 @@ if(BUILD_TESTING)
     FetchContent_MakeAvailable(doctest)
 endif()
 
-# 3. JSON (nlohmann/json - FetchContent
-
+# 3. JSON (nlohmann/json - FetchContent)
 FetchContent_Declare(
     nlohmann_json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
@@ -66,27 +63,48 @@ find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
 # 6. Boost Filesystem (find_package)
 find_package(Boost 1.65 COMPONENTS filesystem)
 
-
 # ============================================================================
 # BIBLIOTECA CORE
 # ============================================================================
 
-# Define a biblioteca do core
-add_library(frankenstein_core STATIC)
+# Primeiro, verifica se existem arquivos .cpp no src/core
+file(GLOB CORE_SOURCES 
+    "src/core/*.cpp"
+    "src/*.cpp"
+)
 
-# Configura sources do core
-target_sources(frankenstein_core PRIVATE
-    src/main.cpp
-    # Adicione outros arquivos .cpp do core aqui
+# Se não encontrar arquivos .cpp, cria um dummy temporário
+if(NOT CORE_SOURCES)
+    message(STATUS "Nenhum arquivo .cpp encontrado. Criando dummy.cpp temporário.")
+    file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/src/core/dummy.cpp
+        "// Arquivo temporário para compilação\nvoid dummy_function() {}\n"
+    )
+    set(CORE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/core/dummy.cpp)
+endif()
+
+# Define a biblioteca do core
+add_library(frankenstein_core STATIC
+    ${CORE_SOURCES}
 )
 
 # Configura includes
 target_include_directories(frankenstein_core PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${taglib_SOURCE_DIR}/taglib>/taglib
 )
 
+# Inclui taglib se estiver disponível via FetchContent
+if(TARGET taglib)
+    target_include_directories(frankenstein_core PUBLIC
+        $<BUILD_INTERFACE:${taglib_SOURCE_DIR}/taglib>
+    )
+elseif(TAGLIB_INCLUDE_DIR)
+    target_include_directories(frankenstein_core PUBLIC
+        ${TAGLIB_INCLUDE_DIR}
+    )
+endif()
+
 target_include_directories(frankenstein_core PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
 )
 
@@ -109,16 +127,21 @@ endif()
 target_compile_features(frankenstein_core PUBLIC cxx_std_11)
 
 # ============================================================================
-# EXECUTÁVEL PRINCIPAL
+# EXECUTÁVEL PRINCIPAL  
 # ============================================================================
 
-add_executable(frankenstein_player src/main.cpp)
-target_link_libraries(frankenstein_player PRIVATE frankenstein_core)
+# Verifica se src/main.cpp existe, senão cria um temporário
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+    add_executable(frankenstein_player src/main.cpp)
+else()
+    message(STATUS "src/main.cpp não encontrado. Criando temporário.")
+    file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+        "// Arquivo main temporário\n#include <iostream>\nint main() { std::cout << \"Frankenstein Media Player\\n\"; return 0; }\n"
+    )
+    add_executable(frankenstein_player src/main.cpp)
+endif()
 
-# Configurações de instalação
-# install(TARGETS frankenstein_player DESTINATION bin)
-# install(FILES config/frankenstein.config.json DESTINATION etc/frankenstein)
-# install(DIRECTORY data/ DESTINATION share/frankenstein)
+target_link_libraries(frankenstein_player PRIVATE frankenstein_core)
 
 # ============================================================================
 # TESTES (apenas se BUILD_TESTING=ON)
@@ -154,9 +177,7 @@ if(BUILD_TESTING)
          DEPENDS frankentein_tests
          COMMENT "Running all test suites"
     )
-endif()
-
-# ============================================================================
+endif()# ============================================================================
 # CONFIGURAÇÕES ESPECÍFICAS POR PLATAFORMA
 # ============================================================================
 

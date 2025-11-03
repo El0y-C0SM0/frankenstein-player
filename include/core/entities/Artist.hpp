@@ -12,13 +12,14 @@
 
 #pragma once
 
-#include "Album.hpp"
-#include "Entity.hpp"
-#include "Song.hpp"
-#include "core/entities/Entity.hpp"
+#include "core/entities/Album.hpp"
+#include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
+
+#include "core/entities/Entity.hpp"
 #include "core/interfaces/ICollection.hpp"
 #include "core/interfaces/IPlayable.hpp"
+
 #include <functional>
 #include <memory>
 #include <string>
@@ -37,6 +38,8 @@ class Artist : public core::Entity,
                public core::ICollection,
                public core::IPlayable {
 private:
+  int nome;
+
   std::string _name;
   std::string _genre;
   std::vector<std::shared_ptr<Song>> _songs;
@@ -102,13 +105,6 @@ public:
   int getAlbumsCount() const;
 
   /**
-   * @brief Define a função para carregar as músicas do artista
-   * @param loader Função que retorna um vetor de músicas
-   */
-  void setSongsLoader(
-      const std::function<std::vector<std::shared_ptr<IPlayable>>()> &loader);
-
-  /**
    * @brief Define a função para carregar os álbuns do artista
    * @param loader Função que retorna um vetor de álbuns
    */
@@ -146,13 +142,6 @@ public:
   const IPlayable *findSongById(unsigned songId);
 
   int calculateTotalDuration();
-
-  /**
-   * @brief Remove uma música do artista
-   * @param songId ID da música a ser removida
-   * @return true se a música foi removida com sucesso, false caso contrário
-   */
-  bool removeSong(unsigned songId);
 
   /**
    * @brief Remove um álbum do artista
@@ -222,5 +211,25 @@ public:
    * @return true se as entidades forem diferentes, false caso contrário
    */
   virtual bool operator!=(const Entity &other) const override;
+
+  std::vector<std::shared_ptr<IPlayable>> getSongs() override;
+  void setSongsLoader(
+      const std::function<std::vector<std::shared_ptr<IPlayable>>()> &loader)
+      override;
+  void addSong(std::shared_ptr<IPlayable> song) override;
+  bool switchSong(unsigned id, unsigned index) override;
+  bool removeSong(unsigned id) override;
+  std::shared_ptr<IPlayable> findSongById(unsigned songId) override;
+  std::shared_ptr<IPlayable> findSongByTitle(const std::string &title) override;
+  int calculateTotalDuration() override;
+  std::string getFormattedDuration() override;
+  std::shared_ptr<IPlayable>
+  getNextSong(std::shared_ptr<IPlayable> current) override;
+  std::shared_ptr<IPlayable>
+  getPreviousSong(std::shared_ptr<IPlayable> current) override;
+  std::shared_ptr<IPlayable> getSongAt(int index) override;
+
+  virtual std::vector<std::shared_ptr<IPlayableObject>>
+  getPlayableObjects() const override;
 };
 } // namespace core

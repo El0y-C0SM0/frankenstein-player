@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <SQLiteCpp/SQLiteCpp.h>
+#include "core/interfaces/IRepository.hpp"
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <memory>
-#include "core/interfaces/IRepository.hpp"
 
 namespace core {
 
@@ -46,12 +45,9 @@ namespace core {
          * @param value Valor do campo para filtro
          * @return Vetor contendo as entidades que correspondem ao critério
          */
-        virtual std::vector<std::shared_ptr<T>> findBy(
-            const std::string& field,
-            const std::string& value
-        ) const override;
-
-
+        std::vector<std::shared_ptr<T>>
+        findBy(const std::string& field,
+               const std::string& value) const override;
 
         /**
          * @brief Obtém o nome da tabela
@@ -105,4 +101,4 @@ namespace core {
         virtual size_t count() const;
     };
 
-}
+}  // namespace core

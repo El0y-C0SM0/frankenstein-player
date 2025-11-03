@@ -1,5 +1,5 @@
 /**
- * @file DatabaseManager.hpp
+ *f @file DatabaseManager.hpp
  * @brief Gerenciador de banco de dados
  *
  * O arquivo define a classe DatabaseManager, responsável por gerenciar a conexão com o banco de dados SQLite.

@@ -1,19 +1,19 @@
 #include <doctest/doctest.h>
 
-#include <memory>
-#include <vector>
-#include <string>
 #include <boost/filesystem.hpp>
+#include <memory>
+#include <string>
+#include <vector>
 
-#include "core/entities/Song.hpp"
 #include "core/entities/Album.hpp"
 #include "core/entities/Artist.hpp"
-#include "core/services/Player.hpp"
+#include "core/entities/Song.hpp"
+#include "core/entities/User.hpp"
 #include "core/services/PlaybackQueue.hpp"
+#include "core/services/Player.hpp"
 
-#include "fixtures/ConfigFixture.hpp" // TODO corrigir include
+#include "fixtures/ConfigFixture.hpp"  // TODO corrigir include
 #include "fixtures/MediaFixture.hpp"
-
 
 TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
     ConfigFixture config = ConfigFixture();
@@ -21,7 +21,6 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
 
     class PlayerFixture {
     public:
-        std::shared_ptr<core::User> user;
         std::shared_ptr<core::Artist> artist;
         std::shared_ptr<core::Album> album;
         std::shared_ptr<core::Song> short_song;
@@ -29,40 +28,53 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
         MediaFixture::SongTestMock short_song_mock, medium_song_mock;
 
         PlayerFixture() {
-            user = std::make_shared<core::User>("test_user");
+            auto user = std::make_shared<core::User>("test_user");
             user->setHomePath(config.userMusicDirectory());
-            short_song_mock = media.getSongTestMock("Short_Song_Test_The_Testers");
-            medium_song_mock = media.getSongTestMock("Medium_Song_Test_The_Testers");
+            short_song_mock =
+                media.getSongTestMock("Short_Song_Test_The_Testers");
+            medium_song_mock =
+                media.getSongTestMock("Medium_Song_Test_The_Testers");
 
-            artist = std::make_shared<core::Artist>(short_song_mock.artist, "Test");
-            album = std::make_shared<core::Album>(short_song_mock.album, artist->getName(), artist->getGenre());
+            artist =
+                std::make_shared<core::Artist>(short_song_mock.artist, "Test");
+            album = std::make_shared<core::Album>(short_song_mock.album,
+                                                  artist->getName(),
+                                                  artist->getGenre());
 
-            short_song = std::make_shared<core::Song>(short_song_mock.title, *album,
-                                                     *artist, *user);
-            medium_song = std::make_shared<core::Song>(medium_song_mock.title, *album,
-                                                      *artist, *user);
+            short_song = std::make_shared<core::Song>(short_song_mock.title,
+                                                      *album,
+                                                      *artist,
+                                                      *user);
+            medium_song = std::make_shared<core::Song>(medium_song_mock.title,
+                                                       *album,
+                                                       *artist,
+                                                       *user);
 
             album->setSongsLoader([this]() {
-                return std::vector<std::shared_ptr<core::IPlayable>>{short_song, medium_song};
+                return std::vector<std::shared_ptr<core::IPlayable>> {
+                    short_song,
+                    medium_song};
             });
 
             artist->setSongsLoader([this]() {
-                return std::vector<std::shared_ptr<core::IPlayable>>{short_song, medium_song};
+                return std::vector<std::shared_ptr<core::IPlayable>> {
+                    short_song,
+                    medium_song};
             });
 
-            boost::filesystem::create_directories(short_song->getAudioFilePath());
-            boost::filesystem::create_directories(medium_song->getAudioFilePath());
+            boost::filesystem::create_directories(
+                short_song->getAudioFilePath());
+            boost::filesystem::create_directories(
+                medium_song->getAudioFilePath());
 
             boost::filesystem::copy_file(
                 short_song_mock.path,
                 short_song->getAudioFilePath(),
-                boost::filesystem::copy_option::overwrite_if_exists
-            );
+                boost::filesystem::copy_option::overwrite_if_exists);
             boost::filesystem::copy_file(
                 medium_song_mock.path,
                 medium_song->getAudioFilePath(),
-                boost::filesystem::copy_option::overwrite_if_exists
-            );
+                boost::filesystem::copy_option::overwrite_if_exists);
         }
 
         ~PlayerFixture() {
@@ -71,7 +83,9 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
         }
     };
 
-    TEST_CASE_FIXTURE(PlayerFixture, "CT-AC-01: Reproduzir uma música/album/artista com sucesso") {
+    TEST_CASE_FIXTURE(
+        PlayerFixture,
+        "CT-AC-01: Reproduzir uma música/album/artista com sucesso") {
         SUBCASE("Reproduzir música individualmente") {
             core::PlaybackQueue queue;
             queue += *short_song;
@@ -80,7 +94,8 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             player.play();
             CHECK(player.isPlaying() == true);
 
-            std::shared_ptr<const core::Song> cur_song = player.getPlaybackQueue()->getCurrentSong();
+            std::shared_ptr<const core::Song> cur_song =
+                player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
             CHECK(*cur_song == *short_song);
 
@@ -94,12 +109,14 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
 
             player.play();
             CHECK(player.isPlaying() == true);
-            std::shared_ptr<const core::Song> cur_song = player.getPlaybackQueue()->getCurrentSong();
+            std::shared_ptr<const core::Song> cur_song =
+                player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
             CHECK(*cur_song == *short_song);
 
             player.fastForward(2);
-            std::shared_ptr<const core::Song> next_song = player.getPlaybackQueue()->getCurrentSong();
+            std::shared_ptr<const core::Song> next_song =
+                player.getPlaybackQueue()->getCurrentSong();
             CHECK(next_song != nullptr);
             CHECK(*next_song == *medium_song);
 
@@ -113,12 +130,14 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
 
             player.play();
             CHECK(player.isPlaying() == true);
-            std::shared_ptr<const core::Song> cur_song = player.getPlaybackQueue()->getCurrentSong();
+            std::shared_ptr<const core::Song> cur_song =
+                player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
             CHECK(*cur_song == *short_song);
 
             player.fastForward(2);
-            std::shared_ptr<const core::Song> next_song = player.getPlaybackQueue()->getCurrentSong();
+            std::shared_ptr<const core::Song> next_song =
+                player.getPlaybackQueue()->getCurrentSong();
             CHECK(next_song != nullptr);
             CHECK(*next_song == *medium_song);
 
@@ -130,7 +149,8 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             player.play();
 
             CHECK(player.isPlaying() == false);
-            std::shared_ptr<const core::Song> cur_song = player.getPlaybackQueue()->getCurrentSong();
+            std::shared_ptr<const core::Song> cur_song =
+                player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song == nullptr);
         }
     }
@@ -182,13 +202,15 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             CHECK(player.isPlaying() == true);
             CHECK(player.isPaused() == false);
 
-            std::shared_ptr<const core::Song> cur_song = player.getPlaybackQueue()->getCurrentSong();
+            std::shared_ptr<const core::Song> cur_song =
+                player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
             CHECK(*cur_song == *short_song);
         }
     }
 
-    TEST_CASE_FIXTURE(PlayerFixture, "CT-AC-03: Manipular posição de reprodução") {
+    TEST_CASE_FIXTURE(PlayerFixture,
+                      "CT-AC-03: Manipular posição de reprodução") {
 
         SUBCASE("Avançar 2 segundos") {
             core::PlaybackQueue queue;
