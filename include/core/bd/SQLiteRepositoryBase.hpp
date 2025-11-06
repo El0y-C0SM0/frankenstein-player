@@ -55,11 +55,19 @@ namespace core {
          */
         const std::string& getTableName() const;
 
+        /**
+         * @brief Mapeia uma linha do resultado para uma entidade
+         * @param query Declaração SQL com o resultado da consulta
+         * @return Ponteiro compartilhado para a entidade mapeada
+         */
+        virtual std::shared_ptr<T>
+        mapRowToEntity(SQLite::Statement& query) const = 0;
+
     public:
         SQLiteRepositoryBase(
             std::shared_ptr<SQLite::Database> db,
             const std::string& table_name
-        ) : _db(db), _table_name(table_name) {}
+        );
 
         virtual ~SQLiteRepositoryBase() = default;
 
@@ -80,6 +88,13 @@ namespace core {
         unsigned getLastInsertId() const;
 
         /**
+         * @brief Obtém todas as entidades do repositório
+         * @copydoc IRepository::getAll
+         * @return Vetor contendo todos os usuarios
+         */
+        std::vector<std::shared_ptr<T>> getAll() const override;
+
+        /**
          * @brief Verifica se um ID existe na tabela
          * @copydoc IRepository::exists
          * @param id ID a ser verificado
@@ -95,6 +110,14 @@ namespace core {
         bool removeAll() override;
 
         /**
+         * @brief Remove uma entidade pelo ID
+         * @copydoc IRepository::remove
+         * @param id ID da entidade a ser removida
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        virtual bool remove(unsigned id) override;
+
+        /**
          * @brief Obtém o número total de entidades no repositório
          * @return Quantidade de entidades
          */
@@ -102,3 +125,5 @@ namespace core {
     };
 
 }  // namespace core
+
+#include "core/bd/SQLiteRepositoryBase.tpp"

@@ -127,6 +127,11 @@ namespace core {
          * @return Ano de lançamento
          */
         int getYear() const;
+        /**
+         * @brief Obtém o usuário dono da música
+         * @return Usuário dono da música
+         */
+        std::shared_ptr<User> getUser() const;
         // Setters
         /**
          * @brief Define o usuário dono da música

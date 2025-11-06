@@ -15,8 +15,6 @@
 #include <memory>
 #include <string>
 
-#include "EntitiesFWD.hpp"  // TODO incluir user
-#include "Entity.hpp"
 #include "core/entities/Entity.hpp"
 #include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
@@ -37,10 +35,17 @@ namespace core {
 
     public:
         HistoryPlayback();
-        HistoryPlayback(std::shared_ptr<User> user,
-                        std::shared_ptr<Song> song,
+        HistoryPlayback(User& user, Song& song);
+        HistoryPlayback(unsigned id,
+                        User& user,
+                        Song& song);
+        HistoryPlayback(unsigned id,
+                        User& user,
+                        Song& song,
                         std::time_t played_at);
-        HistoryPlayback(std::shared_ptr<User> user, std::shared_ptr<Song> song);
+        HistoryPlayback(User& user,
+                        Song& song,
+                        std::time_t played_at);
         ~HistoryPlayback() override = default;
 
         /**

@@ -47,6 +47,15 @@ namespace core {
          */
         bool update(const Album& entity) override;
 
+        /**
+         * @brief Mapeia uma linha do resultado para um artista
+         * @copydoc SQLiteRepositoryBase::mapRowToEntity
+         * @param query Declaração SQL com o resultado da consulta
+         * @return Ponteiro compartilhado para o artista mapeado
+         */
+        virtual std::shared_ptr<Album>
+        mapRowToEntity(SQLite::Statement& query) const override;
+
     public:
         AlbumRepository(std::shared_ptr<SQLite::Database> db);
         ~AlbumRepository() override = default;
@@ -66,13 +75,6 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool remove(unsigned id) override;
-
-        /**
-         * @brief Obtém todos os albuns do repositório
-         * @copydoc IRepository::getAll
-         * @return Vetor contendo todos os albuns
-         */
-        std::vector<std::shared_ptr<Album>> getAll() const override;
 
         /**
          * @brief Busca albuns pelo título e usuário

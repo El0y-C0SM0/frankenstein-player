@@ -45,6 +45,15 @@ namespace core {
          */
         bool update(const User& entity) override;
 
+        /**
+         * @brief Mapeia uma linha do resultado para um usuario
+         * @copydoc SQLiteRepositoryBase::mapRowToEntity
+         * @param query Declaração SQL com o resultado da consulta
+         * @return Ponteiro compartilhado para o usuario mapeado
+         */
+        std::shared_ptr<User>
+        mapRowToEntity(SQLite::Statement& query) const override;
+
     public:
         UserRepository(std::shared_ptr<SQLite::Database> db);
         ~UserRepository() override = default;
@@ -64,13 +73,6 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool remove(unsigned id) override;
-
-        /**
-         * @brief Obtém todos os usuarios do repositório
-         * @copydoc IRepository::getAll
-         * @return Vetor contendo todos os usuarios
-         */
-        std::vector<std::shared_ptr<User>> getAll() const override;
 
         /**
          * @brief Busca usuarios pelo nome de usuário

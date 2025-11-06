@@ -44,7 +44,7 @@ namespace core {
          * @param _username Nome do usuário
          */
         User(const std::string& _username);
-
+        User(userid _uid);
         User(const std::string& _username,
              const std::string& _home_path,
              const std::string& _input_path,

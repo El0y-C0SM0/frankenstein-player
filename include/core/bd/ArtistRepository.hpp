@@ -48,6 +48,15 @@ namespace core {
          */
         bool update(const Artist& entity) override;
 
+        /**
+         * @brief Mapeia uma linha do resultado para um artista
+         * @copydoc SQLiteRepositoryBase::mapRowToEntity
+         * @param query Declaração SQL com o resultado da consulta
+         * @return Ponteiro compartilhado para o artista mapeado
+         */
+        virtual std::shared_ptr<Artist>
+        mapRowToEntity(SQLite::Statement& query) const override;
+
     public:
         ArtistRepository(std::shared_ptr<SQLite::Database> db);
         ~ArtistRepository() override = default;
@@ -69,12 +78,6 @@ namespace core {
         bool remove(unsigned id) override;
 
         /**
-         * @brief Obtém todos os artistas do repositório
-         * @return Vetor contendo todos os artistas
-         */
-        std::vector<std::shared_ptr<Artist>> getAll() const override;
-
-        /**
          * @brief Busca artistas pelo nome e usuário
          * @param name Nome do artista a ser buscado
          * @param user Usuário cujos artistas serão buscados
@@ -90,13 +93,6 @@ namespace core {
         std::vector<std::shared_ptr<Artist>> findByName(const std::string& name) const;
 
         /**
-         * @brief Busca artistas por ID
-         * @param id ID do artista a ser buscado
-         * @return Ponteiro para o artista encontrado, ou nullptr se não encontrado
-         */
-        std::shared_ptr<Artist> findById(unsigned id) const override;
-
-        /**
          * @brief Obtém os albuns de um artista
          * @param artist Artista cujos albuns serão obtidos
          * @return Vetor contendo os albuns do artista fornecido
@@ -109,12 +105,6 @@ namespace core {
          * @return Vetor contendo as músicas do artista fornecido
          */
         std::vector<std::shared_ptr<Song>> getSongs(const Artist& artist) const;
-
-        /**
-         * @brief Conta o número total de artistas no repositório
-         * @return Número total de artistas
-         */
-        virtual size_t count() const override;
     };
 
 }

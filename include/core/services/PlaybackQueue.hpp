@@ -14,10 +14,10 @@
 #include <cstddef>
 #include <memory>
 #include <string>
+#include <random>
 #include <vector>
 
 #include "core/bd/HistoryPlaybackRepository.hpp"
-#include "core/entities/EntitiesFWD.hpp"  // TODO incluir playlist
 #include "core/entities/Playlist.hpp"
 #include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
@@ -41,6 +41,7 @@ namespace core {
         size_t _current;  /*!< @brief Índice da música atual na fila */
         size_t _max_size; /*!< @brief Tamanho máximo da fila */
         bool _aleatory;   /*!< @brief Indica se a reprodução é aleatória */
+        bool _loop;      /*!< @brief Indica se a reprodução está em loop */
         std::shared_ptr<HistoryPlaybackRepository>
             _history_repo; /*!< @brief Repositório de histórico de reprodução */
         std::shared_ptr<User> _current_user; /*!< @brief Usuário atual */
@@ -50,6 +51,8 @@ namespace core {
          * @param song Música que foi reproduzida
          */
         void addToHistory(const Song& song);
+
+        size_t getCurrentIndex() const;
 
     public:
         PlaybackQueue();
@@ -70,10 +73,22 @@ namespace core {
         void add(const IPlayable& tracks);
 
         /**
+         * @brief Adiciona outra fila de reprodução à fila atual
+         * @param other_queue Fila de reprodução a ser adicionada
+         */
+        void add(const PlaybackQueue& other_queue);
+
+        /**
          * @brief Adiciona uma música, album, artista ou playlist à fila
          * @param song Música a ser adicionada
          */
         void operator+=(const IPlayable& tracks);
+
+        /**
+         * @brief Adiciona outra fila de reprodução à fila atual
+         * @param other_queue Fila de reprodução a ser adicionada
+         */
+        void operator+=(const PlaybackQueue& other_queue);
 
         /**
          * @brief Remove uma música da fila pelo índice
@@ -196,10 +211,34 @@ namespace core {
         void setAleatory(bool aleatory);
 
         /**
+         * @brief Alterna o estado da reprodução aleatória
+         * @return Novo estado da reprodução aleatória
+         */
+        bool toggleAleatory();
+
+        /**
          * @brief Verifica se a reprodução aleatória está habilitada
          * @return true se estiver habilitada, false caso contrário
          */
         bool isAleatory() const;
+
+        /**
+         * @brief Habilita ou desabilita o loop da fila
+         * @param loop true para habilitar, false para desabilitar
+         */
+        void setLoop(bool loop);
+
+        /**
+         * @brief Alterna o estado do loop da fila
+         * @return Novo estado do loop da fila
+         */
+        bool toggleLoop();
+
+        /**
+         * @brief Verifica se o loop da fila está habilitado
+         * @return true se estiver habilitado, false caso contrário
+         */
+        bool isLoop() const;
 
         /**
          * @brief Embaralha a fila de reprodução
@@ -219,6 +258,8 @@ namespace core {
          * @return String representando a fila
          */
         std::string toString() const;
+
+        std::string toStringDetailed() const;
     };
 
 }  // namespace core

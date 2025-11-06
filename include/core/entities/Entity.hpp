@@ -24,6 +24,8 @@ protected:
   Datetime _dataCriacao; /** Data de criação */
 
 public:
+    Entity() = default;
+    Entity(unsigned id) : _id(id) {}
   virtual ~Entity() = default;
 
   /**
@@ -38,6 +40,8 @@ public:
    */
   void setId(unsigned id);
 
+
+  // TODO rever a necessidade de Datetime na Entity
   /**
    * @brief Obtém a data de criação
    * @return a data de criação da entidade

@@ -84,17 +84,19 @@ endif()
 find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
 
 # 6. Boost Filesystem (find_package)
-find_package(Boost 1.65 COMPONENTS filesystem)
+find_package(Boost 1.65 COMPONENTS filesystem iostreams REQUIRED)
 
 # ============================================================================
 # BIBLIOTECA CORE
 # ============================================================================
 
 # Primeiro, verifica se existem arquivos .cpp no src/core
-file(GLOB CORE_SOURCES
+file(GLOB_RECURSE CORE_SOURCES
     "src/core/*.cpp"
+    "src/core/**/*.cpp"
     "src/*.cpp"
 )
+
 
 # Se não encontrar arquivos .cpp, cria um dummy temporário
 if(NOT CORE_SOURCES)
@@ -136,7 +138,8 @@ target_link_libraries(frankenstein_core PUBLIC
     SQLiteCpp
     nlohmann_json::nlohmann_json
     ${TAGLIB_LINK_TARGET}
-    Boost::filesystem
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_IOSTREAMS_LIBRARY}
 )
 
 # Aplica flags de cobertura ao core quando apropriado

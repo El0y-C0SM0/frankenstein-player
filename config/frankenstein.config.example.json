@@ -2,7 +2,7 @@
   "environment": "development",
   "database": {
     "filename": "frankenstein_dev.db",
-    "schema": "frankenstein_schema.sql"
+    "schema_path": "frankenstein_schema.sql"
   },
   "paths": {
     "public_user": "/opt/frankenstein/",

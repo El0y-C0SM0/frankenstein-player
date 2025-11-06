@@ -49,6 +49,15 @@ namespace core {
          */
         bool update(const Song& entity) override;
 
+        /**
+         * @brief Mapeia uma linha do resultado para uma musica
+         * @copydoc SQLiteRepositoryBase::mapRowToEntity
+         * @param query Declaração SQL com o resultado da consulta
+         * @return Ponteiro compartilhado para a musica mapeada
+         */
+        virtual std::shared_ptr<Song>
+        mapRowToEntity(SQLite::Statement& query) const override;
+
     public:
         SongRepository(std::shared_ptr<SQLite::Database> db);
         ~SongRepository() override = default;
@@ -68,12 +77,6 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool remove(unsigned id) override;
-
-        /**
-         * @brief Obtém todas as musicas do repositório
-         * @return Vetor contendo todas as musicas
-         */
-        std::vector<std::shared_ptr<Song>> getAll() const override;
 
         /**
          * @brief Busca musicas pelo título e usuário

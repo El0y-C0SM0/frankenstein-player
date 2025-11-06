@@ -45,6 +45,15 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool update(const Playlist& entity) override;
+
+        /**
+         * @brief Mapeia uma linha do resultado para uma playlist
+         * @copydoc SQLiteRepositoryBase::mapRowToEntity
+         * @param query Declaração SQL com o resultado da consulta
+         * @return Ponteiro compartilhado para a playlist mapeada
+         */
+        virtual std::shared_ptr<Playlist>
+        mapRowToEntity(SQLite::Statement& query) const override;
     public:
         PlaylistRepository(std::shared_ptr<SQLite::Database> db);
         ~PlaylistRepository() override = default;
@@ -64,13 +73,6 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool remove(unsigned id) override;
-
-        /**
-         * @brief Obtém todas as playlists do repositório
-         * @copydoc IRepository::getAll
-         * @return Vetor contendo todas as playlists
-         */
-        std::vector<std::shared_ptr<Playlist>> getAll() const override;
 
         /**
          * @brief Busca playlists pelo título e usuário

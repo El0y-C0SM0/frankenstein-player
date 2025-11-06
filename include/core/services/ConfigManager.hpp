@@ -25,6 +25,11 @@ namespace core {
         std::string _config_file_path; /*!< @brief Caminho do arquivo de configuracoes */
         nlohmann::json _config_data;   /*!< @brief Dados de configuracao carregados */
 
+        /**
+         * @brief Valida se os caminhos de configuracao foram escritos
+         */
+        void validateConfigPaths() const;
+
     public:
         enum Enviroment {
             DEVELOPMENT,
@@ -36,20 +41,20 @@ namespace core {
          * @brief Construtor da classe ConfigManager
          * @param config_file_path Caminho do arquivo de configuracoes
          */
-        ConfigManager(const std::string& config_file_p1ath);
+        ConfigManager(const std::string& config_file_path);
         ~ConfigManager();
 
         /**
          * @brief Carrega as configuracoes do arquivo
          * @return true se o carregamento foi bem-sucedido, false caso contrário
          */
-        bool loadConfig();
+        void loadConfig();
 
-        /**
-         * @brief Salva as configuracoes no arquivo
-         * @return true se a salvamento foi bem-sucedido, false caso contrário
-         */
-        bool saveConfig();
+        // /**
+        //  * @brief Salva as configuracoes no arquivo
+        //  * @return true se a salvamento foi bem-sucedido, false caso contrário
+        //  */
+        // bool saveConfig();
 
         /**
          * @brief Obtém o valor de uma configuracao
@@ -58,12 +63,12 @@ namespace core {
          */
         std::string getConfigValue(const std::string& key) const;
 
-        /**
-         * @brief Define o valor de uma configuracao
-         * @param key Chave da configuracao
-         * @param value Valor da configuracao
-         */
-        void setConfigValue(const std::string& key, const std::string& value);
+        // /**
+        //  * @brief Define o valor de uma configuracao
+        //  * @param key Chave da configuracao
+        //  * @param value Valor da configuracao
+        //  */
+        // void setConfigValue(const std::string& key, const std::string& value);
 
         /**
          * @brief Obtém o caminho do banco de dados a partir das configuracoes
@@ -106,5 +111,7 @@ namespace core {
          * @return Ambiente de execução (DEVELOPMENT ou PRODUCTION)
          */
         Enviroment enviroment() const;
+
+        std::string toString() const;
     };
 }

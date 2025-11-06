@@ -46,6 +46,14 @@ namespace core {
          */
         bool update(const HistoryPlayback& entity) override;
 
+        /**
+         * @brief Mapeia uma linha do resultado para um historico de reproducao
+         * @copydoc SQLiteRepositoryBase::mapRowToEntity
+         * @param query Declaração SQL com o resultado da consulta
+         * @return Ponteiro compartilhado para o historico de reproducao mapeado
+         */
+        std::shared_ptr<HistoryPlayback>
+        mapRowToEntity(SQLite::Statement& query) const override;
     public:
         HistoryPlaybackRepository();
         HistoryPlaybackRepository(std::shared_ptr<SQLite::Database> db);
@@ -58,21 +66,6 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool save(HistoryPlayback& entity) override;
-
-        /**
-         * @brief Remove um historico de reproducao do repositório pelo ID
-         * @copydoc IRepository::remove
-         * @param id ID do historico de reproducao a ser removido
-         * @return true se a operação foi bem-sucedida, false caso contrário
-         */
-        bool remove(unsigned id) override;
-
-        /**
-         * @brief Obtém todos os historicos de reproducoes do repositório
-         * @copydoc IRepository::getAll
-         * @return Vetor contendo todos os historicos de reproducoes
-         */
-        std::vector<std::shared_ptr<HistoryPlayback>> getAll() const override;
 
         /**
          * @brief Busca historicos de reproducoes pelo usuário
@@ -97,16 +90,21 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool
-        insertHistoryPlayback(const std::vector<HistoryPlayback>& entities);
+        insertMultipleHistoryPlaybacks(const std::vector<HistoryPlayback>& entities);
 
         /**
          * @brief Conta o número de reproduções de uma música
          * @param user Usuário cujas reproduções serão contadas
          * @return Número de reproduções da música pelo usuário
          */
-        unsigned countPlaybacksByUserAndSong(const Song& song) const;
+        unsigned countPlaybacksBySongAndUser(const Song& song) const;
 
-
+        /**
+         * @brief Conta o número de reproduções de uma música
+         * @param user Usuário cujas reproduções serão contadas
+         * @return Número de reproduções da música pelo usuário
+         */
+        unsigned countPlaybacksBySongAndUser(const Song& song, const User& user) const;
     };
 
 }  // namespace core
