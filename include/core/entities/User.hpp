@@ -10,6 +10,7 @@
 #pragma once
 
 #include <climits>
+#include <ctime>
 #include <string>
 #include <sys/types.h>
 
@@ -43,12 +44,17 @@ namespace core {
          *
          * @param _username Nome do usuário
          */
-        User(const std::string& _username);
-        User(userid _uid);
-        User(const std::string& _username,
-             const std::string& _home_path,
-             const std::string& _input_path,
-             const userid& _uid);
+        User(const std::string& username);
+        User(userid uid);
+        User(const std::string& username,
+             const std::string& home_path,
+             const std::string& input_path,
+             const userid& uid);
+        User(unsigned id,
+             const std::string& username,
+             const std::string& home_path,
+             const std::string& input_path,
+             const userid& uid);
 
         /**
          * @brief Destrutor de um usuário
@@ -118,6 +124,8 @@ namespace core {
          * @return true se for o usuário atual, false caso contrário
          */
         bool isCurrentUser() const;
+
+        void setIsCurrentUser(bool is_current_user);
 
         // Métodos de Entity
 

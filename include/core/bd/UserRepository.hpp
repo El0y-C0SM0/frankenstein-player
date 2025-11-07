@@ -11,9 +11,6 @@
 
 #pragma once
 
-#include <cstddef>
-#include <vector>
-
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
@@ -67,25 +64,18 @@ namespace core {
         bool save(User& entity) override;
 
         /**
-         * @brief Remove um usuario do repositório pelo ID
-         * @copydoc IRepository::remove
-         * @param id ID do usuario a ser removido
-         * @return true se a operação foi bem-sucedida, false caso contrário
-         */
-        bool remove(unsigned id) override;
-
-        /**
          * @brief Busca usuarios pelo nome de usuário
          * @param username Nome de usuário a ser buscado
          * @return Vetor contendo os usuarios que correspondem ao nome de usuário fornecido
          */
-        std::vector<std::shared_ptr<User>> findByUsername(const std::string& username) const;
+        std::shared_ptr<User> findByUsername(const std::string& username) const;
 
         /**
-         * @brief Conta o número total de usuarios no repositório
-         * @return Número total de usuarios
+         * @brief Busca usuarios pelo UID
+         * @param uid UID a ser buscado
+         * @return Vetor contendo os usuarios que correspondem ao UID fornecido
          */
-        size_t count() const override;
+        std::shared_ptr<User> findByUID(const userid& uid) const;
     };
 
 }

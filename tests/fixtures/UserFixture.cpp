@@ -25,7 +25,7 @@ public:
             (boost::filesystem::current_path() / "tests" / "temp_user_data")
                 .string();
         _test_user_mocks["ADMIN_USER"] =
-            UserTestMock {1,
+            UserTestMock {0,
                           "admin_test",
                           _base_test_path + "/admin_test/home",
                           _base_test_path + "/admin_test/input",
@@ -33,7 +33,7 @@ public:
                           true};
 
         _test_user_mocks["NORMAL_USER"] =
-            UserTestMock {2,
+            UserTestMock {0,
                           "normal_user",
                           _base_test_path + "/normal_user/home",
                           _base_test_path + "/normal_user/input",
@@ -41,7 +41,7 @@ public:
                           false};
 
         _test_user_mocks["EMPTY_USER"] =
-            UserTestMock {3,
+            UserTestMock {0,
                           "empty_user",
                           _base_test_path + "/empty_user/home",
                           _base_test_path + "/empty_user/input",
