@@ -6,5 +6,7 @@
 
 class ConfigFixture : public core::ConfigManager {
 public:
-    ConfigFixture() : core::ConfigManager("test/fixtures/test.config.json") {}
+    ConfigFixture() : core::ConfigManager("../tests/config/test.config.json") {
+        loadConfig();
+    }
 };

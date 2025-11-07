@@ -10,7 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 cmake_policy(SET CMP0076 NEW)
 
 # Opções de configuração
-option(BUILD_TESTING "Build tests" ON)
+option(BUILD_TESTING "Build tests" OFF)
 
 # ============================================================================
 # CONFIGURAÇÕES DE COBERTURA DE CÓDIGO
@@ -196,7 +196,7 @@ if(BUILD_TESTING)
         string(REGEX REPLACE "[^A-Za-z0-9_]" "_" testname_sanitized ${testname})
         set(test_target "test_${testname_sanitized}")
 
-        add_executable(${test_target} ${testfile})
+        add_executable(${test_target} tests/test_main.cpp  ${testfile})
         target_link_libraries(${test_target} PRIVATE frankenstein_core doctest)
 
         target_include_directories(${test_target} PUBLIC

@@ -99,8 +99,8 @@ namespace core {
             assert(false && "Paths configuration not found");
             // TODO throw exception
             throw std::runtime_error("Paths configuration not found");
-        } else if (!_config_data["paths"].contains("user") ||
-                   _config_data["paths"]["user"].get<std::string>().empty()) {
+        } else if (!_config_data["paths"].contains("user_home") ||
+                   _config_data["paths"]["user_home"].get<std::string>().empty()) {
             assert(false && "User music directory not found");
             // TODO throw exception
             throw std::runtime_error("User music directory not found");
@@ -125,7 +125,7 @@ namespace core {
     std::string ConfigManager::userMusicDirectory() const {
         validateConfigPaths();
 
-        return _config_data["paths"]["user"].get<std::string>();
+        return _config_data["paths"]["user_home"].get<std::string>();
     }
 
     std::string ConfigManager::publicMusicDirectory() const {

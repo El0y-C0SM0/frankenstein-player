@@ -1,0 +1,17 @@
+{
+  "environment": "testing",
+  "database": {
+    "filename": ":memory:",
+    "schema_path": "../config/frankenstein_schema.sql"
+  },
+  "paths": {
+    "public_user": "test/fixtures/data/public_user/",
+    "user_home": "test/fixtures/data/user/",
+    "input_user": "~/Musicas/frankenstein/input/",
+    "input_public": "/opt/frankenstein/input/",
+    "logs": "test/fixtures/data/logs/"
+  },
+  "features": {
+    "auto_scan_library": false
+  }
+}
