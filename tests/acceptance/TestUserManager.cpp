@@ -19,23 +19,13 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Segurança e gestão de usuário") {
     std::unique_ptr<core::UserRepository> user_repo =
         repo_factory.createUserRepository();
 
-<<<<<<< HEAD
-
-    core::UsersManager userManager(config);
-||||||| d7d9d79
-
-    core::UserManager userManager(config);
-=======
-    // core::UserManager userManager(config);
->>>>>>> origin/main
-
     TEST_CASE("Gerenciar usuários") {
         UserFixture::UserTestMock admin_data =
-            fixture.getUserMock("ADMIN_USER");
+            user_fixture.getUserMock("ADMIN_USER");
         UserFixture::UserTestMock normal_data =
-            fixture.getUserMock("NORMAL_USER");
+            user_fixture.getUserMock("NORMAL_USER");
         UserFixture::UserTestMock empty_data =
-            fixture.getUserMock("EMPTY_USER");
+            user_fixture.getUserMock("EMPTY_USER");
 
         CHECK(user_repo->count() == 0);
 
