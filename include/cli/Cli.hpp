@@ -105,10 +105,22 @@ namespace cli
         void clearPlaylist();
 
         /**
-         * @brief Obtém uma cópia da playlist atual
-         * @return Vector com todas as músicas da playlist
+         * @brief Adiciona um IPlayable à playlist atual.
+         * @param playabel Objeto IPlayable a ser adicionado à playlist.
          */
-        std::vector<std::string> getPlaylist() const;
+       void addToPlaylist(Core::IPlayable &playabel);
+
+        /**
+         * @brief Remove um IPlayable da playlist atual.
+         * @param playabel Objeto IPlayable a ser removido da playlist.
+         */
+       void removeFromPlaylist(Core::IPlayable &playabel);
+
+        /**
+         * @brief Remove um IPlayable da playlist atual pelo índice.
+         * @param idx Índice do objeto IPlayable a ser removido da playlist.
+         */
+       void removeFromPlaylist(unsigned idx);
 
         /**
          * @brief Coloca a playlist atual no modo aleatório.
@@ -152,6 +164,42 @@ namespace cli
          */
         void removeFromQueue(unsigned idx);
 
+        /**
+         * @brief Procura pelas playlists do usuário.
+         * @param query string de busca.
+         *
+         */
+        void searchMusic(const std::string &query) const;
+
+        /**
+         * @brief Procura pelos artistas do usuário.
+         * @param query string de busca.
+         *
+         */
+        void searchArtist(const std::string &query) const;
+
+        /**
+         * @brief Procura pelos álbuns do usuário.
+         * @param query string de busca.
+         *
+         */
+        void searchAlbum(const std::string &query) const;
+
+        /**
+         * @brief Procura pelas playlists do usuário.
+         * @param query string de busca.
+         *
+         */
+        void searchPlaylist(const std::string &query) const;
+
+        /**
+         * @brief Procura pelos podcasts do usuário.
+         * @param query string de busca.
+         *
+         */
+        void searchPodcast(const std::string &query) const;
+
+        void showHelp() const;
     public:
         /**
          * @brief Construtor de um novo objeto Cli
