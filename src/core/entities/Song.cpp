@@ -1,6 +1,8 @@
 
 #include "core/entities/Song.hpp"
+#include "core/bd/ArtistRepository.hpp"
 #include "core/entities/Artist.hpp"
+#include "core/entities/User.hpp"
 #include <SFML/Audio/InputSoundFile.hpp>
 #include <SFML/Audio/Music.hpp>
 #include <boost/smart_ptr/intrusive_ptr.hpp>
@@ -11,10 +13,10 @@ namespace core {
     Song::Song() {};
 
     Song::Song(unsigned id,
-               const std::string& file_path,
                const std::string& title,
-               unsigned& artist)
-        : _id(id), _file_path(file_path), _title(title), _artist_id(artist) {};
+               unsigned& artist,
+               unsigned& user_id)
+        : _id(id), _title(title), _artist_id(artist), _user_id(user_id) {};
 
     Song::Song(const std::string& title,
                std::shared_ptr<Artist>& artist,
@@ -37,8 +39,13 @@ namespace core {
         return _artist;
     };
 
+    std::vector<unsigned> Song::getFeaturingArtistsId() const {
+        return _featuring_artists_ids;
+    };
+
     std::vector<std::shared_ptr<const Artist>> getFeaturingArtists() {
         // temos apenas _featuring_artists_ids, precisa entao buscar no BD.
+        std::vector<std::shared_ptr<const Artist>> _artist;
     };
 
     std::shared_ptr<const Album> Song::getAlbum() const {
@@ -69,7 +76,8 @@ namespace core {
         // pensei em que musicar ter um vector de shared_ptr(user) para que uma
         // musica ser compartilhada
         // User seria por Usuarios do computador
-        _users.push_back(std::make_shared<User>(user));
+        auto id = user.getId();
+        _user_id = id;
     };
 
     void Song::setTitle(const std::string& title) {
@@ -79,6 +87,10 @@ namespace core {
 
     void Song::setArtist(std::shared_ptr<Artist>& artist) {
         this->_artist = artist;
+    };
+
+    void Song::setFeaturingArtists(std::shared_ptr<Artist>& artist) {
+        _featuring_artists_ids.push_back(artist->getId());
     };
 
     void Song::setArtistLoader(
