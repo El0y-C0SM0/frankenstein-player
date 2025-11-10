@@ -11,11 +11,11 @@
  */
 
 #pragma once
+#include <SFML/Audio/SoundSource.hpp>
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <SFML/Audio/SoundSource.hpp>
 
 #include "core/entities/Entity.hpp"
 #include "core/entities/User.hpp"
@@ -64,6 +64,17 @@ namespace core {
          * @brief Construtor vazio
          */
         Song();
+
+        Song(const std::string& title,
+             std::shared_ptr<Artist>& artist,
+             std::shared_ptr<Album>& album);
+
+        //            Song song(song_id, file_path, title, artist_id);
+        Song(unsigned id,
+             std::string file_path,
+             std::string title,
+             unsigned artist_id);
+
         /**
          * @brief Construtor da classe Song
          * @param id Identificador único da música
@@ -82,10 +93,7 @@ namespace core {
          * @param title Título da música
          * @param artist Artista/banda
          */
-        Song(const std::string& title,
-             Artist& artist,
-             Album& album,
-             User& user
+        Song(const std::string& title, Artist& artist, Album& album, User& user
              // std::unique_ptr<User>& user); Acredito que pasar usuario aqui
              // nao é bom pois é validado pelo usuario da maquina
         );
