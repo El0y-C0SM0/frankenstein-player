@@ -66,6 +66,11 @@ namespace core {
         Song();
 
         // TODO DOCUMENTACAO
+        Song(const std::string& title,
+             std::shared_ptr<Artist>& artist,
+             std::shared_ptr<Album>& album);
+
+        //            Song song(song_id, file_path, title, artist_id);
         Song(unsigned id,
              std::string file_path,
              std::string title,
@@ -74,6 +79,7 @@ namespace core {
         Song(const std::string& title,
              std::shared_ptr<Artist>& artist,
              std::shared_ptr<Album>& album);
+
         /**
          * @brief Construtor da classe Song
          * @param id Identificador único da música
