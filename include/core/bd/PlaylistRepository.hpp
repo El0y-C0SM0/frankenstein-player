@@ -46,6 +46,15 @@ namespace core {
          */
         bool update(const Playlist& entity) override;
 
+
+        /**
+         * @brief Adiciona uma música a uma playlist
+         * @param playlist Playlist onde a música será adicionada
+         * @param song Música a ser adicionada
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        bool addSongToPlaylist(const Playlist& playlist, const Song& song);
+
         /**
          * @brief Mapeia uma linha do resultado para uma playlist
          * @copydoc SQLiteRepositoryBase::mapRowToEntity
@@ -57,22 +66,6 @@ namespace core {
     public:
         PlaylistRepository(std::shared_ptr<SQLite::Database> db);
         ~PlaylistRepository() override = default;
-
-        /**
-         * @brief Salva ou atualiza uma playlist no repositório
-         * @copydoc IRepository::save
-         * @param entity Playlist a ser salva ou atualizada
-         * @return true se a operação foi bem-sucedida, false caso contrário
-         */
-        bool save(Playlist& entity) override;
-
-        /**
-         * @brief Remove uma playlist do repositório pelo ID
-         * @copydoc IRepository::remove
-         * @param id ID da playlist a ser removida
-         * @return true se a operação foi bem-sucedida, false caso contrário
-         */
-        bool remove(unsigned id) override;
 
         /**
          * @brief Busca playlists pelo título e usuário
@@ -88,30 +81,6 @@ namespace core {
          * @return Vetor contendo as playlists do usuário fornecido
          */
         std::vector<std::shared_ptr<Playlist>> findByUser(const User& user) const;
-
-        /**
-         * @brief Busca playlists pelo ID
-         * @copydoc IRepository::findById
-         * @param id ID da playlist a ser buscada
-         * @return Ponteiro para a playlist encontrada, ou nullptr se não encontrada
-         */
-        std::shared_ptr<Playlist> findById(unsigned id) const override;
-
-        /**
-         * @brief Adiciona uma música a uma playlist
-         * @param playlist Playlist onde a música será adicionada
-         * @param song Música a ser adicionada
-         * @return true se a operação foi bem-sucedida, false caso contrário
-         */
-        bool addSongToPlaylist(const Playlist& playlist, const Song& song);
-
-        /**
-         * @brief Remove uma música de uma playlist
-         * @param playlist Playlist de onde a música será removida
-         * @param song Música a ser removida
-         * @return true se a operação foi bem-sucedida, false caso contrário
-         */
-        bool removeSongFromPlaylist(const Playlist& playlist, const Song& song);
 
         /**
          * @brief Obtém as músicas de uma playlist

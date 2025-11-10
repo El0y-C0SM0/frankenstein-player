@@ -13,10 +13,11 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <memory.h>
 
-#include "EntitiesFWD.hpp"
 #include "core/entities/Entity.hpp"
 #include "core/entities/Song.hpp"
+#include "core/entities/User.hpp"
 #include "core/interfaces/ICollection.hpp"
 #include "core/interfaces/IPlayable.hpp"
 
@@ -58,6 +59,7 @@ namespace core {
         ~Playlist();
 
         std::string getTitulo();
+        std::string getTitle() const;
 
         void setTitulo(const std::string nome);
 
@@ -76,10 +78,10 @@ namespace core {
         virtual bool operator!=(const Entity& other) const override;
 
         // metodos ICollection
-        virtual std::vector<std::shared_ptr<IPlayable>> getSongs() override;
+        virtual std::vector<std::shared_ptr<Song>> getSongs() const override;
 
         virtual void setSongsLoader(
-            const std::function<std::vector<std::shared_ptr<IPlayable>>()>&
+            const std::function<std::vector<std::shared_ptr<Song>>()>&
                 loader) override;
 
         virtual void addSong(std::shared_ptr<IPlayable> song) override;
@@ -113,5 +115,9 @@ namespace core {
          */
         virtual std::vector<std::shared_ptr<IPlayableObject>>
         getPlayableObjects() const override;
+
+
+        std::shared_ptr<User> getUser() const;
+        void setUser(const User& user);
     };
 }  // namespace core

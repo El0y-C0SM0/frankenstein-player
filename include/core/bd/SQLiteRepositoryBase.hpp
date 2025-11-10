@@ -110,6 +110,14 @@ namespace core {
         bool removeAll() override;
 
         /**
+         * @brief Salva ou atualiza uma entidade no repositório
+         * @copydoc IRepository::save
+         * @param entity Entidade a ser salva ou atualizada
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        virtual bool save(T& entity) override;
+
+        /**
          * @brief Remove uma entidade pelo ID
          * @copydoc IRepository::remove
          * @param id ID da entidade a ser removida
