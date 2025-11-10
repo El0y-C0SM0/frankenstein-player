@@ -30,8 +30,6 @@
 */
 
 namespace core {
-    SongRepository::SongRepository()
-        : SQLiteRepositoryBase<Song>(nullptr, "songs") {}
 
     SongRepository::SongRepository(std::shared_ptr<SQLite::Database> db)
         : SQLiteRepositoryBase<Song>(db, "songs") {}

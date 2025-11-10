@@ -39,12 +39,13 @@ namespace core {
                    public core::IPlayable {
     private:
         int nome;
-
+        unsigned _id = 0;  // TODO nao ta gerando apartir de entity
         std::string _name;
         std::string _genre;
         std::vector<std::shared_ptr<Song>> _songs;
         std::vector<std::shared_ptr<Album>> _albums;
         std::shared_ptr<User> user;
+        unsigned _user_id;
 
         std::function<std::vector<std::shared_ptr<Song>>()> songsLoader;
         std::function<std::vector<std::shared_ptr<Album>>()> albumsLoader;
@@ -54,6 +55,8 @@ namespace core {
          * @brief Construtor vazio
          */
         Artist();
+
+        Artist(unsigned id, std::string name, unsigned user_id);
 
         /**
          * @brief Construtor da classe Artist
@@ -347,5 +350,12 @@ namespace core {
          * especificada, ou nullptr se índice inválido
          */
         std::shared_ptr<IPlayable> getSongAtAlbum(int index, unsigned idAlbum);
+
+        std::shared_ptr<User> getUser() const;
+
+        // TODO IMPLEMENTAÇÃO NO CPP
+        void setSongsLoader(
+            const std::function<std::vector<std::shared_ptr<Song>>()>& loader)
+            override;
     };
 }  // namespace core

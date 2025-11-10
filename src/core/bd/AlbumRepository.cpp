@@ -1,5 +1,6 @@
 #include "core/bd/AlbumRepository.hpp"
 #include "SQLiteCpp/Statement.h"
+#include "core/bd/ArtistRepository.hpp"
 #include "core/bd/SQLiteRepositoryBase.hpp"
 #include "core/bd/SongRepository.hpp"
 #include "core/entities/Song.hpp"
@@ -150,7 +151,8 @@ namespace core {
 
     std::shared_ptr<Artist>
     AlbumRepository::getArtist(const Album& album) const {
-        // TODO quando tiver Artist repository
+        ArtistRepository artist_Repo(_db);
+        return artist_Repo.findById(album.getArtist()->getId());
     };
 
     size_t AlbumRepository::count() const {

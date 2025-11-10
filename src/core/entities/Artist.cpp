@@ -7,6 +7,9 @@ namespace core {
 
     Artist::Artist() {};
 
+    Artist::Artist(unsigned id, std::string name, unsigned user_id)
+        : _id(id), _name(name), _user_id(user_id) {};
+
     Artist::Artist(const std::string& name, const std::string& genre)
 
         : _name(name), _genre(genre) {}
@@ -367,6 +370,10 @@ namespace core {
             }
         }
         return nullptr;
+    };
+
+    std::shared_ptr<User> Artist::getUser() const {
+        return user;
     };
 
 }  // namespace core
