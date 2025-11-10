@@ -11,19 +11,19 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-#include "core/entities/Song.hpp"
-#include "core/entities/Artist.hpp"
 #include "core/entities/Album.hpp"
+#include "core/entities/Artist.hpp"
+#include "core/entities/Song.hpp"
 // #include "core/entities/User.hpp"
 // #include "core/entities/Playlist.hpp"
-#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario e playlist
+#include "core/entities/EntitiesFWD.hpp"  // TODO incluir usuario e playlist
 
 namespace core {
 
@@ -59,6 +59,7 @@ namespace core {
         mapRowToEntity(SQLite::Statement& query) const override;
 
     public:
+        SongRepository();
         SongRepository(std::shared_ptr<SQLite::Database> db);
         ~SongRepository() override = default;
 
@@ -82,35 +83,41 @@ namespace core {
          * @brief Busca musicas pelo título e usuário
          * @param title Título da musica a ser buscada
          * @param user Usuário dono das musicas
-         * @return Vetor contendo as musicas que correspondem ao título fornecido
+         * @return Vetor contendo as musicas que correspondem ao título
+         * fornecido
          */
-        std::vector<std::shared_ptr<Song>> findByTitleAndUser(const std::string& title, const User& user) const;
+        std::vector<std::shared_ptr<Song>>
+        findByTitleAndUser(const std::string& title, const User& user) const;
 
         /**
          * @brief Busca musicas pelo usuário
          * @param user Usuário dono das musicas a serem buscadas
          * @return Vetor contendo as musicas que pertencem ao usuário fornecido
          */
-         std::vector<std::shared_ptr<Song>> findByUser(const User& user) const;
+        std::vector<std::shared_ptr<Song>> findByUser(const User& user) const;
 
         /**
          * @brief Busca musicas pelo artista
          * @param artist Artista da musica a ser buscada
-         * @return Vetor contendo as musicas que correspondem ao artista fornecido
+         * @return Vetor contendo as musicas que correspondem ao artista
+         * fornecido
          */
-        std::vector<std::shared_ptr<Song>> findByArtist(const Artist& artist) const;
+        std::vector<std::shared_ptr<Song>>
+        findByArtist(const Artist& artist) const;
 
-         /**
+        /**
          * @brief Busca musicas pelo album
          * @param album Album da musica a ser buscada
          * @return Vetor contendo as musicas que correspondem ao album fornecido
          */
-        std::vector<std::shared_ptr<Song>> findByAlbum(const Album& album) const;
+        std::vector<std::shared_ptr<Song>>
+        findByAlbum(const Album& album) const;
 
         /**
          * @brief Busca uma musica pelo ID
          * @param id ID da musica a ser buscada
-         * @return Ponteiro para a musica encontrada, ou nullptr se não encontrada
+         * @return Ponteiro para a musica encontrada, ou nullptr se não
+         * encontrada
          */
         std::shared_ptr<Song> findById(unsigned id) const override;
 
@@ -133,7 +140,8 @@ namespace core {
          * @param song Musica cujos artistas colaboradores serão obtidos
          * @return Vetor contendo os artistas colaboradores da musica
          */
-        std::vector<std::shared_ptr<Artist>> getFeaturingArtists(const Song& song) const;
+        std::vector<std::shared_ptr<Artist>>
+        getFeaturingArtists(const Song& song) const;
 
         /**
          * @brief Conta o número total de musicas no repositório
@@ -142,4 +150,4 @@ namespace core {
         virtual size_t count() const override;
     };
 
-}
+}  // namespace core

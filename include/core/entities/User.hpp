@@ -15,7 +15,6 @@
 #include <sys/types.h>
 
 #include "core/entities/Entity.hpp"
-#include "core/entities/Playlist.hpp"
 
 namespace core {
 #ifdef _WIN32

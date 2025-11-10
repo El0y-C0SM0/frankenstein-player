@@ -4,8 +4,8 @@
 #include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
 #include "core/services/PlaybackQueue.hpp"
-#include "mocks/MockPlayable.hpp"
 #include "fixtures/DatabaseFixture.hpp"
+#include "mocks/MockPlayable.hpp"
 
 #include <memory>
 #include <vector>

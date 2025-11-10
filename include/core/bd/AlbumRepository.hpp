@@ -11,17 +11,17 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
 #include "core/entities/Album.hpp"
-#include "core/entities/Song.hpp"
-// #include "core/entities/User.hpp"
 #include "core/entities/EntitiesFWD.hpp"  // TODO incluir usuario
+#include "core/entities/Song.hpp"
+#include "core/entities/User.hpp"
 
 namespace core {
 
@@ -82,27 +82,31 @@ namespace core {
          * @param user Usuário cujos albuns serão buscados
          * @return Vetor contendo os albuns que correspondem ao título fornecido
          */
-        std::vector<std::shared_ptr<Album>> findByTitleAndUser(const std::string& title, const User& user) const;
+        std::vector<std::shared_ptr<Album>>
+        findByTitleAndUser(const std::string& title, const User& user) const;
 
         /**
          * @brief Busca albuns pelo usuário
          * @param user Usuário cujos albuns serão buscados
          * @return Vetor contendo os albuns que pertencem ao usuário fornecido
          */
-         std::vector<std::shared_ptr<Album>> findByUser(const User& user) const;
+        std::vector<std::shared_ptr<Album>> findByUser(const User& user) const;
 
         /**
          * @brief Busca albuns pelo artista e usuário
          * @param artist Nome do artista do album a ser buscado
-         * @return Vetor contendo os albuns que correspondem ao artista fornecido
+         * @return Vetor contendo os albuns que correspondem ao artista
+         * fornecido
          */
-        std::vector<std::shared_ptr<Album>> findByArtist(const std::string& artist) const;
+        std::vector<std::shared_ptr<Album>>
+        findByArtist(const std::string& artist) const;
 
         /**
          * @brief Obtém um album pelo ID e usuário
          * @copydoc IRepository::findById
          * @param id ID do album a ser obtido
-         * @return Ponteiro compartilhado para o album encontrado, ou nullptr se não encontrado
+         * @return Ponteiro compartilhado para o album encontrado, ou nullptr se
+         * não encontrado
          */
         std::shared_ptr<Album> findById(unsigned id) const override;
 
@@ -118,7 +122,8 @@ namespace core {
          * @param album Álbum cujos artistas colaboradores serão obtidos
          * @return Vetor contendo os artistas colaboradores do álbum
          */
-        std::vector<std::shared_ptr<Artist>> getFeaturingArtists(const Album& album) const;
+        std::vector<std::shared_ptr<Artist>>
+        getFeaturingArtists(const Album& album) const;
 
         /**
          * @brief Obtém o artista principal de um álbum
@@ -133,4 +138,4 @@ namespace core {
          */
         virtual size_t count() const override;
     };
-}
+}  // namespace core

@@ -10,11 +10,9 @@
 #include "core/bd/PlaylistRepository.hpp"
 #include "core/bd/UserRepository.hpp"
 
-
 namespace core {
-    PlaylistRepository::PlaylistRepository(
-        std::shared_ptr<SQLite::Database> db) :
-        SQLiteRepositoryBase<Playlist>(db, "playlists") {}
+    PlaylistRepository::PlaylistRepository(std::shared_ptr<SQLite::Database> db)
+        : SQLiteRepositoryBase<Playlist>(db, "playlists") {}
 
     bool PlaylistRepository::insert(const Playlist& entity) {
         SQLite::Statement query(*_db,
@@ -27,15 +25,16 @@ namespace core {
             return false;
 
         for (const auto& song : entity.getSongs()) {
-            if (!addSongToPlaylist(entity, *std::dynamic_pointer_cast<Song>(song)))
+            if (!addSongToPlaylist(entity,
+                                   *std::dynamic_pointer_cast<Song>(song)))
                 return false;
         }
 
         return true;
     }
 
-    bool PlaylistRepository::addSongToPlaylist(
-        const Playlist& playlist, const Song& song) {
+    bool PlaylistRepository::addSongToPlaylist(const Playlist& playlist,
+                                               const Song& song) {
         SQLite::Statement query(*_db,
                                 "INSERT INTO playlist_songs (playlist_id, "
                                 "song_id) "
@@ -66,7 +65,8 @@ namespace core {
             return false;
 
         for (const auto& song : entity.getSongs()) {
-            if (!addSongToPlaylist(entity, *std::dynamic_pointer_cast<Song>(song)))
+            if (!addSongToPlaylist(entity,
+                                   *std::dynamic_pointer_cast<Song>(song)))
                 return false;
         }
 
@@ -85,18 +85,21 @@ namespace core {
         std::shared_ptr<User> user = userRepo->findById(user_id);
         playlist.setUser(*user);
 
-
         auto playlistPtr = std::make_shared<Playlist>(playlist);
-        playlist.setSongsLoader([this, playlistPtr]() -> std::vector<std::shared_ptr<Song>> {
-            return this->getSongs(*playlistPtr);
-        });
+        playlist.setSongsLoader(
+            [this, playlistPtr]() -> std::vector<std::shared_ptr<Song>> {
+                return this->getSongs(*playlistPtr);
+            });
 
         return std::make_shared<Playlist>(playlist);
     }
 
-    std::vector<std::shared_ptr<Playlist>> PlaylistRepository::findByTitleAndUser(const std::string& title, const User& user) const {
-        SQLite::Statement query(*_db,
-                                "SELECT * FROM playlists WHERE title = ? AND user_id = ?;");
+    std::vector<std::shared_ptr<Playlist>>
+    PlaylistRepository::findByTitleAndUser(const std::string& title,
+                                           const User& user) const {
+        SQLite::Statement query(
+            *_db,
+            "SELECT * FROM playlists WHERE title = ? AND user_id = ?;");
         query.bind(1, title);
         query.bind(2, user.getId());
 
@@ -107,7 +110,8 @@ namespace core {
         return playlists;
     }
 
-    std::vector<std::shared_ptr<Playlist>> PlaylistRepository::findByUser(const User& user) const {
+    std::vector<std::shared_ptr<Playlist>>
+    PlaylistRepository::findByUser(const User& user) const {
         SQLite::Statement query(*_db,
                                 "SELECT * FROM playlists WHERE user_id = ?;");
         query.bind(1, user.getId());
@@ -119,8 +123,8 @@ namespace core {
         return playlists;
     }
 
-    std::vector<std::shared_ptr<Song>> PlaylistRepository::getSongs(
-        const Playlist& playlist) const {
+    std::vector<std::shared_ptr<Song>>
+    PlaylistRepository::getSongs(const Playlist& playlist) const {
         SQLite::Statement query(*_db,
                                 "SELECT s.* FROM songs s "
                                 "JOIN playlist_songs ps ON s.id = ps.song_id "
@@ -141,4 +145,4 @@ namespace core {
 
         return songs;
     }
-}
+}  // namespace core

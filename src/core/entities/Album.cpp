@@ -7,6 +7,16 @@
 
 namespace core {
     Album::Album() {};
+
+    // Album para mapRowToEntity
+    Album::Album(unsigned id,
+                 std::string title,
+                 int year,
+                 std::string genre,
+                 unsigned user_id)
+        : _id(id), _name(title), _year(year), _genre(genre),
+          _user_id(user_id) {};
+
     Album::Album(const std::string name,
                  std::shared_ptr<Artist> artist,
                  const std::string genre)
@@ -26,6 +36,11 @@ namespace core {
 
         return _name;
     };
+
+    std::shared_ptr<User> Album::getUser() const {
+        return _user;
+    };
+
     std::shared_ptr<Artist> Album::getArtist() const {
         assert(_artist != nullptr);
         return _artist;
@@ -284,5 +299,19 @@ namespace core {
         return _songs.at(index);  // It throws out_of_range if n is out of
                                   // bounds. entao n precisa de exception
     };
+
+    std::vector<std::shared_ptr<Song>> Album::getSongs() const {
+        // Implementação: converter _songs ou carregar via loader
+        std::vector<std::shared_ptr<Song>> songs;
+        for (auto& song : _songs) {
+            songs.push_back(song);
+        }
+        return songs;
+    }
+
+    void Album::setSongsLoader(
+        const std::function<std::vector<std::shared_ptr<Song>>()>& loader) {
+        // TODO conflito no ICollection
+    }
 
 }  // namespace core

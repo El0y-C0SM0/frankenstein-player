@@ -43,6 +43,8 @@ namespace core {
         std::string _file_path;
         std::string _name;
         unsigned _artist_id;
+        std::shared_ptr<User> _user;
+        unsigned _user_id;
         mutable std::shared_ptr<Artist> _artist;
         mutable std::vector<unsigned> _featuring_artists_ids;
         mutable std::vector<std::shared_ptr<Song>> _songs;
@@ -59,6 +61,13 @@ namespace core {
          * @brief Construtor vazio
          */
         Album();
+
+        // Album para mapRowToEntity
+        Album(unsigned id,
+              std::string title,
+              int year,
+              std::string genre,
+              unsigned user_id);
 
         /**
          * @brief Construtor da classe Album
@@ -96,6 +105,11 @@ namespace core {
          */
         std::string getName() const;
 
+        /*
+         * @brief Retorna o usuario do album
+         * @return shared_ptr<User>
+         */
+        std::shared_ptr<User> getUser() const;
         /**
          * @brief Obtém o artista do álbum
          * @return Nome do artista/banda
@@ -218,7 +232,7 @@ namespace core {
          * @return Vetor de ponteiros compartilhados para IPlayable contendo
          * todas as músicas
          */
-        std::vector<std::shared_ptr<IPlayable>> getSongs() override;
+        std::vector<std::shared_ptr<IPlayable>> getSongs();
 
         /**
          * @brief Define a função de carregamento para as músicas do álbum
@@ -227,7 +241,7 @@ namespace core {
          */
         void setSongsLoader(
             const std::function<std::vector<std::shared_ptr<IPlayable>>()>&
-                loader) override;
+                loader);
 
         /**
          * @brief Adiciona uma música ao álbum
@@ -306,6 +320,12 @@ namespace core {
          * especificada, ou nullptr se índice inválido
          */
         std::shared_ptr<IPlayable> getSongAt(int index) override;
+
+        std::vector<std::shared_ptr<Song>> getSongs() const override;
+
+        void setSongsLoader(
+            const std::function<std::vector<std::shared_ptr<Song>>()>& loader)
+            override;
     };
 
 }  // namespace core

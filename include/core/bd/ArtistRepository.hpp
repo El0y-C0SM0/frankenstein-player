@@ -11,18 +11,18 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "core/bd/SQLiteRepositoryBase.hpp"
-#include "core/entities/Artist.hpp"
 #include "core/entities/Album.hpp"
+#include "core/entities/Artist.hpp"
+#include "core/entities/EntitiesFWD.hpp"  // TODO incluir usuario
 #include "core/entities/Song.hpp"
-// #include "core/entities/User.hpp"
-#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario
+#include "core/entities/User.hpp"
 
 namespace core {
 
@@ -83,21 +83,24 @@ namespace core {
          * @param user Usuário cujos artistas serão buscados
          * @return Vetor contendo os artistas que correspondem ao nome fornecido
          */
-        std::vector<std::shared_ptr<Artist>> findByNameAndUser(const std::string& name, const User& user) const;
+        std::vector<std::shared_ptr<Artist>>
+        findByNameAndUser(const std::string& name, const User& user) const;
 
         /**
          * @brief Busca artistas pelo nome
          * @param name Nome do artista a ser buscado
          * @return Vetor contendo os artistas que correspondem ao nome fornecido
          */
-        std::vector<std::shared_ptr<Artist>> findByName(const std::string& name) const;
+        std::vector<std::shared_ptr<Artist>>
+        findByName(const std::string& name) const;
 
         /**
          * @brief Obtém os albuns de um artista
          * @param artist Artista cujos albuns serão obtidos
          * @return Vetor contendo os albuns do artista fornecido
          */
-        std::vector<std::shared_ptr<Album>> getAlbums(const Artist& artist) const;
+        std::vector<std::shared_ptr<Album>>
+        getAlbums(const Artist& artist) const;
 
         /**
          * @brief Obtém as músicas de um artista
@@ -107,4 +110,4 @@ namespace core {
         std::vector<std::shared_ptr<Song>> getSongs(const Artist& artist) const;
     };
 
-}
+}  // namespace core

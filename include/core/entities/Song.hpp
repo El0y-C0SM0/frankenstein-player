@@ -11,11 +11,11 @@
  */
 
 #pragma once
+#include <SFML/Audio/SoundSource.hpp>
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <SFML/Audio/SoundSource.hpp>
 
 #include "core/entities/Entity.hpp"
 #include "core/entities/User.hpp"
@@ -44,6 +44,7 @@ namespace core {
         std::string _file_path;
         std::string _title;
         unsigned _artist_id;
+        unsigned _user_id;
         std::shared_ptr<Artist> _artist;
         std::vector<unsigned> _featuring_artists_ids;
         unsigned _album_id;
@@ -52,9 +53,6 @@ namespace core {
         std::string _genre;
         int _year;
         bool _metadata_loaded;
-
-        std::vector<std::shared_ptr<User>>
-            _users;  // TODO logica de implementacao
 
         std::function<std::shared_ptr<Artist>()> artistLoader;
         std::function<std::vector<std::shared_ptr<Artist>>()>
@@ -66,6 +64,19 @@ namespace core {
          * @brief Construtor vazio
          */
         Song();
+
+        // TODO DOCUMENTACAO
+        Song(const std::string& title,
+             std::shared_ptr<Artist>& artist,
+             std::shared_ptr<Album>& album);
+
+        //            Song song(song_id, file_path, title, artist_id);
+        Song(unsigned id,
+             std::string file_path,
+             std::string title,
+             unsigned artist_id);
+        // TODO DOCUMENTACAO
+
         /**
          * @brief Construtor da classe Song
          * @param id Identificador único da música
@@ -74,9 +85,9 @@ namespace core {
          * @param artist id artist
          */
         Song(unsigned id,
-             const std::string& file_path,
              const std::string& title,
-             unsigned& artist);
+             unsigned& artist,
+             unsigned& user_id);
         /**
          * @brief Construtor da classe Song
          * @param id Identificador único da música
@@ -84,10 +95,7 @@ namespace core {
          * @param title Título da música
          * @param artist Artista/banda
          */
-        Song(const std::string& title,
-             Artist& artist,
-             Album& album,
-             User& user
+        Song(const std::string& title, Artist& artist, Album& album, User& user
              // std::unique_ptr<User>& user); Acredito que pasar usuario aqui
              // nao é bom pois é validado pelo usuario da maquina
         );
@@ -109,6 +117,13 @@ namespace core {
          * @return Nome do artista/banda
          */
         std::shared_ptr<const Artist> getArtist() const;
+
+        /*
+         * @brief Obtem ID dos artista musica
+         * @return Vetor com id dos artistas
+         */
+        std::vector<unsigned> getFeaturingArtistsId() const;
+
         /**
          * @brief Obtém os artistas colaboradores (featuring)
          * @return Vetor de ponteiros compartilhados para os artistas
@@ -156,6 +171,14 @@ namespace core {
          * @param artist Novo artista
          */
         void setArtist(std::shared_ptr<Artist>& artist);
+
+        /*
+         * @brief Adciona um artista feat a musica
+         * @param artist Artista  a ser adicionado
+         */
+        void
+        setFeaturingArtists(std::shared_ptr<Artist>&
+                                artist);  // TODO overloard p passar o vector
         /**
          * @brief Define a função para carregar o artista
          * @param loader Função que retorna um ponteiro compartilhado para o
