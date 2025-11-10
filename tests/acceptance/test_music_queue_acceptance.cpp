@@ -4,8 +4,8 @@
 #include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
 #include "core/services/PlaybackQueue.hpp"
-#include "mocks/MockPlayable.hpp"
 #include "fixtures/DatabaseFixture.hpp"
+#include "mocks/MockPlayable.hpp"
 
 #include <memory>
 #include <vector>
@@ -55,7 +55,6 @@ TEST_CASE("ACEITAÇÃO: Usuário ouvindo e editando fila de músicas") {
     for (int i = 1; i <= 5; i++) {
         auto musica = std::make_shared<core::Song>();
         musica->setTitle("Música " + std::to_string(i));
-        musica->setDuration(180 + i * 30);
         musicas.push_back(musica);
     }
 
