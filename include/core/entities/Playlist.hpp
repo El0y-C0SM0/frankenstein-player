@@ -35,6 +35,7 @@ namespace core {
         unsigned _user_id;
         std::shared_ptr<User> _user;
         mutable std::vector<std::shared_ptr<Song>> _songs;
+        std::function<std::vector<std::shared_ptr<Song>>()> _loader;
 
     public:
         /**
@@ -84,29 +85,29 @@ namespace core {
             const std::function<std::vector<std::shared_ptr<Song>>()>&
                 loader) override;
 
-        virtual void addSong(std::shared_ptr<IPlayable> song) override;
+        virtual void addSong(std::shared_ptr<Song> song) override;
 
         virtual bool switchSong(unsigned id, unsigned index) override;
 
         virtual bool removeSong(unsigned id) override;
 
-        virtual std::shared_ptr<IPlayable>
+        virtual std::shared_ptr<Song>
         findSongById(unsigned songId) override;
 
-        virtual std::shared_ptr<IPlayable>
+        virtual std::shared_ptr<Song>
         findSongByTitle(const std::string& title) override;
 
         virtual int calculateTotalDuration() override;
 
         virtual std::string getFormattedDuration() override;
 
-        virtual std::shared_ptr<IPlayable>
-        getNextSong(std::shared_ptr<IPlayable> current) override;
+        virtual std::shared_ptr<Song>
+        getNextSong(std::shared_ptr<Song> current) override;
 
-        virtual std::shared_ptr<IPlayable>
-        getPreviousSong(std::shared_ptr<IPlayable> current) override;
+        virtual std::shared_ptr<Song>
+        getPreviousSong(std::shared_ptr<Song> current) override;
 
-        virtual std::shared_ptr<IPlayable> getSongAt(int index) override;
+        virtual std::shared_ptr<Song> getSongAt(int index) override;
 
         // IPlayable
         /**
