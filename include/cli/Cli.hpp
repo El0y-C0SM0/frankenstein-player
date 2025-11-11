@@ -24,6 +24,7 @@
 namespace cli
 {
 
+  #define volumeStep 0.05
   class Cli
   {
   private:
@@ -96,7 +97,7 @@ namespace cli
 
     /**
      * @brief Define o nível de volume do player
-     * @param volume Novo nível de volume entre 0.0 (mudo) e 1.0 (máximo)
+     * @param volume Novo nível de volume entre 0 (mudo) e 100 (máximo)
      */
     void setVolume(unsigned int volume);
 

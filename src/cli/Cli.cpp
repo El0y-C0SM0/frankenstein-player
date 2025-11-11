@@ -9,9 +9,211 @@
  */
 
 #include "cli/Cli.hpp"
+#include <unistd.h>
+#include <cstdlib>
+#include <iostream>
 
 namespace cli
 {
+    Cli::Cli(core::ConfigManager &config_manager)
+    {
+        std::string username;
+        std::string home_path;
+        std::string input_path;
+        std::string uid;
+        try
+        {
+            username = config_manager.getConfigValue("user_username");
+            if (username.empty())
+            {
+                throw std::runtime_error("Username is empty in config");
+            }
+        }
+        catch (const std::exception &e)
+        {
+            username = std::string();
+        }
+
+        try
+        {
+            home_path = config_manager.userMusicDirectory();
+        }
+        catch (const std::exception &e)
+        {
+            home_path = std::string();
+        }
+
+        try
+        {
+            input_path = config_manager.inputUserPath();
+        }
+        catch (const std::exception &e)
+        {
+            if (!home_path.empty())
+                input_path = home_path + "/input/";
+            else
+                input_path = std::string();
+        }
+        try
+        {
+            uid = config_manager.getConfigValue("user_id");
+        }
+        catch (const std::exception &e)
+        {
+            uid = std::string();
+        }
+        _user = std::make_shared<core::User>(username, home_path, input_path, std::stoi(uid));
+
+        _player = std::make_shared<core::Player>();
+    }
+
+    /*
+        void Cli::play(Core::IPlayable &playabel){
+            _player.play(playabel);
+        }
+    */
+
+    void Cli::restart()
+    {
+        _player->restart();
+    }
+
+    void Cli::rewind(unsigned int seconds)
+    {
+        _player->rewind(seconds);
+    }
+
+    void Cli::forward(unsigned int seconds)
+    {
+        _player->fastForward(seconds);
+    }
+
+    void Cli::toggleResumePause()
+    {
+        if (_player->isPlaying())
+        {
+            _player->pause();
+        }
+        else
+        {
+            _player->resume();
+        }
+    }
+
+    void Cli::next()
+    {
+        _player->next();
+    }
+
+    void Cli::previous()
+    {
+        _player->previous();
+    }
+
+    void Cli::setVolume(unsigned int volume)
+    {
+        float vol = static_cast<float>(volume) / 100.0f;
+        if (vol < 0.0f)
+            vol = 0.0f;
+        if (vol > 1.0f)
+            vol = 1.0f;
+        _player->setVolume(vol);
+    }
+
+    void Cli::setVolumeUpDown(const std::string &volume)
+    {
+        if (volume == "up")
+        {
+            _player->setVolume(_player->getVolume() + volumeStep);
+        }
+        else if (volume == "down")
+        {
+            _player->setVolume(_player->getVolume() - volumeStep);
+        }
+    }
+
+    std::string Cli::getVolume() const
+    {
+        float vol = _player->getVolume() * 100.0f;
+        std::cout << "Nivel de volume: " << static_cast<unsigned int>(vol) << std::endl;
+    }
+
+    void Cli::toggleMute(const std::string &command)
+    {
+        if (command == "mute")
+        {
+            if (_player->isMuted())
+            {
+                std::cout << "O player já está mudo." << std::endl;
+                return;
+            }
+            _player->mute();
+        }
+        else if (command == "unmute")
+        {
+            if (!_player->isMuted())
+            {
+                std::cout << "O player não está no mudo." << std::endl;
+                return;
+            }
+            _player->unmute();
+        }
+        else if (command == "toggle_mute")
+        {
+            if (_player->isMuted())
+            {
+                _player->unmute();
+            }
+            else
+            {
+                _player->mute();
+            }
+        }
+    }
+
+    /*
+        std::string Cli::getCurrentSong() const
+        {
+
+        }
+    */
+
+    std::string Cli::getProgress() const
+    {
+        _player->getProgress();
+    }
+
+    void Cli::clearQueue()
+    {
+        _player->clearPlaylist();
+    }
+
+    void Cli::showQueue() const
+    {
+        std::cout << _player->getPlaybackQueue()->toString();
+    }
+
+    void Cli::loop(const std::string &command)
+    {
+        if (command == "on")
+        {
+            if (_player->isLooping())
+            {
+                std::cout << "O loop já está ativado." << std::endl;
+                return;
+            }
+            _player->setLooping();
+        }
+        else if (command == "off")
+        {
+            if (!_player->isLooping())
+            {
+                std::cout << "O loop já está desativado." << std::endl;
+                return;
+            }
+            _player->unsetLooping();
+        }
+    }
 
     bool Cli::doCommand(const std::string &command)
     {
@@ -38,7 +240,6 @@ namespace cli
                 std::getline(ss, playable);
                 if (playable.empty())
                 {
-                    // no argument -> toggle
                     toggleResumePause();
                     return true;
                 }
@@ -49,12 +250,11 @@ namespace cli
                     std::cout << "Não encontrado: " << playable << std::endl;
                     return false;
                 }
-                auto sp = *optPlayable; // shared_ptr<Core::IPlayable>
+                auto sp = *optPlayable;
                 play(*sp);
                 return true;
             }
 
-            // pause/resume
             toggleResumePause();
             return true;
         }
