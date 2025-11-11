@@ -61,30 +61,6 @@ namespace core {
             _albumRepo->save(*album);
         }
         song->setAlbum(*album);
-
-        fs::path originalFile(file.file()->name());
-        std::string baseDir;
-        
-        fs::path publicInputPath(_config.inputPublicPath());
-        fs::path userInputPath(_config.inputUserPath());
-        fs::path originalPath(originalFile);
-        
-        if (fs::equivalent(originalPath.parent_path(), publicInputPath)) {
-            baseDir = _config.publicMusicDirectory();
-        } else if (fs::equivalent(originalPath.parent_path(), userInputPath)) {
-            baseDir = _config.userMusicDirectory();
-        } else {
-            baseDir = _config.publicMusicDirectory();
-        }
-
-        fs::path destPath = fs::path(baseDir) / 
-                           fs::path(artist->getName()) / 
-                           fs::path(album->getName()) / 
-                           originalPath.filename();
-
-        //song->setPath(destPath.string());
-        
-        _songRepo->save(*song);
         
         return song;
     }
@@ -121,17 +97,9 @@ namespace core {
                 if (!f.isNull()) {
 
                     std::shared_ptr<Song> song = readMetadata(f);
+                    _songRepo->save(*song);
                     
-                    std::string baseDestDir = (inputDir == fs::path(_config.inputPublicPath())) 
-                        ? _config.publicMusicDirectory() 
-                        : _config.userMusicDirectory();
-                    
-                    fs::path destPath = fs::path(baseDestDir) / 
-                           fs::path(song->getArtist()->getName()) / 
-                           fs::path(song->getArtist()->getName()) / 
-                           song->getTitle();
-                    
-                    move(filePath, destPath.string());
+                    move(filePath, song->getAudioFilePath());
                         
                 }
             }
