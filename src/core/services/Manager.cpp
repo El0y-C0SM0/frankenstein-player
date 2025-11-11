@@ -1,16 +1,15 @@
 #include "core/services/Manager.hpp"
-#include <stdexcept>
-#include <filesystem>
 
 namespace core {
-    Manager::Manager(const ConfigManager& config,
+    Manager::Manager(ConfigManager& config,
                     std::shared_ptr<SongRepository> songRepo,
                     std::shared_ptr<ArtistRepository> artistRepo,
                     std::shared_ptr<AlbumRepository> albumRepo)
         : _config(config)
         , _songRepo(songRepo)
         , _artistRepo(artistRepo)
-        , _albumRepo(albumRepo) {}
+        , _albumRepo(albumRepo)
+        , _usersManager(UsersManager(config)) {}
 
     void Manager::move(std::string filePath, std::string newFilePath) {
         fs::path source(filePath);
@@ -31,7 +30,7 @@ namespace core {
         std::shared_ptr<Song> song = std::make_shared<Song>();
         song->setTitle(tag->title().isEmpty() ? "Unknown Title" : tag->title().toCString());
         
-        std::string artistName = tag->artist().isEmpty() ? "Unknown" : tag->artist().toCString();
+        std::string artistName = tag->artist().isEmpty() ? "Unknown Artist" : tag->artist().toCString();
         std::vector<std::shared_ptr<Artist>> artists = _artistRepo->findByName(artistName);
         std::shared_ptr<Artist> artist;
         
@@ -43,7 +42,7 @@ namespace core {
         }
         song->setArtist(artist);
         
-        std::string albumTitle = tag->album().isEmpty() ? "Unknown" : tag->album().toCString();
+        std::string albumTitle = tag->album().isEmpty() ? "Unknown Album" : tag->album().toCString();
         std::vector<std::shared_ptr<Album>> albums = _albumRepo->findByArtist(artistName);
         std::shared_ptr<Album> album;
         
@@ -73,13 +72,16 @@ namespace core {
     }
 
     void Manager::update() {
-        std::vector<fs::path> inputDirs = {
-            fs::path(_config.inputPublicPath()),
-            fs::path(_config.inputUserPath())
-        };
+        std::shared_ptr<User> currentUser = _usersManager.getCurrentUser();
+        std::shared_ptr<User> publicUser = _usersManager.getPublicUser();
         
-        verifyDir(_config.publicMusicDirectory());
-        verifyDir(_config.userMusicDirectory());
+        std::string userInput = currentUser.get()->getInputPath();
+        std::string publicInput = publicUser.get()->getInputPath();
+
+        verifyDir(userInput);
+        verifyDir(publicInput);
+
+        std::string inputDirs[] = { userInput, publicInput };
         
         for (const auto& inputDir : inputDirs) {
             if (!fs::exists(inputDir)) {
@@ -88,6 +90,11 @@ namespace core {
 
             for (const auto& entry : fs::directory_iterator(inputDir)) {
                 if (!entry.is_regular_file()) {
+                    continue;
+                }
+
+                TagLib::FileRef probe(entry.path().string().c_str());
+                if (probe.isNull() || !probe.audioProperties()) {
                     continue;
                 }
 
@@ -107,10 +114,16 @@ namespace core {
     }
 
     bool Manager::isUpdated() {
-        std::vector<fs::path> inputDirs = {
-            fs::path(_config.inputPublicPath()),
-            fs::path(_config.inputUserPath())
-        };
+        std::shared_ptr<User> currentUser = _usersManager.getCurrentUser();
+        std::shared_ptr<User> publicUser = _usersManager.getPublicUser();
+        
+        std::string userInput = currentUser.get()->getInputPath();
+        std::string publicInput = publicUser.get()->getInputPath();
+
+        verifyDir(userInput);
+        verifyDir(publicInput);
+
+        std::string inputDirs[] = { userInput, publicInput };
         
         for (const auto& dir : inputDirs) {
             if (!fs::exists(dir)) {

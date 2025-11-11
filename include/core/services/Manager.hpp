@@ -14,6 +14,7 @@
 #include "core/bd/ArtistRepository.hpp"
 #include "core/bd/AlbumRepository.hpp"
 #include "core/services/ConfigManager.hpp"
+#include "core/services/UsersManager.hpp"
 
 #include <boost/filesystem.hpp>
 #include <memory>
@@ -32,10 +33,12 @@ namespace core {
 
     class Manager {
     private:
-        const ConfigManager& _config;
+        ConfigManager& _config;
         std::shared_ptr<SongRepository> _songRepo;
         std::shared_ptr<ArtistRepository> _artistRepo;
         std::shared_ptr<AlbumRepository> _albumRepo;
+        core::UsersManager _usersManager;
+
 
         /**
          * @brief Move um arquivo de um diretório para o outro
@@ -73,7 +76,7 @@ namespace core {
          * @param artistRepo Repositório de artistas
          * @param albumRepo Repositório de álbuns
          */
-        Manager(const ConfigManager& config,
+        Manager(ConfigManager& config,
                 std::shared_ptr<SongRepository> songRepo,
                 std::shared_ptr<ArtistRepository> artistRepo,
                 std::shared_ptr<AlbumRepository> albumRepo);
