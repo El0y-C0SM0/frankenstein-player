@@ -54,7 +54,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
         boost::filesystem::remove_all(config.userMusicDirectory());
     }
 
-    core::Manager manager(config);
+    core::Manager manager(config, song_repo.get(), artist_repo.get(), album_repo.get(), user_repo.get());
 
     TEST_CASE("CT-AC-01: Adicionar e organizar um album") {
         SUBCASE("Organizar um álbum") {

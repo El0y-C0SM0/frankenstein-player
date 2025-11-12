@@ -14,6 +14,9 @@
 #include <chrono>
 #include <ctime>
 #include <string>
+#include <iomanip>
+#include <sstream>
+#include <vector>
 
 namespace core {
     class Datetime {
@@ -34,6 +37,12 @@ namespace core {
          * @param dateTimeStr data no formato DD-MM-YYYY
          */
         Datetime(const std::string& datetimeStr);
+
+        /**
+         * @brief Retorna o Objeto Time Point const
+         * 
+         */
+        const std::chrono::system_clock::time_point& getTimePoint() const;
 
         /**
          * @brief Representação padrão de uma data
