@@ -80,12 +80,29 @@ else()
     set(TAGLIB_LINK_TARGET taglib)
 endif()
 
-# 5. SFML (find_package)
-find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
+#5 MiniAudio
+
+# Download do MiniAudio
+include(FetchContent)
+
+FetchContent_Declare(
+    miniaudio
+    URL https://raw.githubusercontent.com/mackron/miniaudio/master/miniaudio.h
+    DOWNLOAD_NO_EXTRACT true
+)
+
+FetchContent_MakeAvailable(miniaudio)
+
+# Cria um target simples
+add_library(miniaudio_lib INTERFACE)
+target_include_directories(miniaudio_lib INTERFACE 
+    ${miniaudio_SOURCE_DIR}
+)
+
+message(STATUS " MiniAudio configurado - suporte a MP3, WAV, OGG, FLAC")
 
 # 6. Boost Filesystem (find_package)
 find_package(Boost 1.65 COMPONENTS filesystem iostreams REQUIRED)
-
 # ============================================================================
 # BIBLIOTECA CORE
 # ============================================================================
@@ -115,7 +132,6 @@ add_library(frankenstein_core STATIC
 # Configura includes
 target_include_directories(frankenstein_core PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${sfml_SOURCE_DIR}/include>
 )
 
 # Inclui taglib se estiver disponível via FetchContent
@@ -141,6 +157,7 @@ target_link_libraries(frankenstein_core PUBLIC
     ${TAGLIB_LINK_TARGET}
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_IOSTREAMS_LIBRARY}
+    miniaudio_lib  
 )
 
 # Aplica flags de cobertura ao core quando apropriado
@@ -149,16 +166,10 @@ if(BUILD_TESTING AND (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"))
     target_link_options(frankenstein_core PRIVATE ${COVERAGE_LINK_FLAGS})
 endif()
 
-# message(STATUS "+++++++++++=SFML_LIBRARIES: ${SFML_FOUND}")
 
-
-# Adiciona SFML se disponível
-if(SFML_FOUND)
-    message(STATUS "SFML encontrada. Habilitando suporte a áudio.")
-    # target_link_libraries(frankenstein_core PUBLIC SFML::audio SFML::system)
-    target_link_libraries(frankenstein_core PUBLIC ${SFML_LIBRARIES})
-    target_compile_definitions(frankenstein_core PUBLIC HAVE_SFML_AUDIO)
-endif()
+# Define que temos suporte a áudio com MiniAudio
+target_compile_definitions(frankenstein_core PUBLIC HAVE_MINI_AUDIO)
+message(STATUS "MiniAudio habilitado para suporte a áudio.")
 
 # Garante C++11 para todos que usarem o core
 target_compile_features(frankenstein_core PUBLIC cxx_std_11)
@@ -179,6 +190,28 @@ else()
 endif()
 
 target_link_libraries(frankenstein_player PRIVATE frankenstein_core)
+
+
+# ============================================================================
+# TESTE DE MÚSICA (ATUALIZADO PARA MINIAUDIO)
+# ============================================================================
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/testMusic.cpp)
+    add_executable(test_music src/testMusic.cpp)
+    
+    # Link DIRETO com MiniAudio e dependências do sistema
+    target_link_libraries(test_music PRIVATE 
+        miniaudio_lib
+        pthread m dl
+    )
+    
+    # Inclui tudo que precisa
+    target_include_directories(test_music PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+    
+    message(STATUS "Teste de música configurado com MiniAudio")
+endif()
 
 # ============================================================================
 # TESTES (apenas se BUILD_TESTING=ON)
@@ -204,16 +237,10 @@ if(BUILD_TESTING)
         add_executable(${test_target} tests/test_main.cpp  ${testfile})
         target_link_libraries(${test_target} PRIVATE frankenstein_core doctest)
 
-        if(SFML_FOUND)
-            # target_link_libraries(${test_target} PRIVATE SFML::audio SFML::system)
-            target_link_libraries(${test_target} PRIVATE ${SFML_LIBRARIES})
-        endif()
-
         target_include_directories(${test_target} PUBLIC
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/tests>
-            &<BUILD_INTERFACE:${SFML_INCLUDE_DIR}>
         )
 
         if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
@@ -239,13 +266,32 @@ endif()
 
 if(WIN32)
     # Configurações específicas para Windows
-    if(BUILD_WITH_SFML AND SFML_FOUND)
-        # Copia DLLs do SFML para o diretório de build
-        add_custom_command(TARGET frankenstein_player POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${SFML_ROOT}/bin/openal32.dll"
-            $<TARGET_FILE_DIR:frankenstein_player>
-        )
+    # MiniAudio requer algumas bibliotecas no Windows
+    target_link_libraries(frankenstein_core PRIVATE ole32)
+    target_link_libraries(test_music PRIVATE ole32)
+    message(STATUS "Build configurado para Windows com MiniAudio")
+elseif(APPLE)
+    # macOS requer frameworks do Audio
+    target_link_libraries(frankenstein_core PRIVATE 
+        "-framework AudioToolbox"
+        "-framework CoreAudio"
+        "-framework CoreFoundation"
+    )
+    target_link_libraries(test_music PRIVATE 
+        "-framework AudioToolbox"
+        "-framework CoreAudio" 
+        "-framework CoreFoundation"
+    )
+    message(STATUS "Build configurado para macOS com MiniAudio")
+else()
+    # Linux requer ALSA e pthread
+    find_library(ASOUND_LIBRARY asound)
+    if(ASOUND_LIBRARY)
+        target_link_libraries(frankenstein_core PRIVATE ${ASOUND_LIBRARY} pthread)
+        target_link_libraries(test_music PRIVATE ${ASOUND_LIBRARY} pthread)
+        message(STATUS "ALSA encontrada para MiniAudio no Linux")
+    else()
+        message(WARNING "ALSA não encontrada - áudio pode não funcionar no Linux")
     endif()
 endif()
 
@@ -263,3 +309,4 @@ endif()
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Testing enabled: ${BUILD_TESTING}")
 message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "Audio library: MiniAudio")

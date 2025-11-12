@@ -11,16 +11,15 @@
  */
 
 #pragma once
-#include <SFML/Audio/SoundSource.hpp>
-#include <functional>
-#include <memory>
-#include <string>
-#include <vector>
-
 #include "core/entities/Entity.hpp"
 #include "core/entities/User.hpp"
 #include "core/interfaces/IPlayable.hpp"
 #include "core/interfaces/IPlayableObject.hpp"
+#include <functional>
+#include <memory>
+#include <miniaudio.h>
+#include <string>
+#include <vector>
 
 namespace core {
     // Forward declaration
@@ -53,6 +52,7 @@ namespace core {
         std::string _genre;
         int _year;
         bool _metadata_loaded;
+        ma_decoder_config decoderConfig;
 
         std::function<std::shared_ptr<Artist>()> artistLoader;
         std::function<std::vector<std::shared_ptr<Artist>>()>
@@ -66,9 +66,9 @@ namespace core {
         Song();
 
         // TODO DOCUMENTACAO
-        Song(const std::string& title,
-             std::shared_ptr<Artist>& artist,
-             std::shared_ptr<Album>& album);
+        Song(const std::string &title,
+             std::shared_ptr<Artist> &artist,
+             std::shared_ptr<Album> &album);
 
         //            Song song(song_id, file_path, title, artist_id);
         Song(unsigned id,
@@ -85,9 +85,9 @@ namespace core {
          * @param artist id artist
          */
         Song(unsigned id,
-             const std::string& title,
-             unsigned& artist,
-             unsigned& user_id);
+             const std::string &title,
+             unsigned &artist,
+             unsigned &user_id);
         /**
          * @brief Construtor da classe Song
          * @param id Identificador único da música
@@ -95,7 +95,7 @@ namespace core {
          * @param title Título da música
          * @param artist Artista/banda
          */
-        Song(const std::string& title, Artist& artist, Album& album, User& user
+        Song(const std::string &title, Artist &artist, Album &album, User &user
              // std::unique_ptr<User>& user); Acredito que pasar usuario aqui
              // nao é bom pois é validado pelo usuario da maquina
         );
@@ -160,62 +160,62 @@ namespace core {
          * @brief Define o usuário dono da música
          * @param user Novo usuário
          */
-        void setUser(const User& user);
+        void setUser(const User &user);
         /**
          * @brief Define o título da música
          * @param title Novo título
          */
-        void setTitle(const std::string& title);
+        void setTitle(const std::string &title);
         /**
          * @brief Define o artista principal
          * @param artist Novo artista
          */
-        void setArtist(std::shared_ptr<Artist>& artist);
+        void setArtist(std::shared_ptr<Artist> &artist);
 
         /*
          * @brief Adciona um artista feat a musica
          * @param artist Artista  a ser adicionado
          */
         void
-        setFeaturingArtists(std::shared_ptr<Artist>&
-                                artist);  // TODO overloard p passar o vector
+        setFeaturingArtists(std::shared_ptr<Artist> &
+                                artist); // TODO overloard p passar o vector
         /**
          * @brief Define a função para carregar o artista
          * @param loader Função que retorna um ponteiro compartilhado para o
          * artista
          */
         void
-        setArtistLoader(const std::function<std::shared_ptr<Artist>()>& loader);
+        setArtistLoader(const std::function<std::shared_ptr<Artist>()> &loader);
         /**
          * @brief Define a função para carregar os artistas colaboradores
          * @param loader Função que retorna um vetor de ponteiros compartilhados
          * para os artistas colaboradores
          */
         void setFeaturingArtistsLoader(
-            const std::function<std::vector<std::shared_ptr<Artist>>()>&
+            const std::function<std::vector<std::shared_ptr<Artist>>()> &
                 loader);
         /**
          * @brief Define os artistas colaboradores (featuring)
          * @param artists Vetor de artistas colaboradores
          */
-        void setFeaturingArtists(const std::vector<Artist>& artists);
+        void setFeaturingArtists(const std::vector<Artist> &artists);
         /**
          * @brief Define função para carregar o álbum
          * @param loader Função que retorna um ponteiro compartilhado para o
          * álbum
          */
         void
-        setAlbumLoader(const std::function<std::shared_ptr<Album>()>& loader);
+        setAlbumLoader(const std::function<std::shared_ptr<Album>()> &loader);
         /**
          * @brief Define o álbum
          * @param album Novo álbum
          */
-        void setAlbum(const Album& album);
+        void setAlbum(const Album &album);
         /**
          * @brief Define o gênero
          * @param genre Novo gênero
          */
-        void setGenre(const std::string& genre);
+        void setGenre(const std::string &genre);
         /**
          * @brief Define o ano de lançamento
          * @param year Novo ano
@@ -261,14 +261,14 @@ namespace core {
          * @param other Song a ser comparada
          * @return true se as entidades forem iguais, false caso contrário
          */
-        bool operator==(const Entity& other) const override;
+        bool operator==(const Entity &other) const override;
 
         /**
          * @brief Compara duas Song para desigualdade
          * @param other Song a ser comparada
          * @return true se as entidades forem diferentes, false caso contrário
          */
-        bool operator!=(const Entity& other) const override;
+        bool operator!=(const Entity &other) const override;
 
         /**
          * @brief Obtém o caminho do arquivo de áudio
@@ -276,5 +276,5 @@ namespace core {
          */
         std::string getAudioFilePath() const override;
 
-    };  // namespace core
-}  // namespace core
+    }; // namespace core
+} // namespace core

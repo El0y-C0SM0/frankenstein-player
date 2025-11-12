@@ -148,25 +148,25 @@ namespace core {
          * implementação)
          * @param path
          */
-        void setFilePath(std::string& path);
+        void setFilePath(std::string &path);
 
         /**
          * @brief Define o artista do álbum
          * @param artist Novo nome do artista
          */
-        void setArtist(const std::shared_ptr<Artist>& artist);
+        void setArtist(const std::shared_ptr<Artist> &artist);
 
         /**
          * @brief Define os artistas colaboradores (featuring)
          * @param artists Vetor de artistas colaboradores
          */
-        void setFeaturingArtists(const std::vector<Artist>& artists);
+        void setFeaturingArtists(const std::vector<Artist> &artists);
 
         /**
          * @brief Define o gênero do álbum
          * @param genre Novo gênero musical
          */
-        void setGenre(const std::string& genre);
+        void setGenre(const std::string &genre);
 
         /**
          * @brief Define o ano de lançamento
@@ -180,7 +180,7 @@ namespace core {
          * artista
          */
         void
-        setArtistLoader(const std::function<std::shared_ptr<Artist>()>& loader);
+        setArtistLoader(const std::function<std::shared_ptr<Artist>()> &loader);
 
         /**
          * @brief Define a função para carregar os artistas colaboradores do
@@ -189,7 +189,7 @@ namespace core {
          * para os artistas colaboradores
          */
         void setFeaturingArtistsLoader(
-            const std::function<std::vector<std::shared_ptr<Artist>>()>&
+            const std::function<std::vector<std::shared_ptr<Artist>>()> &
                 loader);
 
         /**
@@ -205,14 +205,14 @@ namespace core {
          * @param other Album a ser comparada
          * @return true se as entidades forem iguais, false caso contrário
          */
-        bool operator==(const Entity& other) const override;
+        bool operator==(const Entity &other) const override;
 
         /**
          * @brief Compara dois Albums para desigualdade
          * @param other Album a ser comparada
          * @return true se as entidades forem diferentes, false caso contrário
          */
-        bool operator!=(const Entity& other) const override;
+        bool operator!=(const Entity &other) const override;
 
         /**
          * @brief Obtém os objetos reproduzíveis
@@ -240,7 +240,7 @@ namespace core {
          * para IPlayable
          */
         void setSongsLoader(
-            const std::function<std::vector<std::shared_ptr<IPlayable>>()>&
+            const std::function<std::vector<std::shared_ptr<IPlayable>>()> &
                 loader);
 
         /**
@@ -281,7 +281,7 @@ namespace core {
          * ou nullptr se não encontrada
          */
         std::shared_ptr<IPlayable>
-        findSongByTitle(const std::string& title) override;
+        findSongByTitle(const std::string &title) override;
 
         /**
          * @brief Calcula a duração total do álbum
@@ -324,10 +324,8 @@ namespace core {
         std::vector<std::shared_ptr<Song>> getSongs() const override;
 
         void setSongsLoader(
-            const std::function<std::vector<std::shared_ptr<Song>>()>& loader)
+            const std::function<std::vector<std::shared_ptr<Song>>()> &loader)
             override;
     };
 
-}  // namespace core
-
-#pragma once
+} // namespace core
