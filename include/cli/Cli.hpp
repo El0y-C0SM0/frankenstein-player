@@ -258,12 +258,6 @@ namespace cli
      */
     void searchPlaylist(const std::string &query) const;
 
-    /**
-     * @brief Procura pelos podcasts do usuário.
-     * @param query string de busca.
-     *
-     */
-    void searchPodcast(const std::string &query) const;
 
     /**
      * @brief Mostra a ajuda com os comandos disponíveis.

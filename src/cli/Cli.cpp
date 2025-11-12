@@ -171,13 +171,6 @@ namespace cli
         }
     }
 
-    /*
-        std::string Cli::getCurrentSong() const
-        {
-
-        }
-    */
-
     std::string Cli::getProgress() const
     {
         _player->getProgress();
@@ -214,6 +207,95 @@ namespace cli
             _player->unsetLooping();
         }
     }
+
+    // TODO: implementar (depende de player)
+    /*
+        std::string Cli::getCurrentSong() const
+        {
+            _player->getCurrentSong();
+        }
+
+        void Cli::play(Core::IPlayable &playabel)
+        {
+            _player->play(playabel);
+        }
+
+        void Cli::shuffle()
+        {
+            _player->shuffle();
+        }
+
+        void Cli::like()
+        {
+            _player->likeCurrentSong();
+        }
+        void Cli::deslike()
+        {
+            _player->deslikeCurrentSong();
+        }
+
+        void Cli::addToQueue(Core::IPlayable &playabel)
+        {
+            _player->addToPlaybackQueue(playabel);
+        }
+        void Cli::removeFromQueue(unsigned idx)
+        {
+            _player->removeFromPlaybackQueue(idx);
+        }
+        void Cli::showQueue() const
+        {
+            _player->showPlaybackQueue();
+        }
+        void Cli::showStatus() const
+        {
+            _player->showStatus();
+        }
+
+    */
+
+    // TODO implementar resolvePlayable
+    /*
+        std::optional<std::shared_ptr<Core::IPlayable>> Cli::resolvePlayable(const std::string &str)
+        {
+            return std::nullopt;
+        }
+
+        bool Cli::showPlaylist(Core::IPlayable &playlist)
+        {
+            return false;
+        }
+
+        bool Cli::addToPlaylist(Core::IPlayable &playlist, Core::IPlayable &playabel)
+        {
+            return false;
+        }
+
+        bool Cli::emoveFromPlaylist(Core::IPlayable &playlist, Core::IPlayable &playabel)
+        {
+            return false;
+        }
+
+        bool Cli::removeFromPlaylist(Core::IPlayable &playlist, unsigned int idx)
+        {
+            return false;
+        }
+
+        void Cli::searchMusic(const std::string &query) const
+        {
+        }
+
+        void Cli::searchArtist(const std::string &query) const
+        {
+        }
+
+        void Cli::searchAlbum(const std::string &query) const
+        {
+        }
+
+        void Cli::searchPlaylist(const std::string &query) const
+        {
+        }
+    */
 
     bool Cli::doCommand(const std::string &command)
     {
