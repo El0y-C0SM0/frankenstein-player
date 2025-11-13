@@ -152,14 +152,14 @@ namespace core {
          * @return Ponteiro compartilhado para IPlayable da música encontrada,
          * ou nullptr se não encontrada
          */
-        std::shared_ptr<IPlayable> findSongByTitle(const std::string &title) override;
+        std::shared_ptr<Song> findSongByTitle(const std::string &title) override;
         /**
          * @brief Busca uma música de um artista pelo ID
          * @param songId ID da música a ser buscada
          * @return Ponteiro compartilhado para IPlayable da música encontrada,
          * ou nullptr se não encontrada
          */
-        std::shared_ptr<IPlayable> findSongById(unsigned songId) override;
+        std::shared_ptr<Song> findSongById(unsigned songId) override;
 
         /**
          * @brief Calcula a duração total de um artista
@@ -268,7 +268,7 @@ namespace core {
          * @param song Ponteiro compartilhado para IPlayable representando a
          * música a ser adicionada
          */
-        void addSong(std::shared_ptr<IPlayable> song) override;
+        void addSong(std::shared_ptr<Song> song) override;
 
         /**
          * @brief Adiciona uma música a algum album
@@ -299,8 +299,8 @@ namespace core {
          * @return Ponteiro compartilhado para IPlayable da próxima música, ou
          * nullptr se não houver próxima
          */
-        std::shared_ptr<IPlayable>
-        getNextSong(std::shared_ptr<IPlayable> current) override;
+        std::shared_ptr<Song>
+        getNextSong(std::shared_ptr<Song> current) override;
 
         /**
          * @brief Obtém a música anterios em relação à música atual
@@ -308,8 +308,8 @@ namespace core {
          * @return Ponteiro compartilhado para IPlayable da próxima música, ou
          * nullptr se não houver próxima
          */
-        std::shared_ptr<IPlayable>
-        getPreviousSong(std::shared_ptr<IPlayable> current) override;
+        std::shared_ptr<Song>
+        getPreviousSong(std::shared_ptr<Song> current) override;
 
         /**
          * @brief Obtém a próxima música em relação à música atual do album
@@ -336,7 +336,7 @@ namespace core {
          * @return Ponteiro compartilhado para IPlayable da música na posição
          * especificada, ou nullptr se índice inválido
          */
-        std::shared_ptr<IPlayable> getSongAt(int index) override;
+        std::shared_ptr<Song> getSongAt(int index) override;
 
         /**
          * @brief Obtém a música em uma posição específica de Album
