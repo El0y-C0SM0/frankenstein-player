@@ -1,17 +1,15 @@
 #include "core/services/Manager.hpp"
 
-namespace core {
-    Manager::Manager(ConfigManager& config,
-                    std::shared_ptr<SongRepository> songRepo,
-                    std::shared_ptr<ArtistRepository> artistRepo,
-                    std::shared_ptr<AlbumRepository> albumRepo)
-        : _config(config)
-        , _songRepo(songRepo)
-        , _artistRepo(artistRepo)
-        , _albumRepo(albumRepo)
-        , _usersManager(config) {}
+namespace core
+{
+    Manager::Manager(ConfigManager &config,
+                     std::shared_ptr<SongRepository> songRepo,
+                     std::shared_ptr<ArtistRepository> artistRepo,
+                     std::shared_ptr<AlbumRepository> albumRepo)
+        : _config(config), _songRepo(songRepo), _artistRepo(artistRepo), _albumRepo(albumRepo), _usersManager(config) {}
 
-    void Manager::move(std::string filePath, std::string newFilePath) {
+    void Manager::move(std::string filePath, std::string newFilePath)
+    {
         fs::path source(filePath);
         fs::path destination(newFilePath);
 
@@ -20,8 +18,10 @@ namespace core {
         fs::rename(source, destination);
     }
 
-    std::shared_ptr<Song> Manager::readMetadata(TagLib::FileRef file) {
-        if(file.isNull() || !file.tag()) {
+    std::shared_ptr<Song> Manager::readMetadata(TagLib::FileRef file)
+    {
+        if (file.isNull() || !file.tag())
+        {
             std::cout << "Nenhum metadado encontrado" << std::endl;
         }
 
@@ -33,16 +33,17 @@ namespace core {
         song->setYear(tag->year() == 0 ? 1900 : tag->year());
         // song->setDuration(file.audioProperties() ? file.audioProperties()->length() : 0);
 
-
-
         std::string artistName = tag->artist().isEmpty() ? "Unknown Artist" : tag->artist().toCString();
         std::vector<std::shared_ptr<Artist>> artists = _artistRepo->findByName(artistName);
         std::shared_ptr<Artist> artist;
 
-        if (artists.empty()) {
+        if (artists.empty())
+        {
             artist = std::make_shared<Artist>(artistName, song->getGenre());
             _artistRepo->save(*artist);
-        } else {
+        }
+        else
+        {
             artist = artists[0];
         }
         song->setArtist(artist);
@@ -52,15 +53,18 @@ namespace core {
         std::shared_ptr<Album> album;
 
         bool albumFound = false;
-        for (const std::shared_ptr<Album>& existingAlbum : albums) {
-            if (existingAlbum->getName() == albumTitle) {
+        for (const std::shared_ptr<Album> &existingAlbum : albums)
+        {
+            if (existingAlbum->getName() == albumTitle)
+            {
                 album = existingAlbum;
                 albumFound = true;
                 break;
             }
         }
 
-        if (!albumFound) {
+        if (!albumFound)
+        {
             album = std::make_shared<Album>(albumTitle, artist, song->getGenre());
             album->setYear(song->getYear());
             // album.setUser(song->getUser());
@@ -71,14 +75,17 @@ namespace core {
         return song;
     }
 
-    void Manager::verifyDir(std::string path) {
+    void Manager::verifyDir(std::string path)
+    {
         fs::path dir(path);
-        if (!fs::exists(dir)) {
+        if (!fs::exists(dir))
+        {
             fs::create_directories(dir);
         }
     }
 
-    void Manager::update() {
+    void Manager::update()
+    {
         std::shared_ptr<User> currentUser = _usersManager.getCurrentUser();
         std::shared_ptr<User> publicUser = _usersManager.getPublicUser();
 
@@ -88,39 +95,45 @@ namespace core {
         verifyDir(userInput);
         verifyDir(publicInput);
 
-        std::string inputDirs[] = { userInput, publicInput };
+        std::string inputDirs[] = {userInput, publicInput};
 
-        for (const auto& inputDir : inputDirs) {
-            if (!fs::exists(inputDir)) {
+        for (const auto &inputDir : inputDirs)
+        {
+            if (!fs::exists(inputDir))
+            {
                 continue;
             }
 
-            for (const auto& entry : fs::directory_iterator(inputDir)) {
-                if (!entry.is_regular_file()) {
+            for (const auto &entry : fs::directory_iterator(inputDir))
+            {
+                if (boost::filesystem::is_regular_file(entry.status()))
+                {
                     continue;
                 }
 
                 TagLib::FileRef probe(entry.path().string().c_str());
-                if (probe.isNull() || !probe.audioProperties()) {
+                if (probe.isNull() || !probe.audioProperties())
+                {
                     continue;
                 }
 
                 std::string filePath = entry.path().string();
 
                 TagLib::FileRef f(filePath.c_str());
-                if (!f.isNull()) {
+                if (!f.isNull())
+                {
 
                     std::shared_ptr<Song> song = readMetadata(f);
                     _songRepo->save(*song);
 
                     move(filePath, song->getAudioFilePath());
-
                 }
             }
         }
     }
 
-    bool Manager::isUpdated() {
+    bool Manager::isUpdated()
+    {
         std::shared_ptr<User> currentUser = _usersManager.getCurrentUser();
         std::shared_ptr<User> publicUser = _usersManager.getPublicUser();
 
@@ -130,15 +143,19 @@ namespace core {
         verifyDir(userInput);
         verifyDir(publicInput);
 
-        std::string inputDirs[] = { userInput, publicInput };
+        std::string inputDirs[] = {userInput, publicInput};
 
-        for (const auto& dir : inputDirs) {
-            if (!fs::exists(dir)) {
+        for (const auto &dir : inputDirs)
+        {
+            if (!fs::exists(dir))
+            {
                 continue;
             }
 
-            for (const auto& entry : fs::directory_iterator(dir)) {
-                if (entry.is_regular_file()) {
+            for (const auto &entry : fs::directory_iterator(dir))
+            {
+                if (boost::filesystem::is_regular_file(entry.status()))
+                {
                     return false;
                 }
             }
@@ -147,7 +164,8 @@ namespace core {
         return true;
     }
 
-    void Manager::defineArtist(int songId, int artistId) {
+    void Manager::defineArtist(int songId, int artistId)
+    {
         std::cout << "Método fora do escopo do MVP" << std::endl;
     }
 
