@@ -34,7 +34,7 @@
 namespace core {
 
     #if defined(_WIN32)
-        std::string getSIDCurrentUser() {
+        userid UsersManager::getSIDCurrentUser() const {
             HANDLE tokenHandle = nullptr;
             if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &tokenHandle)) {
                 assert(false && "Erro ao abrir o token do processo.");
@@ -96,7 +96,9 @@ namespace core {
                 for (i = 0; i < dwEntriesRead; i++, pTmpBuf++) {
                     if (pTmpBuf == NULL) break;
 
-                    std::string username = pTmpBuf->usri0_name;
+                    
+                    std::wstring wusername(pTmpBuf->usri0_name);
+                    std::string username(wusername.begin(), wusername.end());   
                     std::string home_path = _configManager->userMusicDirectory();
                     std::string input_path = _configManager->inputUserPath();
                     std::string uid = "";
@@ -265,8 +267,9 @@ namespace core {
 
     std::shared_ptr<User> UsersManager::getCurrentUser() const {
         #if defined(_WIN32)
+            userid current_uid;
             try {
-                userid current_uid = getSIDCurrentUser();
+                current_uid = getSIDCurrentUser();
             } catch (const std::runtime_error &e) {
                 throw std::runtime_error("Erro ao obter o SID do usuário atual: " + std::string(e.what()));
             }

@@ -18,13 +18,6 @@ namespace core {
         _uid(0),
         _is_current_user(false) {}
 
-    User::User(userid uid) :
-        _username(""),
-        _home_path(""),
-        _input_path(""),
-        _uid(uid),
-        _is_current_user(false) {}
-
     User::User(const std::string& username,
                const std::string& home_path,
                const std::string& input_path,

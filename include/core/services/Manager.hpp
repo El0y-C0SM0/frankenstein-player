@@ -19,8 +19,8 @@
 #include <boost/filesystem.hpp>
 #include <memory>
 #ifdef _WIN32
-    #include <tag.h>
-    #include <fileref.h>
+    #include <taglib/tag.h>
+    #include <taglib/fileref.h>
 #elif __linux__
     #include <taglib/tag.h>
     #include <taglib/fileref.h>

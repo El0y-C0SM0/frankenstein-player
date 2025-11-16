@@ -51,7 +51,7 @@ namespace core {
     }
 
     bool UserRepository::save(User& entity) {
-        if (entity.getUID() == 0 && count() > 1)
+        if (entity.getId() == 0 && count() > 1)
             return false;
 
         if (entity.getId() == 0)

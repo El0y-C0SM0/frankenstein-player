@@ -35,7 +35,7 @@ namespace core {
             * @brief Obtém o SID do usuário atual no Windows
             * @return String contendo o SID do usuário atual
             */
-            std::string getSIDCurrentUser();
+            std::string getSIDCurrentUser() const;
 
             /**
             * @brief Obtém a lista de usuários do sistema operacional Windows
@@ -102,7 +102,7 @@ namespace core {
          * @param id ID do usuário a ser obtido
          * @return Ponteiro compartilhado para o usuário encontrado ou nullptr se não encontrado
          */
-        std::shared_ptr<User> getUserById(const uint id) const;
+        std::shared_ptr<User> getUserById(const unsigned id) const;
 
         /**
          * @brief Obtém um usuário pelo ID do OS
