@@ -43,8 +43,8 @@ namespace core {
         std::string _file_path;
         std::string _title;
         unsigned _artist_id;
-        unsigned _user_id;
-        // User _user;
+        unsigned user_id;
+        User _user;
         std::shared_ptr<Artist> _artist;
         std::vector<unsigned> _featuring_artists_ids;
         unsigned _album_id;
@@ -62,44 +62,56 @@ namespace core {
 
     public:
         /**
-         * @brief Construtor vazio
+         * @brief Construtor padrão - inicializa uma música com valores padrão
          */
         Song();
 
-        // TODO DOCUMENTACAO
+        /**
+         * @brief Construtor com título, artista e álbum
+         * @param title Título da música
+         * @param artist Ponteiro compartilhado para o artista principal
+         * @param album Ponteiro compartilhado para o álbum
+         */
         Song(const std::string &title,
              std::shared_ptr<Artist> &artist,
              std::shared_ptr<Album> &album);
 
-        //            Song song(song_id, file_path, title, artist_id);
+        /**
+         * @brief Construtor básico para criação de música com informações essenciais
+         * @param id Identificador único da música
+         * @param file_path Caminho do arquivo de áudio
+         * @param title Título da música
+         * @param artist_id Identificador do artista principal
+         */
         Song(unsigned id,
              std::string file_path,
              std::string title,
              unsigned artist_id);
-        // TODO DOCUMENTACAO
 
         /**
-         * @brief Construtor da classe Song
+         * @brief Construtor para música com ID, título, artista e usuário
          * @param id Identificador único da música
-         * @param file_path Caminho do arquivo de áudio
          * @param title Título da música
-         * @param artist id artist
+         * @param artist Referência para o ID do artista
+         * @param user_id Referência para o ID do usuário proprietário
          */
         Song(unsigned id,
              const std::string &title,
              unsigned &artist,
              unsigned &user_id);
+
         /**
-         * @brief Construtor da classe Song
-         * @param id Identificador único da música
-         * @param file_path Caminho do arquivo de áudio
+         * @brief Construtor completo com objetos relacionados
          * @param title Título da música
-         * @param artist Artista/banda
+         * @param artist Referência para o objeto Artist
+         * @param album Referência para o objeto Album
+         * @param user Referência para o objeto User proprietário
          */
-        Song(const std::string &title, Artist &artist, Album &album, User &user
-             // std::unique_ptr<User>& user); Acredito que pasar usuario aqui
-             // nao é bom pois é validado pelo usuario da maquina
-        );
+        Song(const std::string &title, Artist &artist, Album &album, User &user);
+
+        /**
+         * @brief Destrutor da classe Song
+         */
         ~Song();
 
         // Getters

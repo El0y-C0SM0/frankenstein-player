@@ -7,27 +7,47 @@
 #include <cassert>
 #include <memory>
 #include <miniaudio.h>
+#include <stdexcept>
+#include <taglib/fileref.h>
+#include <taglib/tag.h>
+#include <taglib/tpropertymap.h>
 
 namespace core {
-    Song::Song() {};
+    Song::Song() {
+    }
+
+    Song::Song(const std::string &title,
+               std::shared_ptr<Artist> &artist,
+               std::shared_ptr<Album> &album)
+        : _title(title),
+          _artist(artist),
+          _album(album) {};
 
     Song::Song(unsigned id,
                std::string file_path,
                std::string title,
                unsigned artist_id)
-        : _id(id), _file_path(file_path), _title(title),
+        : _id(id),
+          _file_path(std::move(file_path)),
+          _title(std::move(title)),
           _artist_id(artist_id) {};
 
     Song::Song(unsigned id,
                const std::string &title,
                unsigned &artist,
                unsigned &user_id)
-        : _id(id), _title(title), _artist_id(artist), _user_id(user_id) {};
+        : _id(id),
+          _title(title),
+          _artist_id(artist),
+          user_id(user_id)
+    // Construtor focado em IDs para integração com banco de dados
+    {};
 
-    Song::Song(const std::string &title,
-               std::shared_ptr<Artist> &artist,
-               std::shared_ptr<Album> &album)
-        : _title(title), _artist(artist), _album(album) {};
+    Song::Song(const std::string &title, Artist &artist, Album &album, User &user)
+        : _title(title),
+          _user(user),
+          _artist(std::make_shared<Artist>(artist)),
+          _album(std::make_shared<Album>(album)) {};
 
     Song::~Song() = default;
 
@@ -50,8 +70,8 @@ namespace core {
     };
 
     std::vector<std::shared_ptr<const Artist>> getFeaturingArtists() {
-        // temos apenas _featuring_artists_ids, precisa entao buscar no BD.
-        std::vector<std::shared_ptr<const Artist>> _artist;
+        // TODO.
+        return std::vector<std::shared_ptr<const Artist>>();
     };
 
     std::shared_ptr<const Album> Song::getAlbum() const {
@@ -59,6 +79,30 @@ namespace core {
     };
 
     int Song::getDuration() const {
+        if (_duration > 0) {
+            return _duration;
+        }
+
+        if (_file_path.empty()) {
+            throw std::runtime_error("Caminho do arquivo está vazio para a música: " + _title);
+        }
+        try {
+            TagLib::FileRef file(_file_path.c_str());
+            if (file.isNull()) {
+                throw std::runtime_error("Não foi possível abrir o arquivo: " + _file_path);
+            }
+            if (!file.audioProperties()) {
+                throw std::runtime_error("Arquivo não contém propriedades de áudio: " + _file_path);
+            }
+
+            int duration = file.audioProperties()->lengthInSeconds();
+            const_cast<Song *>(this)->_duration = duration;
+
+            return duration;
+        } catch (const std::exception &e) {
+            throw std::runtime_error(std::string("Falha ao obter duração de '") +
+                                     _file_path + "': " + e.what());
+        }
     }
 
     std::string Song::getGenre() const {
@@ -69,6 +113,10 @@ namespace core {
         return _year;
     };
 
+    std::shared_ptr<User> Song::getUser() const {
+        return std::make_shared<User>(_user);
+    };
+
     // Setters
 
     void Song::setUser(const User &user) {
@@ -76,7 +124,7 @@ namespace core {
         // musica ser compartilhada
         // User seria por Usuarios do computador
         auto id = user.getId();
-        _user_id = id;
+        _user.setId(id);
     };
 
     void Song::setTitle(const std::string &title) {
@@ -172,8 +220,11 @@ namespace core {
     };
 
     std::string Song::getAudioFilePath() const {
-        // return _user->getBasePath() + "/" + getArtist()->getName() + "/" +
-        //        getAlbum()->getName() + "/" + getTitle() + ".mp3";
-        return "";
+        if (_file_path.empty()) {
+            throw std::invalid_argument("Song não possui caminho de arquivo definido");
+        }
+
+        return _user.getHomePath() + "/" + getArtist()->getName() + "/" +
+               getAlbum()->getName() + "/" + getTitle() + ".mp3";
     };
 } // namespace core

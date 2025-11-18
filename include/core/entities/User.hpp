@@ -38,21 +38,23 @@ namespace core {
         bool _is_current_user;   /*!< Indica se é o usuário atual do sistema */
 
     public:
+        User();
+
         /**
          * @brief Constroi um novo usuário
          *
          * @param _username Nome do usuário
          */
-        User(const std::string& username);
-        User(const std::string& username,
-             const std::string& home_path,
-             const std::string& input_path,
-             const userid& uid);
+        User(const std::string &username);
+        User(const std::string &username,
+             const std::string &home_path,
+             const std::string &input_path,
+             const userid &uid);
         User(unsigned id,
-             const std::string& username,
-             const std::string& home_path,
-             const std::string& input_path,
-             const userid& uid);
+             const std::string &username,
+             const std::string &home_path,
+             const std::string &input_path,
+             const userid &uid);
 
         /**
          * @brief Destrutor de um usuário
@@ -72,7 +74,7 @@ namespace core {
          *
          * @param username Novo nome do usuário
          */
-        void setUsername(const std::string& username);
+        void setUsername(const std::string &username);
 
         /**
          * @brief Obtém o caminho do diretório home do usuário
@@ -86,7 +88,7 @@ namespace core {
          *
          * @param home_path Novo caminho do diretório home
          */
-        void setHomePath(const std::string& home_path);
+        void setHomePath(const std::string &home_path);
 
         /**
          * @brief Obtém o caminho do diretório de entrada de músicas do usuário
@@ -100,7 +102,7 @@ namespace core {
          *
          * @param input_path Novo caminho do diretório de entrada
          */
-        void setInputPath(const std::string& input_path);
+        void setInputPath(const std::string &input_path);
 
         /**
          * @brief Obtém o ID do usuário no OS
@@ -114,7 +116,7 @@ namespace core {
          *
          * @param uid Novo ID do usuário
          */
-        void setUID(const userid& uid);
+        void setUID(const userid &uid);
 
         /**
          * @brief Verifica se é o usuário atual do sistema
@@ -132,14 +134,14 @@ namespace core {
          * @param other Outro usuário para comparação
          * @return true se forem iguais, false caso contrário
          */
-        bool operator==(const Entity& other) const override;
+        bool operator==(const Entity &other) const override;
 
         /**
          * @brief Compara dois usuários para desigualdade
          * @param other Outro usuário para comparação
          * @return true se forem diferentes, false caso contrário
          */
-        bool operator!=(const Entity& other) const override;
+        bool operator!=(const Entity &other) const override;
     };
 
-}  // namespace core
+} // namespace core
