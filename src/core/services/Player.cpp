@@ -54,8 +54,9 @@ namespace core {
     }
 
     bool Player::loadCurrentSong() {
-        if (!_audioInitialized)
+        if (!_audioInitialized) {
             return false;
+        }
 
         auto currentQueue = getCurrentQueue();
         if (!currentQueue || _currentSongIndex < 0 || _currentSongIndex >= currentQueue->size()) {

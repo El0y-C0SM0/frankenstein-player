@@ -44,7 +44,7 @@ namespace core {
         std::string _genre;
         std::vector<std::shared_ptr<Song>> _songs;
         std::vector<std::shared_ptr<Album>> _albums;
-        std::shared_ptr<User> user;
+        std::shared_ptr<User> user; // TODO Trocar para User?
         unsigned _user_id;
 
         std::function<std::vector<std::shared_ptr<Song>>()> songsLoader;
@@ -268,7 +268,7 @@ namespace core {
          * @param song Ponteiro compartilhado para IPlayable representando a
          * música a ser adicionada
          */
-        void addSong(Song& song) override;
+        void addSong(Song &song) override;
 
         /**
          * @brief Adiciona uma música a algum album

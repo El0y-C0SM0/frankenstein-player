@@ -248,7 +248,7 @@ namespace core {
          * @param song Ponteiro compartilhado para IPlayable representando a
          * música a ser adicionada
          */
-        void addSong(Song& song) override;
+        void addSong(Song &song) override;
 
         /**
          * @brief Move uma música para uma nova posição no álbum
@@ -302,7 +302,7 @@ namespace core {
          * nullptr se não houver próxima
          */
         std::shared_ptr<Song>
-        getNextSong(Song& current) override;
+        getNextSong(Song &current) override;
 
         /**
          * @brief Obtém a música anterior em relação à música atual
@@ -311,7 +311,7 @@ namespace core {
          * nullptr se não houver anterior
          */
         std::shared_ptr<Song>
-        getPreviousSong(Song& current) override;
+        getPreviousSong(Song &current) override;
 
         /**
          * @brief Obtém a música em uma posição específica do álbum
