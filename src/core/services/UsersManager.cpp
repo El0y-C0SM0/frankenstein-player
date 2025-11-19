@@ -222,7 +222,6 @@ namespace core {
         for (const auto& os_user : os_users) {
             bool user_exists = false;
 
-
             for (auto& stored_user : users_db) {
                 if ((*stored_user) != (*os_user))
                     continue;
@@ -233,10 +232,13 @@ namespace core {
                     stored_user->getHomePath() == os_user->getHomePath() &&
                     stored_user->getInputPath() == os_user->getInputPath())
                     break;
-
                 stored_user->setUsername(os_user->getUsername());
+                try {
                 stored_user->setHomePath(_configManager->userMusicDirectory());
                 stored_user->setInputPath(_configManager->inputUserPath());
+                } catch (const std::invalid_argument &e) {
+                    throw std::runtime_error("Erro ao atualizar os caminhos do usuário: " + std::string(e.what()));
+                }
 
                 if (!_userRepository->save(*stored_user)) {
                     throw std::runtime_error("Erro ao atualizar o usuário no banco de dados.");
