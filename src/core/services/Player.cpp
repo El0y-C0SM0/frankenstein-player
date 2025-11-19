@@ -1,6 +1,7 @@
 #include "core/services/Player.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace core {
 
@@ -15,16 +16,22 @@ namespace core {
 
         ma_result result = ma_engine_init(NULL, &_audioEngine);
         if (result != MA_SUCCESS) {
-            std::cerr << "Falha ao iniciar Audio Engine: " << result << std::endl;
-            _audioInitialized = false;
-        } else {
-            _audioInitialized = true;
-            std::cout << "Audio engine inicializado" << std::endl;
+            std::string errorMsg = "Falha ao iniciar Audio Engine: " + std::to_string(result);
+            std::cerr << errorMsg << std::endl;
+            throw std::runtime_error(errorMsg);
         }
-        // inicializando um som vazio.
+
+        _audioInitialized = true;
+        std::cout << "Audio engine inicializado" << std::endl;
+
         ma_sound_config soundConfig = ma_sound_config_init();
         soundConfig.pFilePath = "";
-        ma_sound_init_ex(&_audioEngine, &soundConfig, &_currentSound);
+        result = ma_sound_init_ex(&_audioEngine, &soundConfig, &_currentSound);
+        if (result != MA_SUCCESS) {
+            ma_engine_uninit(&_audioEngine);
+            _audioInitialized = false;
+            throw std::runtime_error("Falha ao iniciar ma_sound: " + std::to_string(result));
+        }
     }
 
     Player::Player(const core::PlaybackQueue &tracks) : Player() {
@@ -39,10 +46,10 @@ namespace core {
     }
 
     std::shared_ptr<PlaybackQueue> Player::getCurrentQueue() const {
-        if (_currentQueueIndex >= 0 && _currentQueueIndex < _queue.size()) {
+        if (_currentQueueIndex >= 0 && static_cast<size_t>(_currentQueueIndex) < _queue.size()) {
             return _queue[_currentQueueIndex];
         }
-        return nullptr;
+        throw std::out_of_range("Sem queue atual");
     }
 
     void Player::sound_end_callback(void *pUserData, ma_sound *pSound) {
@@ -55,19 +62,19 @@ namespace core {
 
     bool Player::loadCurrentSong() {
         if (!_audioInitialized) {
-            return false;
+            throw std::runtime_error("Audio engine nao inicializado");
         }
 
         auto currentQueue = getCurrentQueue();
-        if (!currentQueue || _currentSongIndex < 0 || _currentSongIndex >= currentQueue->size()) {
-            return false;
+        if (!currentQueue || _currentSongIndex < 0 || static_cast<size_t>(_currentQueueIndex) >= currentQueue->size()) {
+            throw std::runtime_error("Index Song invalido");
         }
 
         cleanupCurrentSound();
 
         _currentSong = currentQueue->at(_currentSongIndex);
         if (!_currentSong) {
-            return false;
+            throw std::runtime_error("Current song é null");
         }
         // TODO logica e filepath no construtor de BD
         std::string filePath = _currentSong->getFilePath();
@@ -76,7 +83,7 @@ namespace core {
 
         if (result != MA_SUCCESS) {
             std::cerr << "Failed to load sound: " << filePath << std::endl;
-            return false;
+            throw std::runtime_error("Falha ao carregar sound do path: " + filePath);
         }
 
         // Configurar callback para quando o som terminar
@@ -98,6 +105,10 @@ namespace core {
         ma_sound_uninit(&_currentSound);
     }
     void Player::addPlaybackQueue(const core::PlaybackQueue &tracks) {
+        if (tracks.empty()) {
+            throw std::invalid_argument("Cannot add empty playback queue");
+        }
+
         _queue.push_back(std::make_shared<core::PlaybackQueue>(tracks));
 
         if (_currentQueueIndex == -1 && !_queue.empty()) {
@@ -110,7 +121,7 @@ namespace core {
 
     void Player::play() {
         if (!_audioInitialized) {
-            return;
+            throw std::runtime_error("Audio engine nao inicializado");
         }
 
         if (_playerState == PlayerState::PAUSED) {
@@ -153,12 +164,12 @@ namespace core {
 
         int nextIndex = _currentSongIndex + 1;
 
-        if (nextIndex >= currentQueue->size()) {
+        if (static_cast<size_t>(nextIndex) >= currentQueue->size()) {
             if (_isLooping) {
                 nextIndex = 0;
             } else {
                 int nextQueueIndex = _currentQueueIndex + 1;
-                if (nextQueueIndex < _queue.size() && !_queue[nextQueueIndex]->empty()) {
+                if (static_cast<size_t>(nextQueueIndex) < _queue.size() && !_queue[nextQueueIndex]->empty()) {
                     _currentQueueIndex = nextQueueIndex;
                     _currentSongIndex = 0;
                 } else {
@@ -198,7 +209,7 @@ namespace core {
     void Player::seek(int seconds) {
 
         if (!_currentSong) {
-            return;
+            throw std::runtime_error("Song atual nao carregado");
         }
 
         ma_uint64 currentFrame;
@@ -226,8 +237,9 @@ namespace core {
     }
 
     unsigned int Player::getElapsedTime() const {
-        if (!_currentSong)
-            return 0;
+        if (!_currentSong) {
+            throw std::runtime_error("Song atual nao carregado");
+        }
 
         ma_uint64 currentFrame;
         ma_sound_get_cursor_in_pcm_frames(&_currentSound, &currentFrame);
@@ -244,7 +256,7 @@ namespace core {
         auto currentQueue = getCurrentQueue();
 
         if (!currentQueue || currentQueue->empty()) {
-            return;
+            throw std::runtime_error("Queue não inicializada");
         }
 
         int prevIndex = _currentSongIndex - 1;
@@ -273,16 +285,25 @@ namespace core {
     }
 
     void Player::setLooping() {
+        if (!_audioInitialized) {
+            throw std::runtime_error("Audio engine nao inicializado");
+        }
         _isLooping = true;
         ma_sound_set_looping(&_currentSound, MA_TRUE);
     }
 
     void Player::unsetLooping() {
+        if (!_audioInitialized) {
+            throw std::runtime_error("Audio engine nao inicializado");
+        }
         _isLooping = false;
         ma_sound_set_looping(&_currentSound, MA_FALSE);
     }
 
     void Player::setVolume(float volume) {
+        if (!_audioInitialized) {
+            throw std::runtime_error("Audio engine nao inicializado");
+        }
         _volume = std::max(0.0f, std::min(volume, 1.0f));
         ma_sound_set_volume(&_currentSound, _volume);
     }
@@ -316,8 +337,9 @@ namespace core {
         return _isLooping;
     }
     float Player::getProgress() const {
-        if (!_currentSong)
-            return 0.0f;
+        if (!_currentSong) {
+            throw std::runtime_error("Song atual nao carregado");
+        }
 
         ma_uint64 lengthInFrames;
         ma_uint64 currentFrame;
@@ -337,8 +359,9 @@ namespace core {
 
     int Player::getPlaylistSize() const {
         auto currentQueue = getCurrentQueue();
-        if (!currentQueue)
-            return 0;
+        if (!currentQueue) {
+            throw std::runtime_error("Queue não inicializada");
+        }
         return currentQueue->size();
     }
 
@@ -358,17 +381,19 @@ namespace core {
 
     bool Player::hasNext() const {
         auto currentQueue = getCurrentQueue();
-        if (!currentQueue)
-            return false;
+        if (!currentQueue) {
+            throw std::runtime_error("Queue não inicializada");
+        }
 
-        return (_currentSongIndex + 1 < currentQueue->size()) ||
-               (_currentQueueIndex + 1 < _queue.size());
+        return (static_cast<size_t>(_currentSongIndex) + 1 < currentQueue->size()) ||
+               (static_cast<size_t>(_currentQueueIndex) + 1 < _queue.size());
     }
 
     bool Player::hasPrevious() const {
         auto currentQueue = getCurrentQueue();
-        if (!currentQueue)
-            return false;
+        if (!currentQueue) {
+            throw std::runtime_error("Queue não inicializada");
+        }
 
         return (_currentSongIndex > 0) ||
                (_currentQueueIndex > 0);
