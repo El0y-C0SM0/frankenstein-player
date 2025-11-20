@@ -13,11 +13,14 @@
 #include "core/entities/Song.hpp"
 #include "core/services/PlaybackQueue.hpp"
 #include <memory>
+#include <miniaudio.h>
 #include <vector>
 
 namespace core {
 
-    enum class PlayerState { STOPPED, PLAYING, PAUSED };
+    enum class PlayerState { STOPPED,
+                             PLAYING,
+                             PAUSED };
 
     /**
      * @class Player
@@ -31,14 +34,33 @@ namespace core {
     private:
         std::vector<std::shared_ptr<core::PlaybackQueue>> _queue;
         std::shared_ptr<core::Song>
-            _currentSong;   // chamar metodo de PlayBackQueue getCurrentSong
-        int _currentIndex;  // chamar do metodo PlayBackQueue findCurrentIndex
-        PlayerState playerState;
-        bool _isPlaying;
+            _currentSong;
+        int _currentQueueIndex;
+        int _currentSongIndex;
+        PlayerState _playerState;
         bool _isLooping;
-        bool _isStopped;
         float _volume;
         float _previousVolume;
+
+        // miniaudio
+        ma_engine _audioEngine;
+        ma_sound _currentSound;
+        bool _audioInitialized;
+
+        /**
+         * @brief Callback para quando uma música termina
+         */
+        static void sound_end_callback(void *pUserData, ma_sound *pSound);
+
+        /**
+         * @brief Carrega e prepara uma música para reprodução
+         */
+        bool loadCurrentSong();
+
+        /**
+         * @brief Limpa o som atual
+         */
+        void cleanupCurrentSound();
 
     public:
         /**
@@ -53,7 +75,7 @@ namespace core {
          * Inicializa o player com estado playing e volume máximo.
          * Deve criar o vetor de _queue com tracks no index 0
          */
-        Player(const core::PlaybackQueue& tracks);
+        Player(const core::PlaybackQueue &tracks);
 
         /**
          * @brief Destrutor
@@ -61,11 +83,13 @@ namespace core {
          */
         ~Player();
 
+        std::shared_ptr<PlaybackQueue> getCurrentQueue() const;
+
         /**
          * @brief Adicionar uma Queue ao vector _queue
          *
          */
-        void addPlaybackQueue(const core::PlaybackQueue& tracks);
+        void addPlaybackQueue(const core::PlaybackQueue &tracks);
 
         /**
          * @brief Reproduz música atual na Queue
@@ -158,7 +182,8 @@ namespace core {
          * @brief Define o nível de volume do player
          * @param volume Novo nível de volume entre 0.0 (mudo) e 1.0 (máximo)
          */
-        void setVolume(float& volume);
+
+        void setVolume(float volume);
 
         /**
          * @brief Obtém o nível de volume atual
@@ -241,5 +266,5 @@ namespace core {
          */
         bool hasPrevious() const;
     };
-}  // namespace core
+} // namespace core
 #pragma once

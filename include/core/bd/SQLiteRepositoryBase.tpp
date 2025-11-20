@@ -106,6 +106,14 @@ namespace core {
     }
 
     template <typename T>
+    bool SQLiteRepositoryBase<T>::save(T& entity) {
+        if (entity.getId() == 0)
+            return insert(entity);
+        else
+            return update(entity);
+    }
+
+    template <typename T>
     size_t SQLiteRepositoryBase<T>::count() const {
         std::string sql = "SELECT COUNT(1) FROM " + _table_name;
         SQLite::Statement query = prepare(sql);

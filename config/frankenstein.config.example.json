@@ -6,7 +6,7 @@
   },
   "paths": {
     "public_user": "/opt/frankenstein/",
-    "user": "~/Musicas/frankenstein/",
+    "user_home": "~/Musicas/frankenstein/",
     "input_user": "~/Musicas/frankenstein/input/",
     "input_public": "/opt/frankenstein/input/",
     "logs": "/var/log/frankenstein/"

@@ -24,8 +24,8 @@ protected:
   Datetime _dataCriacao; /** Data de criação */
 
 public:
-    Entity() = default;
-    Entity(unsigned id) : _id(id) {}
+    Entity() : _id(0), _dataCriacao(Datetime()) {};
+    Entity(unsigned id) : _id(id), _dataCriacao(Datetime()) {}
   virtual ~Entity() = default;
 
   /**

@@ -34,8 +34,6 @@ namespace core {
 
             mapped_file.close();
         } else {
-            assert(false && "Schema file not found");
-            // TODO throw exception
             throw std::runtime_error("Schema file not found");
         }
     }

@@ -14,12 +14,13 @@
 #include "core/bd/ArtistRepository.hpp"
 #include "core/bd/AlbumRepository.hpp"
 #include "core/services/ConfigManager.hpp"
+#include "core/services/UsersManager.hpp"
 
 #include <boost/filesystem.hpp>
 #include <memory>
 #ifdef _WIN32
-    #include <tag.h>
-    #include <fileref.h>
+    #include <taglib/tag.h>
+    #include <taglib/fileref.h>
 #elif __linux__
     #include <taglib/tag.h>
     #include <taglib/fileref.h>
@@ -32,6 +33,12 @@ namespace core {
 
     class Manager {
     private:
+        ConfigManager& _config;
+        std::shared_ptr<SongRepository> _songRepo;
+        std::shared_ptr<ArtistRepository> _artistRepo;
+        std::shared_ptr<AlbumRepository> _albumRepo;
+        core::UsersManager _usersManager;
+
 
         /**
          * @brief Move um arquivo de um diretório para o outro
@@ -63,10 +70,16 @@ namespace core {
     public:
 
         /**
-         * @brief Construtor padrão
+         * @brief Construtor da classe Manager
          * @param config Instância da configuração do sistema
+         * @param songRepo Repositório de músicas
+         * @param artistRepo Repositório de artistas
+         * @param albumRepo Repositório de álbuns
          */
-        Manager(const ConfigManager& config);
+        Manager(ConfigManager& config,
+                std::shared_ptr<SongRepository> songRepo,
+                std::shared_ptr<ArtistRepository> artistRepo,
+                std::shared_ptr<AlbumRepository> albumRepo);
 
         /***
          * @brief Atualiza toda a organização das músicas com base no diretório temporário

@@ -25,8 +25,6 @@ namespace core {
         boost::filesystem::path config_file(_config_file_path);
 
         if (!boost::filesystem::exists(config_file)) {
-            assert(false && "Config file not found");
-            // TODO exception
             throw std::runtime_error("Config file not found");
         }
 
@@ -35,8 +33,7 @@ namespace core {
 
         if (mapped_file.data() == nullptr) {
             mapped_file.close();
-            assert(false && "Failed to map config file, file data is null");
-            // TODO throw exception
+
             throw std::runtime_error("Failed to map config file, file data is null");
         }
 
@@ -46,8 +43,7 @@ namespace core {
             _config_data = nlohmann::json::parse(config_content);
         } catch (const nlohmann::json::parse_error& e) {
             mapped_file.close();
-            assert(false && "Failed to parse config file, invalid JSON format");
-            // TODO throw exception
+
             throw std::runtime_error("Failed to parse config file, invalid JSON format");
         }
         mapped_file.close();
@@ -71,8 +67,7 @@ namespace core {
 
     std::string ConfigManager::databasePath() const {
         if (!_config_data.contains("database")) {
-            assert(false && "Database configuration not found" && _config_data.contains("database"));
-            // TODO throw exception
+
             throw std::runtime_error("Database configuration not found");
         }
 
@@ -81,13 +76,9 @@ namespace core {
 
     std::string ConfigManager::databaseSchemaPath() const {
         if (!_config_data.contains("database")) {
-            assert(false && "Database configuration not found");
-            // TODO throw exception
             throw std::runtime_error("Database configuration not found");
         } else if (!_config_data["database"].contains("schema_path") ||
                    _config_data["database"]["schema_path"].get<std::string>().empty()) {
-            assert(false && "Database schema path not found");
-            // TODO throw exception
             throw std::runtime_error("Database schema path not found");
         }
 
@@ -96,28 +87,18 @@ namespace core {
 
     void ConfigManager::validateConfigPaths() const {
         if (!_config_data.contains("paths")) {
-            assert(false && "Paths configuration not found");
-            // TODO throw exception
             throw std::runtime_error("Paths configuration not found");
         } else if (!_config_data["paths"].contains("user_home") ||
                    _config_data["paths"]["user_home"].get<std::string>().empty()) {
-            assert(false && "User music directory not found");
-            // TODO throw exception
             throw std::runtime_error("User music directory not found");
         } else if (!_config_data["paths"].contains("public_user") ||
             _config_data["paths"]["public_user"].get<std::string>().empty()) {
-            assert(false && "Public music directory not found");
-            // TODO throw exception
             throw std::runtime_error("Public music directory not found");
         } else if (!_config_data["paths"].contains("input_public") ||
             _config_data["paths"]["input_public"].get<std::string>().empty()) {
-            assert(false && "Input public path not found");
-            // TODO throw exception
             throw std::runtime_error("Input public path not found");
         } else if (!_config_data["paths"].contains("input_user") ||
             _config_data["paths"]["input_user"].get<std::string>().empty()) {
-            assert(false && "Input user path not found");
-            // TODO throw exception
             throw std::runtime_error("Input user path not found");
         }
     }

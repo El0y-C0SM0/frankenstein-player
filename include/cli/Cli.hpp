@@ -280,11 +280,13 @@ namespace cli
      */
     Cli(core::ConfigManager &config_manager);
 
-    /**
-     * @brief Destrutor de um objeto Cli
-     *
-     */
-    ~Cli();
+        /**
+         * @brief Destrutor de um objeto Cli
+         *
+         */
+        ~Cli();
+
+        void start();
 
     /**
      * @brief Recebe, trata e realiza uma string com o comando completo a ser realizado.

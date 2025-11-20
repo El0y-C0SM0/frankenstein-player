@@ -38,16 +38,16 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             artist =
                 std::make_shared<core::Artist>(short_song_mock.artist, "Test");
             album = std::make_shared<core::Album>(short_song_mock.album,
-                                                  artist->getName(),
+                                                  artist,
                                                   artist->getGenre());
 
             short_song = std::make_shared<core::Song>(short_song_mock.title,
-                                                      *album,
                                                       *artist,
+                                                      *album,
                                                       *user);
             medium_song = std::make_shared<core::Song>(medium_song_mock.title,
-                                                       *album,
                                                        *artist,
+                                                       *album,
                                                        *user);
 
             album->setSongsLoader([this]() {
@@ -92,12 +92,12 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             std::shared_ptr<const core::Song> cur_song =
                 player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
-            CHECK(*cur_song == *short_song);
+            CHECK_EQ(*cur_song, *short_song);
 
             player.pause();
         }
@@ -108,17 +108,17 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
             std::shared_ptr<const core::Song> cur_song =
                 player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
-            CHECK(*cur_song == *short_song);
+            CHECK_EQ(*cur_song, *short_song);
 
             player.fastForward(2);
             std::shared_ptr<const core::Song> next_song =
                 player.getPlaybackQueue()->getCurrentSong();
             CHECK(next_song != nullptr);
-            CHECK(*next_song == *medium_song);
+            CHECK_EQ(*next_song, *medium_song);
 
             player.pause();
         }
@@ -129,17 +129,17 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
             std::shared_ptr<const core::Song> cur_song =
                 player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
-            CHECK(*cur_song == *short_song);
+            CHECK_EQ(*cur_song, *short_song);
 
             player.fastForward(2);
             std::shared_ptr<const core::Song> next_song =
                 player.getPlaybackQueue()->getCurrentSong();
             CHECK(next_song != nullptr);
-            CHECK(*next_song == *medium_song);
+            CHECK_EQ(*next_song, *medium_song);
 
             player.pause();
         }
@@ -148,10 +148,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player;
             player.play();
 
-            CHECK(player.isPlaying() == false);
+            CHECK_EQ(player.isPlaying(), false);
             std::shared_ptr<const core::Song> cur_song =
                 player.getPlaybackQueue()->getCurrentSong();
-            CHECK(cur_song == nullptr);
+            CHECK_EQ(cur_song, nullptr);
         }
     }
 
@@ -162,11 +162,11 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             player.pause();
-            CHECK(player.isPlaying() == false);
-            CHECK(player.isPaused() == true);
+            CHECK_EQ(player.isPlaying(), false);
+            CHECK_EQ(player.isPaused(), true);
         }
 
         SUBCASE("Pause Pause") {
@@ -175,15 +175,15 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             player.pause();
-            CHECK(player.isPlaying() == false);
-            CHECK(player.isPaused() == true);
+            CHECK_EQ(player.isPlaying(), false);
+            CHECK_EQ(player.isPaused(), true);
 
             player.pause();
-            CHECK(player.isPlaying() == false);
-            CHECK(player.isPaused() == true);
+            CHECK_EQ(player.isPlaying(), false);
+            CHECK_EQ(player.isPaused(), true);
         }
 
         SUBCASE("Pause Resume") {
@@ -192,20 +192,20 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             player.pause();
-            CHECK(player.isPlaying() == false);
-            CHECK(player.isPaused() == true);
+            CHECK_EQ(player.isPlaying(), false);
+            CHECK_EQ(player.isPaused(), true);
 
             player.resume();
-            CHECK(player.isPlaying() == true);
-            CHECK(player.isPaused() == false);
+            CHECK_EQ(player.isPlaying(), true);
+            CHECK_EQ(player.isPaused(), false);
 
             std::shared_ptr<const core::Song> cur_song =
                 player.getPlaybackQueue()->getCurrentSong();
             CHECK(cur_song != nullptr);
-            CHECK(*cur_song == *short_song);
+            CHECK_EQ(*cur_song, *short_song);
         }
     }
 
@@ -218,7 +218,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             unsigned start_time = player.getElapsedTime();
 
@@ -226,7 +226,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             unsigned new_time = player.getElapsedTime();
 
             CHECK(new_time >= start_time + 2);
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
         }
 
         SUBCASE("Retroceder 2 segundos") {
@@ -235,7 +235,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             player.fastForward(3);
             unsigned start_time = player.getElapsedTime();
@@ -244,7 +244,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             unsigned new_time = player.getElapsedTime();
 
             CHECK(new_time <= start_time - 2);
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
         }
 
         SUBCASE("Reiniciar música") {
@@ -253,13 +253,13 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             player.fastForward(2);
             unsigned new_time = player.getElapsedTime();
 
             player.restart();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             unsigned restarted_time = player.getElapsedTime();
             CHECK(restarted_time < new_time);
@@ -271,12 +271,12 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             core::Player player(queue);
 
             player.play();
-            CHECK(player.isPlaying() == true);
+            CHECK_EQ(player.isPlaying(), true);
 
             unsigned start_time = player.getElapsedTime();
 
             CHECK_NOTHROW(player.fastForward(5000));
-            CHECK(player.isPlaying() == false);
+            CHECK_EQ(player.isPlaying(), false);
         }
     }
 }

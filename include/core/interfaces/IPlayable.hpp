@@ -34,7 +34,7 @@ public:
    * @return Vetor de ponteiros compartilhados para objetos reproduzíveis
    */
   virtual std::vector<std::shared_ptr<IPlayableObject>>
-  getPlayableObjects() const;
+  getPlayableObjects() const = 0;
 };
 
 } // namespace core

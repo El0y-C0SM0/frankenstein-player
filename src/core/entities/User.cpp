@@ -18,13 +18,6 @@ namespace core {
         _uid(0),
         _is_current_user(false) {}
 
-    User::User(userid uid) :
-        _username(""),
-        _home_path(""),
-        _input_path(""),
-        _uid(uid),
-        _is_current_user(false) {}
-
     User::User(const std::string& username,
                const std::string& home_path,
                const std::string& input_path,
@@ -66,6 +59,8 @@ namespace core {
     }
 
     void User::setHomePath(const std::string& home_path) {
+        if (home_path.empty())
+            throw std::invalid_argument("Home path do usuario não pode ser vazio");
         _home_path = home_path;
     }
 
@@ -78,6 +73,8 @@ namespace core {
     }
 
     void User::setInputPath(const std::string& input_path) {
+        if (input_path.empty())
+            throw std::invalid_argument("Input path do usuario não pode ser vazio");
         _input_path = input_path;
     }
 

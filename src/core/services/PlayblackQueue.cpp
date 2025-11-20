@@ -39,6 +39,8 @@ namespace core {
         add(playable);
     }
 
+    PlaybackQueue::~PlaybackQueue() = default;
+
     size_t PlaybackQueue::getCurrentIndex() const {
         return _aleatory ? _indices_aleatory[_current] : _current;
     }
@@ -53,9 +55,6 @@ namespace core {
                 _queue.push_back(std::dynamic_pointer_cast<Song>(song));
                 count++;
             } else {
-                assert(false && "PlaybackQueue reached its maximum size");
-                break;
-                // TODO throw exception
                 throw std::length_error("PlaybackQueue reached its maximum size");
             }
         }
@@ -87,9 +86,6 @@ namespace core {
                 _queue.push_back(other_queue.at(i));
                 count++;
             } else {
-                assert(false && "PlaybackQueue reached its maximum size");
-                break;
-                // TODO throw exception
                 throw std::length_error("PlaybackQueue reached its maximum size");
             }
         }

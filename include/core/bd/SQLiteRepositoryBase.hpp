@@ -63,6 +63,20 @@ namespace core {
         virtual std::shared_ptr<T>
         mapRowToEntity(SQLite::Statement& query) const = 0;
 
+        /**
+         * @brief Insere uma nova entidade no repositório
+         * @param entity Entidade a ser inserida
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        virtual bool insert(const T& entity) override = 0;
+
+        /**
+         * @brief Atualiza uma entidade existente no repositório
+         * @param entity Entidade a ser atualizada
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        virtual bool update(const T& entity) override = 0;
+
     public:
         SQLiteRepositoryBase(
             std::shared_ptr<SQLite::Database> db,
@@ -108,6 +122,14 @@ namespace core {
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
         bool removeAll() override;
+
+        /**
+         * @brief Salva ou atualiza uma entidade no repositório
+         * @copydoc IRepository::save
+         * @param entity Entidade a ser salva ou atualizada
+         * @return true se a operação foi bem-sucedida, false caso contrário
+         */
+        virtual bool save(T& entity) override;
 
         /**
          * @brief Remove uma entidade pelo ID

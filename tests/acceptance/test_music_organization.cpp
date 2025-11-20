@@ -35,14 +35,14 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
         auto songs = song_repo->findByTitleAndUser(song.title, user);
 
         CHECK(songs.size() > 0);
-        CHECK(songs[0]->getTitle() == song.title);
-        CHECK(songs[0]->getDuration() == song.duracao);
+        CHECK_EQ(songs[0]->getTitle(), song.title);
+        CHECK_EQ(songs[0]->getDuration(), song.duracao);
         if (!song.artist.empty())
-            CHECK(songs[0]->getArtist()->getName() == song.artist);
+            CHECK_EQ(songs[0]->getArtist()->getName(), song.artist);
         if (!song.album.empty())
-            CHECK(songs[0]->getAlbum()->getName() == song.album);
-        CHECK(songs[0]->getYear() == std::stoi(song.year));
-        CHECK(songs[0]->getGenre() == song.genre);
+            CHECK_EQ(songs[0]->getAlbum()->getName(), song.album);
+        CHECK_EQ(songs[0]->getYear(), std::stoi(song.year));
+        CHECK_EQ(songs[0]->getGenre(), song.genre);
     }
 
     void clearTestEnvironment() {
@@ -54,7 +54,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
         boost::filesystem::remove_all(config.userMusicDirectory());
     }
 
-    core::Manager manager(config);
+    core::Manager manager(config, song_repo.get(), artist_repo.get(), album_repo.get(), user_repo.get());
 
     TEST_CASE("CT-AC-01: Adicionar e organizar um album") {
         SUBCASE("Organizar um álbum") {
@@ -82,8 +82,8 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
 
             CHECK(boost::filesystem::exists(song1_path_registre));
             CHECK(boost::filesystem::exists(song2_path_registre));
-            CHECK(song_mock1.album == song_mock2.album);
-            CHECK(song_mock1.artist == song_mock2.artist);
+            CHECK_EQ(song_mock1.album, song_mock2.album);
+            CHECK_EQ(song_mock1.artist, song_mock2.artist);
             checkSongInDatabase(song_mock1, user);
             checkSongInDatabase(song_mock2, user);
 
@@ -122,12 +122,12 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             CHECK(boost::filesystem::exists(song2_path_registre));
             checkSongInDatabase(song_mock2, user);
 
-            CHECK(song_mock1.album == song_mock2.album);
-            CHECK(song_mock1.artist == song_mock2.artist);
+            CHECK_EQ(song_mock1.album, song_mock2.album);
+            CHECK_EQ(song_mock1.artist, song_mock2.artist);
 
             auto albuns = album_repo->getAll();
-            CHECK(albuns.size() == 1);
-            CHECK(albuns[0]->getSongCount() == 2);
+            CHECK_EQ(albuns.size(), 1);
+            CHECK_EQ(albuns[0]->getSongCount(), 2);
 
             clearTestEnvironment();
         }
@@ -185,21 +185,21 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             CHECK(boost::filesystem::exists(song1_path_registre));
 
             auto songs = song_repo->getAll();
-            CHECK(songs.size() == 1);
-            CHECK(songs[0]->getTitle() == song_mock1.title);
-            CHECK(songs[0]->getDuration() == song_mock1.duracao);
+            CHECK_EQ(songs.size(), 1);
+            CHECK_EQ(songs[0]->getTitle(), song_mock1.title);
+            CHECK_EQ(songs[0]->getDuration(), song_mock1.duracao);
             if (!song_mock1.artist.empty())
-                CHECK(songs[0]->getArtist()->getName() == song_mock1.artist);
+                CHECK_EQ(songs[0]->getArtist()->getName(), song_mock1.artist);
             else
                 FAIL_CHECK(
                     "Erro: song_mock1.artist está vazio, não foi possível verificar o artista.");
             if (!song_mock1.album.empty())
-                CHECK(songs[0]->getAlbum()->getName() == song_mock1.album);
+                CHECK_EQ(songs[0]->getAlbum()->getName(), song_mock1.album);
             else
                 FAIL_CHECK(
                     "Erro: song_mock1.album está vazio, não foi possível verificar o álbum.");
-            CHECK(songs[0]->getYear() == std::stoi(song_mock1.year));
-            CHECK(songs[0]->getGenre() == song_mock1.genre);
+            CHECK_EQ(songs[0]->getYear(), std::stoi(song_mock1.year));
+            CHECK_EQ(songs[0]->getGenre(), song_mock1.genre);
 
             clearTestEnvironment();
         }
@@ -370,8 +370,8 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
                     found_artist2 = true;
             }
 
-            CHECK(found_artist1 == true);
-            CHECK(found_artist2 == true);
+            CHECK_EQ(found_artist1, true);
+            CHECK_EQ(found_artist2, true);
 
             clearTestEnvironment();
         }
@@ -411,7 +411,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             checkSongInDatabase(song_mock2, user2);
 
             auto artists = artist_repo->getAll();
-            CHECK(artist_repo->count() == 1);
+            CHECK_EQ(artist_repo->count(), 1);
 
             clearTestEnvironment();
         }
