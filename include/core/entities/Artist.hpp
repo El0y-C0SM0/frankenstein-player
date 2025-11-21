@@ -38,7 +38,6 @@ namespace core {
                    public core::ICollection,
                    public core::IPlayable {
     private:
-        int nome;
         unsigned _id = 0; // TODO nao ta gerando apartir de entity
         std::string _name;
         std::string _genre;
@@ -259,9 +258,6 @@ namespace core {
          * todas as músicas
          */
         std::vector<std::shared_ptr<IPlayable>> getSongsAlbum(unsigned idAlbum);
-
-        void setSongsLoader(
-            const std::function<std::vector<std::shared_ptr<IPlayable>>()> &loader);
 
         /**
          * @brief Adiciona uma música ao artista

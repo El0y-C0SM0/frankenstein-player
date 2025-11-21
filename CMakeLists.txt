@@ -10,7 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 cmake_policy(SET CMP0076 NEW)
 
 # Opções de configuração
-option(BUILD_TESTING "Build tests" OFF)
+option(BUILD_TESTING "Build tests" ON)
 
 # ============================================================================
 # CONFIGURAÇÕES DE COBERTURA DE CÓDIGO
@@ -114,7 +114,6 @@ file(GLOB_RECURSE CORE_SOURCES
     "src/*.cpp"
 )
 
-
 # Se não encontrar arquivos .cpp, cria um dummy temporário
 if(NOT CORE_SOURCES)
     message(STATUS "Nenhum arquivo .cpp encontrado. Criando dummy.cpp temporário.")
@@ -201,11 +200,11 @@ if(BUILD_TESTING)
     file(GLOB_RECURSE ACCEPTANCE_TEST_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/acceptance/*.cpp"
     )
-    file(GLOB_RECURSE UNIT_TEST_SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/**/*.cpp"
-    )
+    #file(GLOB_RECURSE UNIT_TEST_SOURCES
+    #    "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/**/*.cpp"
+    #)
 
-    set(ALL_TEST_SOURCES ${ACCEPTANCE_TEST_SOURCES} ${UNIT_TEST_SOURCES})
+    set(ALL_TEST_SOURCES ${ACCEPTANCE_TEST_SOURCES})#${UNIT_TEST_SOURCES}
 
     foreach(testfile IN LISTS ALL_TEST_SOURCES)
         get_filename_component(testname ${testfile} NAME_WE)

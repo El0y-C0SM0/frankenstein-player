@@ -228,13 +228,6 @@ namespace core {
         std::string getAudioFilePath() const override;
 
         /**
-         * @brief Obtém um vetor com todas as músicas do álbum
-         * @return Vetor de ponteiros compartilhados para IPlayable contendo
-         * todas as músicas
-         */
-        std::vector<std::shared_ptr<IPlayable>> getSongs();
-
-        /**
          * @brief Define a função de carregamento para as músicas do álbum
          * @param loader Função que retorna um vetor de ponteiros compartilhados
          * para IPlayable

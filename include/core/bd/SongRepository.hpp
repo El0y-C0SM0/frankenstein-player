@@ -20,10 +20,10 @@
 #include "core/bd/SQLiteRepositoryBase.hpp"
 #include "core/entities/Album.hpp"
 #include "core/entities/Artist.hpp"
+#include "core/entities/EntitiesFWD.hpp"
+#include "core/entities/Playlist.hpp"
 #include "core/entities/Song.hpp"
-// #include "core/entities/User.hpp"
-// #include "core/entities/Playlist.hpp"
-#include "core/entities/EntitiesFWD.hpp" // TODO incluir usuario e playlist
+#include "core/entities/User.hpp"
 
 namespace core {
 

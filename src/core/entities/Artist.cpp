@@ -1,4 +1,5 @@
 #include "core/entities/Artist.hpp"
+#include "core/entities/Album.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -22,6 +23,9 @@ namespace core {
 
         : _name(name), _genre(genre) {
     }
+
+    Artist::~Artist() = default;
+
     std::string Artist::getName() const {
         return _name;
     };
@@ -232,21 +236,6 @@ namespace core {
         }
         return vector;
     };
-    std::vector<std::shared_ptr<IPlayable>>
-    Artist::getSongsAlbum(unsigned idAlbum) {
-        std::vector<std::shared_ptr<IPlayable>> songs;
-
-        for (auto const &album : _albums) {
-            if (album->getId() == idAlbum) {
-
-                auto albumSongs = album->getSongs();
-                songs.insert(songs.end(), albumSongs.begin(), albumSongs.end());
-                break;
-            }
-        }
-
-        return songs;
-    }
 
     void Artist::addSong(Song &song) {
         _songs.push_back(std::make_shared<Song>(song));
@@ -355,5 +344,32 @@ namespace core {
     std::shared_ptr<User> Artist::getUser() const {
         return user;
     };
+
+    int Artist::calculateTotalDuration() {
+        return getTotalDuration();
+    }
+
+    void Artist::setSongsLoader(const std::function<std::vector<std::shared_ptr<Song>>()> &loader) {
+        if (!loader) {
+            throw std::invalid_argument("Loader não pode ser null");
+        }
+        songsLoader = loader;
+    }
+
+    std::vector<std::shared_ptr<IPlayable>> Artist::getSongsAlbum(unsigned idAlbum) {
+        std::vector<std::shared_ptr<IPlayable>> songs;
+
+        for (auto const &album : _albums) {
+            if (album->getId() == idAlbum) {
+                auto albumSongs = album->getSongs(); // Retorna vector<shared_ptr<Song>>
+
+                for (auto &song : albumSongs) {
+                    songs.push_back(song);
+                }
+                break;
+            }
+        }
+        return songs;
+    }
 
 } // namespace core

@@ -7,7 +7,6 @@
 
 #include <doctest/doctest.h>
 
-#include "core/entities/Playlist.hpp"
 #include "core/entities/Song.hpp"
 #include "core/services/PlaybackQueue.hpp"
 #include "fixtures/PlaybackQueueFixture.hpp"
@@ -100,8 +99,8 @@ TEST_CASE_FIXTURE(PlaybackQueueFixture,
     }
 
     SUBCASE("Voltar para música anterior após avançar") {
-        queue.next();  // Vai para Second
-        queue.next();  // Vai para Third
+        queue.next(); // Vai para Second
+        queue.next(); // Vai para Third
 
         auto previous = queue.previous();
         CHECK(previous->getTitle() == "Second");

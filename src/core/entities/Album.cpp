@@ -180,7 +180,6 @@ namespace core {
 
     std::vector<std::shared_ptr<Song>> Album::getSongs() const {
         std::vector<std::shared_ptr<Song>> vector;
-
         for (auto const &s : _songs) {
             vector.push_back(s);
         }
@@ -321,4 +320,5 @@ namespace core {
         }
         return _songs.at(static_cast<size_t>(index));
     };
+
 } // namespace core

@@ -11,6 +11,8 @@
 
 
 namespace core {
+    User::User() {};
+    
     User::User(const std::string& username) :
         _username(username),
         _home_path(""),
