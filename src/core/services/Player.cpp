@@ -1,4 +1,6 @@
+#define MINIAUDIO_IMPLEMENTATION
 #include "core/services/Player.hpp"
+#include "miniaudio.h"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

@@ -22,7 +22,6 @@ public:
   std::shared_ptr<core::Song> createSong(const std::string &title) {
     auto song = std::make_shared<core::Song>();
     song->setTitle(title);
-    song->setDuration(200);
     return song;
   }
 };

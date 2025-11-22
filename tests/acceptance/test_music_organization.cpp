@@ -21,11 +21,11 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
     MediaFixture media = MediaFixture();
     core::RepositoryFactory repo_factory(DatabaseFixture().getDatabase());
 
-    std::unique_ptr<core::SongRepository> song_repo =
+    std::shared_ptr<core::SongRepository> song_repo =
         repo_factory.createSongRepository();
-    std::unique_ptr<core::ArtistRepository> artist_repo =
+    std::shared_ptr<core::ArtistRepository> artist_repo =
         repo_factory.createArtistRepository();
-    std::unique_ptr<core::AlbumRepository> album_repo =
+    std::shared_ptr<core::AlbumRepository> album_repo =
         repo_factory.createAlbumRepository();
     std::unique_ptr<core::UserRepository> user_repo =
         repo_factory.createUserRepository();
@@ -54,7 +54,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
         boost::filesystem::remove_all(config.userMusicDirectory());
     }
 
-    core::Manager manager(config, song_repo.get(), artist_repo.get(), album_repo.get(), user_repo.get());
+    core::Manager manager(config, song_repo, artist_repo, album_repo);
 
     TEST_CASE("CT-AC-01: Adicionar e organizar um album") {
         SUBCASE("Organizar um álbum") {

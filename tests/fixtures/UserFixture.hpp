@@ -2,7 +2,6 @@
 
 #include <string>
 #include <map>
-#include <memory>
 #include <boost/filesystem.hpp>
 
 #include "core/entities/User.hpp"

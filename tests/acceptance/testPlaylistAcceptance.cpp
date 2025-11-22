@@ -27,10 +27,9 @@
 
 TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists") {
 
-    std::shared_ptr<core::Song> createSong(const std::string& title) {
+    std::shared_ptr<core::Song> createSong(const std::string &title) {
         auto song = std::make_shared<core::Song>();
         song->setTitle(title);
-        song->setDuration(200);
         return song;
     }
 
@@ -59,9 +58,9 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists") {
         }
 
         SUBCASE("Adicionar e remover músicas de uma playlist existente") {
-            playlist->addSong(std::make_shared<core::Song>(*songA));
-            playlist->addSong(std::make_shared<core::Song>(*songB));
-            playlist->addSong(std::make_shared<core::Song>(*songC));
+            playlist->addSong(*songA);
+            playlist->addSong(*songB);
+            playlist->addSong(*songC);
 
             auto songs = playlist->getSongs();
             CHECK(songs.size() == 3);
@@ -78,12 +77,12 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists") {
         SUBCASE("Visualizar todas as playlists disponíveis") {
 
             std::vector<std::string> playlistTitles;
-            for (const auto& pl : myPlaylists) {
+            for (const auto &pl : myPlaylists) {
                 playlistTitles.push_back(pl->getTitulo());
             }
 
             bool found = false;
-            for (const auto& t : playlistTitles) {
+            for (const auto &t : playlistTitles) {
                 if (t == PlaylistTesteTitulo) {
                     found = true;
                     break;
