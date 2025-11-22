@@ -9,9 +9,6 @@
  */
 
 #include "cli/Cli.hpp"
-#include <unistd.h>
-#include <cstdlib>
-#include <iostream>
 
 namespace cli
 {
@@ -269,17 +266,8 @@ namespace cli
 
     */
 
-    // TODO implementar resolvePlayable
+    // TODO implementar
     /*
-        std::optional<std::shared_ptr<Core::IPlayable>> Cli::resolvePlayable(const std::string &str)
-        {
-            return std::nullopt;
-        }
-
-        bool Cli::showPlaylist(Core::IPlayable &playlist)
-        {
-            return false;
-        }
 
         bool Cli::addToPlaylist(Core::IPlayable &playlist, Core::IPlayable &playabel)
         {
@@ -312,6 +300,50 @@ namespace cli
         {
         }
     */
+
+    void Cli::showPlaylist(core::IPlayable &playlist) const
+    {
+        auto pl = dynamic_cast<core::Playlist *>(&playlist);
+        if (pl)
+        {
+            std::cout << "Playlist: " << pl->getTitle() << std::endl;
+            auto songs = pl->getSongs();
+            for (const auto &song : songs)
+            {
+                std::cout << "- " << song->getTitle() << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "O objeto fornecido não é uma playlist válida." << std::endl;
+        }
+    }
+
+    void Cli::showAlbum(core::IPlayable &album) const
+    {
+        auto al = dynamic_cast<core::Album *>(&album);
+        if (al)
+        {
+            al->toString();
+        }
+        else
+        {
+            std::cout << "O objeto fornecido não é uma playlist válida." << std::endl;
+        }
+    }
+
+    void Cli::showArtist(core::IPlayable &artist) const
+    {
+        auto ar = dynamic_cast<core::Artist *>(&artist);
+        if (ar)
+        {
+            ar->toString();
+        }
+        else
+        {
+            std::cout << "O objeto fornecido não é uma playlist válida." << std::endl;
+        }
+    }
 
     void Cli::start()
     {
@@ -706,9 +738,9 @@ namespace cli
                 std::getline(ss, query);
                 query.erase(0, query.find_first_not_of(" "));
 
-                if (searchType == "music")
+                if (searchType == "music" || searchType == "song")
                 {
-                    searchMusic(query);
+                    searchSong(query);
                     return true;
                 }
                 else if (searchType == "artist")

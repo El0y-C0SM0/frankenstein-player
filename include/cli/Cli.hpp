@@ -15,21 +15,29 @@
 #include <sstream>
 #include <iostream>
 #include <optional>
+#include <cstdlib>
+#include <iostream>
 
-// #include "core/entities/EntitiesFWD.hpp" // TODO incluir user
 #include "core/services/ConfigManager.hpp"
 #include "core/entities/User.hpp"
 #include "core/services/Player.hpp"
+#include "core/entities/Playlist.hpp"
+#include "core/entities/Album.hpp"
+#include "core/interfaces/IPlayable.hpp"
+#include "core/bd/SongRepository.hpp"
+
 
 namespace cli
 {
 
 #define volumeStep 0.05
+
   class Cli
   {
   private:
     std::shared_ptr<core::User> _user;
     std::shared_ptr<core::Player> _player;
+    std::shared_ptr<SQLite::Database> db;
 
     /**
      * @brief resolve uma string para um IPlayable ou IPlayableObject
@@ -151,6 +159,19 @@ namespace cli
      */
     void showPlaylist(core::IPlayable &playlist) const;
 
+        /**
+     * @brief Mostra as informações do album.
+     *
+     * @param playlist Objeto IPlayable que representa o album a ser exibida.
+     */
+    void showAlbum(core::IPlayable &album) const;
+
+    /**
+     * @brief Mostra as informações do artista.
+     * @param artist Objeto IPlayable que representa o artista a ser exibido.
+     */
+     void Cli::showArtist(core::IPlayable &artist) const;
+
     /**
      * @brief Adiciona um IPlayable à playlist atual.
      *
@@ -235,7 +256,7 @@ namespace cli
      * @param query string de busca.
      *
      */
-    void searchMusic(const std::string &query) const;
+    void searchSong(const std::string &query) const;
 
     /**
      * @brief Procura pelos artistas do usuário.
