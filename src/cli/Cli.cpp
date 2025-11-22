@@ -154,7 +154,7 @@ namespace cli
         }
     }
 
-    std::string Cli::getVolume() const
+    void Cli::getVolume() const
     {
         float vol = _player->getVolume() * 100.0f;
         std::cout << "Nivel de volume: " << static_cast<unsigned int>(vol) << std::endl;
@@ -196,7 +196,7 @@ namespace cli
         }
     }
 
-    std::string Cli::getProgress() const
+    void Cli::getProgress() const
     {
         _player->getProgress();
     }
@@ -527,9 +527,7 @@ namespace cli
                 return false;
             }
 
-            std::string current_volume = getVolume();
-            std::cout << "Volume atual: " << current_volume << std::endl;
-
+            getVolume();
             return true;
         }
         else if (firstCommand == "rewind")
@@ -753,7 +751,6 @@ namespace cli
                                 std::cout << "Playlist não encontrada: " << playlist << std::endl;
                                 return false;
                             }
-                            auto spPl = optPl.at(0);
 
                             auto optSong = _library->searchSong(playable);
                             if (optSong.empty())
@@ -761,6 +758,7 @@ namespace cli
                                 std::cout << "Música não encontrada: " << playable << std::endl;
                                 return false;
                             }
+                            
                             auto spPl = optPl.at(0);
                             auto spSong = optSong.at(0);
                             removeFromPlaylist(*spPl, *spSong);

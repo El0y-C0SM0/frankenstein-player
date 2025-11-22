@@ -113,10 +113,8 @@ namespace cli
      * @brief Obtém o nível de volume atual
      *
      * chama getVolume de player
-     *
-     * @return string do valor atual do volume
      */
-    std::string getVolume() const;
+    void getVolume() const;
 
     /**
      * @brief Silencia o player
@@ -135,9 +133,8 @@ namespace cli
 
     /**
      * @brief Obtém o progresso atual da reprodução
-     * @return String com o valor de progresso da música.
      */
-    std::string getProgress() const;
+    void getProgress() const;
 
     /**
      * @brief Limpa toda a fila
@@ -164,7 +161,7 @@ namespace cli
      * @brief Mostra as informações do artista.
      * @param artist Objeto IPlayable que representa o artista a ser exibido.
      */
-     void Cli::showArtist(core::IPlayable &artist) const;
+     void showArtist(core::IPlayable &artist) const;
 
     /**
      * @brief Adiciona um IPlayable à playlist atual.
