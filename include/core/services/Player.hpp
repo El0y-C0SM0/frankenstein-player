@@ -217,6 +217,12 @@ namespace core {
         PlayerState stateOfPlayer() const;
 
         /**
+         * @brief Verifica se o player está mudo
+         * @return true se está mudo, false caso contrário
+         */
+        bool isMuted() const;
+
+        /**
          * @brief Verifica se o player está reproduzindo
          * @return true se está reproduzindo, false se pausado ou parado
          */
