@@ -31,6 +31,11 @@ namespace core {
 
     public:
         /**
+         * @brief Construtor default
+         */
+         DatabaseManager() = default;
+
+        /**
          * @brief Construtor do gerenciador de banco de dados
          */
         DatabaseManager(std::string db_path, std::string schema_path);
