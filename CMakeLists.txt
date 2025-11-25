@@ -245,6 +245,7 @@ if(WIN32)
     # Configurações específicas para Windows
     # MiniAudio requer algumas bibliotecas no Windows
     target_link_libraries(frankenstein_core PRIVATE ole32)
+    target_link_libraries(frankenstein_core PRIVATE netapi32)
     message(STATUS "Build configurado para Windows com MiniAudio")
 elseif(APPLE)
     # macOS requer frameworks do Audio

@@ -10,6 +10,12 @@
 #include <memory>
 #include <vector>
 
+#ifdef _WIN32
+    std::string uid1001 = "1001";
+#else
+    uid_t uid1001 = 1001;
+#endif
+
 class UserFixture {
 public:
     struct UserTestMock {
@@ -17,7 +23,11 @@ public:
         std::string username;
         std::string home_path;
         std::string input_path;
-        long uid;
+        #ifdef _WIN32
+            std::string uid;
+        #else
+            long uid;
+        #endif
         bool is_current_user;
     };
 
@@ -31,7 +41,7 @@ public:
                           "usuario_teste",
                           "/home/usuario_teste",
                           "/home/usuario_teste/input",
-                          1001,
+                          uid1001,
                           false};
     }
 
@@ -44,7 +54,7 @@ TEST_CASE("ACEITAÇÃO: Usuário ouvindo e editando fila de músicas") {
     UserFixture user_fixture;
     auto user_data = user_fixture.getUserMock("NORMAL_USER");
 
-    auto user = std::make_shared<core::User>(user_data.username,
+    std::shared_ptr<core::User> user = std::make_shared<core::User>(user_data.username,
                                              user_data.home_path,
                                              user_data.input_path,
                                              user_data.uid);

@@ -14,6 +14,11 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <cassert>
+#include <algorithm>
+#include <sstream>
+#include <iostream>
+#include <stdexcept>
 
 #include "core/entities/Entity.hpp"
 #include "core/entities/Song.hpp"

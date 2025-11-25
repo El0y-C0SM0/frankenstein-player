@@ -70,11 +70,14 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
             boost::filesystem::copy_file(
                 short_song_mock.path,
                 short_song->getAudioFilePath(),
-                boost::filesystem::copy_option::overwrite_if_exists);
+                //boost::filesystem::copy_option::overwrite_if_exists
+                boost::filesystem::copy_options::overwrite_existing
+            );
             boost::filesystem::copy_file(
                 medium_song_mock.path,
                 medium_song->getAudioFilePath(),
-                boost::filesystem::copy_option::overwrite_if_exists);
+                //boost::filesystem::copy_options::overwrite_existing);
+                boost::filesystem::copy_options::overwrite_existing);
         }
 
         ~PlayerFixture() {

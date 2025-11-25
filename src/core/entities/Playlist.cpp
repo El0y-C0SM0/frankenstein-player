@@ -3,10 +3,6 @@
 #include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
 
-#include <algorithm>
-#include <cassert>
-#include <memory>
-#include <sstream>
 
 namespace core {
 
@@ -47,24 +43,33 @@ namespace core {
 	}
 
 	bool Playlist::switchSong(unsigned id, unsigned index) {
-		if (index > _songs.size()) return false;
+			try {
+				if (index > _songs.size()) throw std::out_of_range("index maior que o tamanho da playlist");
 
-        std::vector<std::shared_ptr<Song>>::iterator it = _songs.begin();
-        while(it != _songs.end()) {
-            if(it->get()->getId() == id) {
-                break;
-            }
-        }
+				auto it = _songs.begin();
+				while (it != _songs.end()) {
+					if ((*it)->getId() == id) {
+						break;
+					}
+					++it;
+				}
 
-		if (it == _songs.end()) return false;
-		auto node = *it;
-		_songs.erase(it);
-		if (index >= _songs.size()) {
-			_songs.push_back(node);
-		} else {
-			_songs.insert(_songs.begin() + index, node);
-		}
-		return true;
+				if (it == _songs.end()) return false;
+				auto node = *it;
+				_songs.erase(it);
+				if (index >= _songs.size()) {
+					_songs.push_back(node);
+				} else {
+					_songs.insert(_songs.begin() + index, node);
+				}
+				return true;
+			} catch (const std::out_of_range &e) {
+				std::cerr << "switchSong: índice inválido: " << e.what() << std::endl;
+				return false;
+			} catch (const std::exception &e) {
+				std::cerr << "switchSong: erro inesperado: " << e.what() << std::endl;
+				return false;
+			}
 	}
 
 	bool Playlist::removeSong(unsigned id) {
@@ -153,8 +158,13 @@ namespace core {
 	}
 
 	std::shared_ptr<Song> Playlist::getSongAt(int index) {
-		if (index < 0 || static_cast<size_t>(index) >= _songs.size()) return nullptr;
-		return _songs[index];
+			if (index < 0) return nullptr;
+			try {
+				return _songs.at(static_cast<size_t>(index));
+			} catch (const std::out_of_range &e) {
+				std::cerr << "getSongAt: índice fora do intervalo: " << e.what() << std::endl;
+				return nullptr;
+			}
 	}
 
 	std::vector<std::shared_ptr<IPlayableObject>> Playlist::getPlayableObjects() const {

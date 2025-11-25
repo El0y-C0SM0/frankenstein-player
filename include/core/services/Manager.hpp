@@ -17,8 +17,10 @@
 #include "core/services/ConfigManager.hpp"
 #include "core/services/UsersManager.hpp"
 
+#include <exception>
 #include <boost/filesystem.hpp>
 #include <memory>
+#include <sstream>
 #ifdef _WIN32
     #include <taglib/tag.h>
     #include <taglib/fileref.h>
@@ -67,6 +69,12 @@ namespace core {
          * Verifica se um diretório existe e caso não exista cria o diretório
          */
         void verifyDir(std::string path);
+
+        /**
+         * @brief Retira os espaços do inicio e do fim
+         * 
+         */
+        std::string cleanString(const std::string& str);
 
     public:
 
