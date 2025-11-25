@@ -11,6 +11,7 @@
 #include <memory>
 #include <miniaudio.h>
 #include <stdexcept>
+#include <string>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <taglib/tpropertymap.h>
@@ -97,7 +98,7 @@ namespace core {
             return _duration;
         }
 
-        if (_file_path.empty()) {
+        if (getAudioFilePath().empty()) {
             throw std::runtime_error("Caminho do arquivo está vazio para a música: " + _title);
         }
         try {
@@ -247,7 +248,13 @@ namespace core {
     };
 
     std::string Song::getAudioFilePath() const {
-        return _user.getHomePath() + "/" + getArtist()->getName() + "/" +
-               getAlbum()->getName() + "/" + getTitle() + ".mp3";
+        std::string path = _user.getHomePath() + "/" + getArtist()->getName() + "/";
+        if (getAlbum())
+            path += getAlbum()->getName() + "/";
+        else
+            path += "Singles/";
+        path += getTitle() + ".mp3";
+
+        return path;
     };
 } // namespace core

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS artists (
 -- Tabela de álbuns
 CREATE TABLE IF NOT EXISTS albums (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT UNIQUE NOT NULL,
+    title TEXT NOT NULL,
     release_year INTEGER,
     genre TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
