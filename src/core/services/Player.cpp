@@ -112,7 +112,7 @@ namespace core {
             &_currentSound);
 
         if (result != MA_SUCCESS) {
-            std::cerr << "❌ Erro ao carregar: " << result << std::endl;
+            std::cerr << "Erro ao carregar: " << result << std::endl;
             return false;
         }
 
@@ -128,7 +128,7 @@ namespace core {
 
     void Player::addPlaybackQueue(const core::PlaybackQueue &tracks) {
         if (tracks.empty()) {
-            throw std::invalid_argument("Cannot add empty playback queue");
+            throw std::invalid_argument("PlaybackQueue nao pode ser vazia");
         }
 
         _queue.push_back(std::make_shared<core::PlaybackQueue>(tracks));
@@ -168,7 +168,7 @@ namespace core {
             ma_result result = ma_sound_start(&_currentSound);
             if (result == MA_SUCCESS) {
                 _playerState = PlayerState::PLAYING;
-                std::cout << "▶ Reproduzindo..." << std::endl;
+                std::cout << " Reproduzindo..." << std::endl;
             }
         }
     }
@@ -358,7 +358,6 @@ namespace core {
 
             // Se o estado diz PLAYING mas o som parou = música terminou!
             if (!soundIsPlaying && !_isLooping) {
-                std::cout << "\n🎵 Música terminou - avançando automaticamente..." << std::endl;
                 const_cast<Player *>(this)->playNextSong();
             }
         }
@@ -372,7 +371,6 @@ namespace core {
 
             // Se o estado diz PLAYING mas o som não está tocando, a música terminou
             if (!soundIsPlaying && !_isLooping) {
-                // Precisamos fazer cast pois estamos em método const
                 const_cast<Player *>(this)->playNextSong();
                 return _playerState == PlayerState::PLAYING;
             }
