@@ -29,6 +29,8 @@ namespace core {
         memset(&_currentSound, 0, sizeof(_currentSound));
 
         std::cout << "Audio engine inicializado" << std::endl;
+
+        _queue = std::make_shared<core::PlaybackQueue>();
     }
 
     Player::Player(const core::PlaybackQueue &tracks) : Player() {
@@ -43,8 +45,8 @@ namespace core {
     }
 
     std::shared_ptr<PlaybackQueue> Player::getCurrentQueue() const {
-        if (_currentQueueIndex >= 0 && static_cast<size_t>(_currentQueueIndex) < _queue.size()) {
-            return _queue[_currentQueueIndex];
+        if (_currentQueueIndex >= 0 && static_cast<size_t>(_currentQueueIndex) < _queues.size()) {
+            return _queues[_currentQueueIndex];
         }
         return nullptr;
     }
@@ -76,19 +78,19 @@ namespace core {
             throw std::runtime_error("Audio engine não inicializado");
         }
 
-        auto currentQueue = getCurrentQueue();
-        if (!currentQueue) {
+        // auto currentQueue = getCurrentQueue();
+        if (!_queue) {
             throw std::runtime_error("Queue inválida");
         }
 
-        if (_currentSongIndex < 0 || static_cast<size_t>(_currentSongIndex) >= currentQueue->size()) {
+        if (_currentSongIndex < 0 || static_cast<size_t>(_currentSongIndex) >= _queue->size()) {
             throw std::runtime_error("Índice inválido");
         }
 
         // Limpa som anterior
         cleanupCurrentSound();
 
-        _currentSong = currentQueue->at(_currentSongIndex);
+        _currentSong = _queue->getCurrentSong();
         if (!_currentSong) {
             throw std::runtime_error("Música é null");
         }
@@ -131,14 +133,15 @@ namespace core {
             throw std::invalid_argument("PlaybackQueue nao pode ser vazia");
         }
 
-        _queue.push_back(std::make_shared<core::PlaybackQueue>(tracks));
+        *_queue += tracks;
+        // _queues.push_back(std::make_shared<core::PlaybackQueue>(tracks));
 
-        if (_currentQueueIndex == -1 && !_queue.empty()) {
-            _currentQueueIndex = 0;
-            if (_queue[0]->size() > 0) {
-                _currentSongIndex = 0;
-            }
-        }
+        // if (_currentQueueIndex == -1 && !_queues.empty()) {
+        //     _currentQueueIndex = 0;
+        //     if (_queues[0]->size() > 0) {
+        //         _currentSongIndex = 0;
+        //     }
+        // }
     }
 
     void Player::play() {
@@ -151,12 +154,12 @@ namespace core {
             return;
         }
 
-        if (_currentQueueIndex == -1 && !_queue.empty()) {
+        if (_currentQueueIndex == -1 && !_queues.empty()) {
             _currentQueueIndex = 0;
         }
 
-        auto currentQueue = getCurrentQueue();
-        if (!currentQueue || currentQueue->empty()) {
+        // auto currentQueue = getCurrentQueue();
+        if (!_queue || _queue->empty()) {
             return;
         }
 
@@ -201,39 +204,47 @@ namespace core {
     }
 
     void Player::playNextSong() {
-        auto currentQueue = getCurrentQueue();
-        if (!currentQueue || currentQueue->empty()) {
+        // auto currentQueue = getCurrentQueue();
+        if (!_queue || _queue->empty()) {
             _playerState = PlayerState::STOPPED;
             return;
         }
 
-        int nextIndex = _currentSongIndex + 1;
+        // int nextIndex = _currentSongIndex + 1;
 
-        if (static_cast<size_t>(nextIndex) >= currentQueue->size()) {
-            if (_isLooping) {
-                _currentSongIndex = 0;
-            } else {
-                int nextQueueIndex = _currentQueueIndex + 1;
+        auto nextSong = _queue->next();
 
-                if (static_cast<size_t>(nextQueueIndex) < _queue.size()) {
-                    auto nextQueue = _queue[nextQueueIndex];
-                    if (nextQueue && !nextQueue->empty()) {
-                        _currentQueueIndex = nextQueueIndex;
-                        _currentSongIndex = 0;
-                    } else {
-                        _playerState = PlayerState::STOPPED;
-                        cleanupCurrentSound();
-                        return;
-                    }
-                } else {
-                    _playerState = PlayerState::STOPPED;
-                    cleanupCurrentSound();
-                    return;
-                }
-            }
-        } else {
-            _currentSongIndex = nextIndex;
+        if (!nextSong) {
+            _playerState = PlayerState::STOPPED;
+            cleanupCurrentSound();
+            return;
         }
+
+        // if (static_cast<size_t>(nextIndex) >= _queue->size()) {
+        //     if (_isLooping) {
+        //         _currentSongIndex = 0;
+        //     } else {
+        //         int nextQueueIndex = _currentQueueIndex + 1;
+
+        //         if (static_cast<size_t>(nextQueueIndex) < _queues.size()) {
+        //             auto nextQueue = _queues[nextQueueIndex];
+        //             if (nextQueue && !nextQueue->empty()) {
+        //                 _currentQueueIndex = nextQueueIndex;
+        //                 _currentSongIndex = 0;
+        //             } else {
+        //                 _playerState = PlayerState::STOPPED;
+        //                 cleanupCurrentSound();
+        //                 return;
+        //             }
+        //         } else {
+        //             _playerState = PlayerState::STOPPED;
+        //             cleanupCurrentSound();
+        //             return;
+        //         }
+        //     }
+        // } else {
+        //     _currentSongIndex = nextIndex;
+        // }
 
         if (loadCurrentSong()) {
             ma_result result = ma_sound_start(&_currentSound);
@@ -248,28 +259,33 @@ namespace core {
     }
 
     void Player::previous() {
-        auto currentQueue = getCurrentQueue();
-        if (!currentQueue || currentQueue->empty()) {
+        // auto currentQueue = getCurrentQueue();
+        if (!_queue || _queue->empty()) {
             throw std::runtime_error("Queue não inicializada");
         }
 
-        int prevIndex = _currentSongIndex - 1;
+        // int prevIndex = _currentSongIndex - 1;
 
-        if (prevIndex < 0) {
-            if (_isLooping) {
-                prevIndex = currentQueue->size() - 1;
-            } else {
-                int prevQueueIndex = _currentQueueIndex - 1;
-                if (prevQueueIndex >= 0 && !_queue[prevQueueIndex]->empty()) {
-                    _currentQueueIndex = prevQueueIndex;
-                    _currentSongIndex = _queue[prevQueueIndex]->size() - 1;
-                } else {
-                    return;
-                }
-            }
-        } else {
-            _currentSongIndex = prevIndex;
-        }
+        auto prevSong = _queue->previous();
+
+        if (!prevSong)
+            return;
+
+        // if (prevIndex < 0) {
+        //     if (_isLooping) {
+        //         prevIndex = currentQueue->size() - 1;
+        //     } else {
+        //         int prevQueueIndex = _currentQueueIndex - 1;
+        //         if (prevQueueIndex >= 0 && !_queues[prevQueueIndex]->empty()) {
+        //             _currentQueueIndex = prevQueueIndex;
+        //             _currentSongIndex = _queues[prevQueueIndex]->size() - 1;
+        //         } else {
+        //             return;
+        //         }
+        //     }
+        // } else {
+        //     _currentSongIndex = prevIndex;
+        // }
 
         if (loadCurrentSong()) {
             ma_sound_start(&_currentSound);
@@ -421,21 +437,21 @@ namespace core {
     }
 
     int Player::getPlaylistSize() const {
-        auto currentQueue = getCurrentQueue();
-        if (!currentQueue) {
+        // auto currentQueue = getCurrentQueue();
+        if (!_queue) {
             throw std::runtime_error("Queue não inicializada");
         }
-        return currentQueue->size();
+        return _queue->size();
     }
 
-    const std::shared_ptr<PlaybackQueue> Player::getPlaybackQueue() const {
-        return getCurrentQueue();
+    std::shared_ptr<PlaybackQueue> Player::getPlaybackQueue() const {
+        return _queue;
     }
 
     void Player::clearPlaylist() {
         pause();
         cleanupCurrentSound();
-        _queue.clear();
+        _queues.clear();
         _currentQueueIndex = -1;
         _currentSongIndex = -1;
         _currentSong.reset();
@@ -443,22 +459,25 @@ namespace core {
     }
 
     bool Player::hasNext() const {
-        auto currentQueue = getCurrentQueue();
-        if (!currentQueue) {
-            return false;
-        }
+        return _queue->getNextSong() != nullptr;
 
-        return (static_cast<size_t>(_currentSongIndex) + 1 < currentQueue->size()) ||
-               (static_cast<size_t>(_currentQueueIndex) + 1 < _queue.size());
+        // auto currentQueue = getCurrentQueue();
+        // if (!currentQueue) {
+        //     return false;
+        // }
+
+        // return (static_cast<size_t>(_currentSongIndex) + 1 < currentQueue->size()) ||
+        //        (static_cast<size_t>(_currentQueueIndex) + 1 < _queue.size());
     }
 
     bool Player::hasPrevious() const {
-        auto currentQueue = getCurrentQueue();
-        if (!currentQueue) {
-            return false;
-        }
+        return _queue->getPreviousSong() != nullptr;
+        // auto currentQueue = getCurrentQueue();
+        // if (!currentQueue) {
+        //     return false;
+        // }
 
-        return (_currentSongIndex > 0) || (_currentQueueIndex > 0);
+        // return (_currentSongIndex > 0) || (_currentQueueIndex > 0);
     }
 
 } // namespace core

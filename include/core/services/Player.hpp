@@ -33,8 +33,8 @@ namespace core {
      */
     class Player {
     private:
-        std::vector<std::shared_ptr<core::PlaybackQueue>> _queue;
-        std::shared_ptr<core::Song>
+        std::vector<std::shared_ptr<core::PlaybackQueue>> _queues;
+        std::shared_ptr<const core::Song>
             _currentSong;
         int _currentQueueIndex;
         int _currentSongIndex;
@@ -42,6 +42,7 @@ namespace core {
         bool _isLooping;
         float _volume;
         float _previousVolume;
+        std::shared_ptr<core::PlaybackQueue> _queue;
 
         // miniaudio
         ma_engine _audioEngine;
@@ -254,7 +255,7 @@ namespace core {
          */
         int getPlaylistSize() const;
 
-        const std::shared_ptr<PlaybackQueue> getPlaybackQueue() const;
+        std::shared_ptr<PlaybackQueue> getPlaybackQueue() const;
 
         /**
          * @brief Limpa toda a playlist

@@ -18,6 +18,7 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "core/bd/DatabaseManager.hpp"
 #include "core/services/ConfigManager.hpp"
 #include "core/entities/User.hpp"
 #include "core/services/Player.hpp"
@@ -40,6 +41,8 @@ namespace cli
     std::shared_ptr<core::Player> _player;
     std::shared_ptr<core::Library> _library;
     std::shared_ptr<SQLite::Database> _db;
+    core::ConfigManager _config;
+    core::DatabaseManager _db_manager;
 
     /**
      * @brief toca um IPlayable ou um IPlayableObject
