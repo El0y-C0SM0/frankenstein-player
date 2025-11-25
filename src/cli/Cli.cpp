@@ -9,6 +9,8 @@
  */
 
 #include "cli/Cli.hpp"
+#include <fstream>
+#include <iomanip>
 
 namespace cli
 {
@@ -87,13 +89,17 @@ namespace cli
         _player = std::make_shared<core::Player>();
 
         _library = std::make_shared<core::Library>(_user, _db);
-    }
 
-    /*
-        void Cli::play(Core::IPlayable &playabel){
-            _player.play(playabel);
+        try
+        {
+            std::ifstream helpFile("resources/help.json");
+            helpFile >> _helpData;
         }
-    */
+        catch (const std::exception &e)
+        {
+            std::cerr << "Erro ao carregar o arquivo de ajuda 'assets/help.json': " << e.what() << std::endl;
+        }
+    }
 
     void Cli::restart()
     {
@@ -285,11 +291,6 @@ namespace cli
             _player->play(playabel);
         }
 
-        void Cli::shuffle()
-        {
-            _player->shuffle();
-        }
-
         void Cli::removeFromQueue(unsigned idx)
         {
             _player->removeFromPlaybackQueue(idx);
@@ -300,11 +301,48 @@ namespace cli
             _player->showStatus();
         }
 
-        void Cli::showHelp (std::string command) const
-        {
-            // implementar
-        }
     */
+
+    void Cli::showHelp() const
+    {
+        if (_helpData.empty() || !_helpData.contains("commands"))
+        {
+            std::cout << "Nenhuma informação de ajuda disponível." << std::endl;
+            return;
+        }
+
+        std::cout << "Comandos disponíveis:" << std::endl;
+        for (auto it = _helpData["commands"].begin(); it != _helpData["commands"].end(); ++it)
+        {
+            std::cout << "  " << std::left << std::setw(15) << it.key()
+                      << it.value().value("description", "") << std::endl;
+        }
+        std::cout << "\nDigite 'help <comando>' para mais detalhes." << std::endl;
+    }
+
+    void Cli::showHelp(const std::string &topic) const
+    {
+        if (topic.empty())
+        {
+            showHelp();
+            return;
+        }
+
+        if (_helpData.empty() || !_helpData.contains("commands") || !_helpData["commands"].contains(topic))
+        {
+            std::cout << "Nenhuma ajuda encontrada para o comando '" << topic << "'." << std::endl;
+            return;
+        }
+
+        const auto &cmd_info = _helpData["commands"][topic];
+        std::cout << "Ajuda para o comando: " << topic << std::endl;
+        std::cout << "  Descrição: " << cmd_info.value("description", "N/A") << std::endl;
+        std::cout << "  Uso: " << cmd_info.value("usage", "N/A") << std::endl;
+        if (cmd_info.contains("aliases"))
+        {
+            std::cout << "  Apelidos: " << cmd_info["aliases"].dump() << std::endl;
+        }
+    }
 
     void Cli::searchSong(const std::string &query) const
     {
@@ -822,7 +860,7 @@ namespace cli
         }
         else if (firstCommand == "help")
         {
-            showHelp();
+            ss >> firstCommand ? showHelp(firstCommand) : showHelp();
             return true;
         }
         else
