@@ -12,6 +12,7 @@
 
 #include "core/entities/Song.hpp"
 #include "core/services/PlaybackQueue.hpp"
+#include <atomic>
 #include <memory>
 #include <miniaudio.h>
 #include <vector>
@@ -46,6 +47,10 @@ namespace core {
         ma_engine _audioEngine;
         ma_sound _currentSound;
         bool _audioInitialized;
+
+        std::atomic<bool> _inCallback;
+        ma_uint64 _songStartTime;
+        bool _hasSongStartTime;
 
         /**
          * @brief Callback para quando uma música termina
@@ -265,6 +270,7 @@ namespace core {
          * @return true se há música anterior, false caso contrário
          */
         bool hasPrevious() const;
+
+        ma_uint64 getEngineTime() const;
     };
 } // namespace core
-#pragma once

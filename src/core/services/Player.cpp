@@ -1,7 +1,8 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include "core/services/Player.hpp"
 #include "miniaudio.h"
-#include <cassert>
+#include <cstring>
+#include <iostream>
 #include <memory>
 #include <stdexcept>
 
@@ -14,20 +15,22 @@ namespace core {
           _isLooping(false),
           _volume(1.0f),
           _previousVolume(1.0f),
-          _audioInitialized(false) {
+          _audioInitialized(false),
+          _inCallback(false),
+          _songStartTime(0),
+          _hasSongStartTime(false) {
 
         ma_result result = ma_engine_init(NULL, &_audioEngine);
         if (result != MA_SUCCESS) {
-            std::string errorMsg = "Falha ao iniciar Audio Engine: " + std::to_string(result);
-            std::cerr << errorMsg << std::endl;
-            throw std::runtime_error(errorMsg);
+            throw std::runtime_error("Falha ao inicializar Audio Engine: " + std::to_string(result));
         }
 
         _audioInitialized = true;
-        std::cout << "Audio engine inicializado" << std::endl;
-
         memset(&_currentSound, 0, sizeof(_currentSound));
+
+        std::cout << "Audio engine inicializado" << std::endl;
     }
+
     Player::Player(const core::PlaybackQueue &tracks) : Player() {
         addPlaybackQueue(tracks);
     }
@@ -38,69 +41,91 @@ namespace core {
             ma_engine_uninit(&_audioEngine);
         }
     }
+
     std::shared_ptr<PlaybackQueue> Player::getCurrentQueue() const {
         if (_currentQueueIndex >= 0 && static_cast<size_t>(_currentQueueIndex) < _queue.size()) {
             return _queue[_currentQueueIndex];
         }
-        throw std::out_of_range("Sem queue atual");
+        return nullptr;
     }
 
-    void Player::sound_end_callback(void *pUserData, ma_sound *pSound) {
-        // Manter pSound, pois é preciso para miniaudio
-        Player *player = static_cast<Player *>(pUserData);
-        if (player && !player->_isLooping) {
-            player->playNextSong();
+    ma_uint64 Player::getEngineTime() const {
+        if (!_audioInitialized) {
+            return 0;
         }
+        return ma_engine_get_time(&_audioEngine);
+    }
+
+    void Player::cleanupCurrentSound() {
+        if (_currentSound.pDataSource == nullptr) {
+            return;
+        }
+
+        if (ma_sound_is_playing(&_currentSound)) {
+            ma_sound_stop(&_currentSound);
+        }
+
+        ma_sound_uninit(&_currentSound);
+        memset(&_currentSound, 0, sizeof(_currentSound));
+
+        _hasSongStartTime = false;
     }
 
     bool Player::loadCurrentSong() {
         if (!_audioInitialized) {
-            throw std::runtime_error("Audio engine nao inicializado");
+            throw std::runtime_error("Audio engine não inicializado");
         }
 
         auto currentQueue = getCurrentQueue();
-        if (!currentQueue || _currentSongIndex < 0 || static_cast<size_t>(_currentSongIndex) >= currentQueue->size()) {
-            throw std::runtime_error("Index Song invalido");
+        if (!currentQueue) {
+            throw std::runtime_error("Queue inválida");
         }
 
+        if (_currentSongIndex < 0 || static_cast<size_t>(_currentSongIndex) >= currentQueue->size()) {
+            throw std::runtime_error("Índice inválido");
+        }
+
+        // Limpa som anterior
         cleanupCurrentSound();
 
         _currentSong = currentQueue->at(_currentSongIndex);
         if (!_currentSong) {
-            throw std::runtime_error("Current song é null");
+            throw std::runtime_error("Música é null");
         }
 
         std::string filePath = _currentSong->getFilePath();
-
         if (filePath.empty()) {
-            throw std::runtime_error("Caminho do arquivo vazio");
+            throw std::runtime_error("Caminho vazio");
         }
 
-        ma_result result = ma_sound_init_from_file(&_audioEngine, filePath.c_str(), 0, NULL, NULL, &_currentSound);
+        std::cout << "\n♪ Carregando: " << _currentSong->getTitle() << std::endl;
+
+        // Inicializa com flags de decodificação
+        ma_uint32 flags = MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_ASYNC;
+
+        ma_result result = ma_sound_init_from_file(
+            &_audioEngine,
+            filePath.c_str(),
+            flags,
+            NULL,
+            NULL,
+            &_currentSound);
 
         if (result != MA_SUCCESS) {
-            std::cerr << "Failed to load sound: " << filePath << " - Error: " << result << std::endl;
-            throw std::runtime_error("Falha ao carregar sound do path: " + filePath);
+            std::cerr << "❌ Erro ao carregar: " << result << std::endl;
+            return false;
         }
 
-        ma_sound_set_end_callback(&_currentSound, sound_end_callback, this);
-
         ma_sound_set_volume(&_currentSound, _volume);
+        ma_sound_set_looping(&_currentSound, _isLooping ? MA_TRUE : MA_FALSE);
+        ma_sound_seek_to_pcm_frame(&_currentSound, 0);
 
-        ma_sound_set_looping(&_currentSound, _isLooping);
+        _songStartTime = getEngineTime();
+        _hasSongStartTime = true;
 
         return true;
     }
 
-    void Player::cleanupCurrentSound() {
-        if (_currentSound.pDataSource != nullptr) {
-            if (ma_sound_is_playing(&_currentSound)) {
-                ma_sound_stop(&_currentSound);
-            }
-            ma_sound_uninit(&_currentSound);
-            memset(&_currentSound, 0, sizeof(_currentSound));
-        }
-    }
     void Player::addPlaybackQueue(const core::PlaybackQueue &tracks) {
         if (tracks.empty()) {
             throw std::invalid_argument("Cannot add empty playback queue");
@@ -118,7 +143,7 @@ namespace core {
 
     void Player::play() {
         if (!_audioInitialized) {
-            throw std::runtime_error("Audio engine nao inicializado");
+            throw std::runtime_error("Audio engine não inicializado");
         }
 
         if (_playerState == PlayerState::PAUSED) {
@@ -131,11 +156,83 @@ namespace core {
         }
 
         auto currentQueue = getCurrentQueue();
-        if (!currentQueue || currentQueue->empty())
+        if (!currentQueue || currentQueue->empty()) {
             return;
+        }
 
         if (_currentSongIndex == -1) {
             _currentSongIndex = 0;
+        }
+
+        if (loadCurrentSong()) {
+            ma_result result = ma_sound_start(&_currentSound);
+            if (result == MA_SUCCESS) {
+                _playerState = PlayerState::PLAYING;
+                std::cout << "▶ Reproduzindo..." << std::endl;
+            }
+        }
+    }
+
+    void Player::pause() {
+        if (_playerState == PlayerState::PLAYING && ma_sound_is_playing(&_currentSound)) {
+            ma_sound_stop(&_currentSound);
+            _playerState = PlayerState::PAUSED;
+        }
+    }
+
+    void Player::resume() {
+        if (_playerState == PlayerState::PAUSED && _currentSound.pDataSource != nullptr) {
+            ma_sound_start(&_currentSound);
+            _playerState = PlayerState::PLAYING;
+        }
+    }
+
+    void Player::restart() {
+        if (_currentSound.pDataSource != nullptr) {
+            ma_sound_stop(&_currentSound);
+            ma_sound_seek_to_pcm_frame(&_currentSound, 0);
+
+            _songStartTime = getEngineTime();
+            _hasSongStartTime = true;
+
+            ma_sound_start(&_currentSound);
+            _playerState = PlayerState::PLAYING;
+        }
+    }
+
+    void Player::playNextSong() {
+        auto currentQueue = getCurrentQueue();
+        if (!currentQueue || currentQueue->empty()) {
+            _playerState = PlayerState::STOPPED;
+            return;
+        }
+
+        int nextIndex = _currentSongIndex + 1;
+
+        if (static_cast<size_t>(nextIndex) >= currentQueue->size()) {
+            if (_isLooping) {
+                _currentSongIndex = 0;
+            } else {
+                int nextQueueIndex = _currentQueueIndex + 1;
+
+                if (static_cast<size_t>(nextQueueIndex) < _queue.size()) {
+                    auto nextQueue = _queue[nextQueueIndex];
+                    if (nextQueue && !nextQueue->empty()) {
+                        _currentQueueIndex = nextQueueIndex;
+                        _currentSongIndex = 0;
+                    } else {
+                        _playerState = PlayerState::STOPPED;
+                        cleanupCurrentSound();
+                        return;
+                    }
+                } else {
+                    _playerState = PlayerState::STOPPED;
+                    cleanupCurrentSound();
+                    return;
+                }
+            }
+        } else {
+            _currentSongIndex = nextIndex;
         }
 
         if (loadCurrentSong()) {
@@ -146,35 +243,32 @@ namespace core {
         }
     }
 
-    void Player::pause() {
-        if (ma_sound_is_playing(&_currentSound)) {
-            ma_sound_stop(&_currentSound);
-            _playerState = PlayerState::PAUSED;
-        }
+    void Player::next() {
+        playNextSong();
     }
 
-    void Player::playNextSong() {
+    void Player::previous() {
         auto currentQueue = getCurrentQueue();
         if (!currentQueue || currentQueue->empty()) {
-            return;
+            throw std::runtime_error("Queue não inicializada");
         }
 
-        int nextIndex = _currentSongIndex + 1;
+        int prevIndex = _currentSongIndex - 1;
 
-        if (static_cast<size_t>(nextIndex) >= currentQueue->size()) {
+        if (prevIndex < 0) {
             if (_isLooping) {
-                nextIndex = 0;
+                prevIndex = currentQueue->size() - 1;
             } else {
-                int nextQueueIndex = _currentQueueIndex + 1;
-                if (static_cast<size_t>(nextQueueIndex) < _queue.size() && !_queue[nextQueueIndex]->empty()) {
-                    _currentQueueIndex = nextQueueIndex;
-                    _currentSongIndex = 0;
+                int prevQueueIndex = _currentQueueIndex - 1;
+                if (prevQueueIndex >= 0 && !_queue[prevQueueIndex]->empty()) {
+                    _currentQueueIndex = prevQueueIndex;
+                    _currentSongIndex = _queue[prevQueueIndex]->size() - 1;
                 } else {
-                    _playerState = PlayerState::STOPPED;
+                    return;
                 }
             }
         } else {
-            _currentSongIndex = nextIndex;
+            _currentSongIndex = prevIndex;
         }
 
         if (loadCurrentSong()) {
@@ -183,30 +277,9 @@ namespace core {
         }
     }
 
-    void Player::resume() {
-        if (_playerState == PlayerState::PAUSED) {
-            ma_sound_start(&_currentSound);
-            _playerState = PlayerState::PLAYING;
-        }
-    }
-
-    void Player::restart() {
-        if (getCurrentQueue()) {
-            ma_sound_stop(&_currentSound);
-            ma_sound_seek_to_pcm_frame(&_currentSound, 0);
-            ma_sound_start(&_currentSound);
-            _playerState = PlayerState::PLAYING;
-        }
-    }
-
-    void Player::rewind(unsigned int seconds) {
-        seek(-static_cast<int>(seconds));
-    }
-
     void Player::seek(int seconds) {
-
-        if (!_currentSong) {
-            throw std::runtime_error("Song atual nao carregado");
+        if (!_currentSong || _currentSound.pDataSource == nullptr) {
+            throw std::runtime_error("Música não carregada");
         }
 
         ma_uint64 currentFrame;
@@ -227,82 +300,43 @@ namespace core {
         }
 
         ma_sound_seek_to_pcm_frame(&_currentSound, newFrame);
+
+        if (_hasSongStartTime) {
+            _songStartTime = getEngineTime() - newFrame;
+        }
+    }
+
+    void Player::rewind(unsigned int seconds) {
+        seek(-static_cast<int>(seconds));
     }
 
     void Player::fastForward(unsigned int seconds) {
         seek(static_cast<int>(seconds));
     }
 
-    unsigned int Player::getElapsedTime() const {
-        if (!_currentSong) {
-            throw std::runtime_error("Song atual nao carregado");
-        }
-
-        ma_uint64 currentFrame;
-        ma_sound_get_cursor_in_pcm_frames(&_currentSound, &currentFrame);
-
-        ma_uint64 sampleRate = ma_engine_get_sample_rate(&_audioEngine);
-        return static_cast<unsigned int>(currentFrame / sampleRate);
-    }
-
-    void Player::next() {
-        playNextSong();
-    }
-
-    void Player::previous() {
-        auto currentQueue = getCurrentQueue();
-
-        if (!currentQueue || currentQueue->empty()) {
-            throw std::runtime_error("Queue não inicializada");
-        }
-
-        int prevIndex = _currentSongIndex - 1;
-
-        if (prevIndex < 0) {
-            if (_isLooping) {
-                prevIndex = currentQueue->size() - 1;
-            } else {
-                int prevQueueIndex = _currentQueueIndex - 1;
-
-                if (prevQueueIndex >= 0 && !_queue[prevQueueIndex]->empty()) {
-                    _currentQueueIndex = prevQueueIndex;
-                    _currentSongIndex = _queue[prevQueueIndex]->size() - 1;
-                } else {
-                    return;
-                }
-            }
-        } else {
-            _currentSongIndex = prevIndex;
-        }
-
-        if (loadCurrentSong()) {
-            ma_sound_start(&_currentSound);
-            _playerState = PlayerState::PLAYING;
-        }
-    }
-
     void Player::setLooping() {
-        if (!_audioInitialized) {
-            throw std::runtime_error("Audio engine nao inicializado");
-        }
         _isLooping = true;
-        ma_sound_set_looping(&_currentSound, MA_TRUE);
+        if (_currentSound.pDataSource != nullptr) {
+            ma_sound_set_looping(&_currentSound, MA_TRUE);
+        }
     }
 
     void Player::unsetLooping() {
-        if (!_audioInitialized) {
-            throw std::runtime_error("Audio engine nao inicializado");
-        }
         _isLooping = false;
-        ma_sound_set_looping(&_currentSound, MA_FALSE);
+        if (_currentSound.pDataSource != nullptr) {
+            ma_sound_set_looping(&_currentSound, MA_FALSE);
+        }
+    }
+
+    bool Player::isLooping() const {
+        return _isLooping;
     }
 
     void Player::setVolume(float volume) {
-        if (!_audioInitialized) {
-            throw std::runtime_error("Audio engine nao inicializado");
-        }
         _volume = std::max(0.0f, std::min(volume, 1.0f));
-        ma_sound_set_volume(&_currentSound, _volume);
+        if (_currentSound.pDataSource != nullptr) {
+            ma_sound_set_volume(&_currentSound, _volume);
+        }
     }
 
     float Player::getVolume() const {
@@ -319,39 +353,68 @@ namespace core {
     }
 
     PlayerState Player::stateOfPlayer() const {
+        if (_playerState == PlayerState::PLAYING && _currentSound.pDataSource != nullptr) {
+            bool soundIsPlaying = ma_sound_is_playing(&_currentSound);
+
+            // Se o estado diz PLAYING mas o som parou = música terminou!
+            if (!soundIsPlaying && !_isLooping) {
+                std::cout << "\n🎵 Música terminou - avançando automaticamente..." << std::endl;
+                const_cast<Player *>(this)->playNextSong();
+            }
+        }
+
         return _playerState;
     }
 
     bool Player::isPlaying() const {
-        return _playerState == PlayerState::PLAYING && ma_sound_is_playing(&_currentSound);
+        if (_playerState == PlayerState::PLAYING && _currentSound.pDataSource != nullptr) {
+            bool soundIsPlaying = ma_sound_is_playing(&_currentSound);
+
+            // Se o estado diz PLAYING mas o som não está tocando, a música terminou
+            if (!soundIsPlaying && !_isLooping) {
+                // Precisamos fazer cast pois estamos em método const
+                const_cast<Player *>(this)->playNextSong();
+                return _playerState == PlayerState::PLAYING;
+            }
+
+            return soundIsPlaying;
+        }
+        return false;
     }
 
     bool Player::isPaused() const {
         return _playerState == PlayerState::PAUSED;
     }
 
-    bool Player::isLooping() const {
-        return _isLooping;
-    }
-    float Player::getProgress() const {
-        if (!_currentSong) {
-            throw std::runtime_error("Song atual nao carregado");
+    unsigned int Player::getElapsedTime() const {
+        if (!_currentSong || _currentSound.pDataSource == nullptr || !_hasSongStartTime) {
+            return 0;
         }
 
-        ma_uint64 lengthInFrames;
-        ma_uint64 currentFrame;
+        ma_uint64 currentTime = getEngineTime();
+        ma_uint64 elapsed = (currentTime >= _songStartTime) ? (currentTime - _songStartTime) : 0;
+        ma_uint64 sampleRate = ma_engine_get_sample_rate(&_audioEngine);
 
-        // Obter o comprimento total do som (requer ponteiro para armazenar o resultado)
-        ma_result lengthResult = ma_sound_get_length_in_pcm_frames(&_currentSound, &lengthInFrames);
+        return static_cast<unsigned int>(elapsed / sampleRate);
+    }
 
-        // Obter a posição atual
-        ma_result cursorResult = ma_sound_get_cursor_in_pcm_frames(&_currentSound, &currentFrame);
-
-        if (lengthResult != MA_SUCCESS || cursorResult != MA_SUCCESS || lengthInFrames == 0) {
+    float Player::getProgress() const {
+        if (!_currentSong || _currentSound.pDataSource == nullptr) {
             return 0.0f;
         }
 
-        return static_cast<float>(currentFrame) / static_cast<float>(lengthInFrames);
+        ma_uint64 lengthInFrames;
+        ma_result lengthResult = ma_sound_get_length_in_pcm_frames(&_currentSound, &lengthInFrames);
+
+        if (lengthResult != MA_SUCCESS || lengthInFrames == 0) {
+            return 0.0f;
+        }
+
+        unsigned int elapsed = getElapsedTime();
+        ma_uint64 sampleRate = ma_engine_get_sample_rate(&_audioEngine);
+        ma_uint64 elapsedFrames = elapsed * sampleRate;
+
+        return std::min(1.0f, static_cast<float>(elapsedFrames) / static_cast<float>(lengthInFrames));
     }
 
     int Player::getPlaylistSize() const {
@@ -379,7 +442,7 @@ namespace core {
     bool Player::hasNext() const {
         auto currentQueue = getCurrentQueue();
         if (!currentQueue) {
-            throw std::runtime_error("Queue não inicializada");
+            return false;
         }
 
         return (static_cast<size_t>(_currentSongIndex) + 1 < currentQueue->size()) ||
@@ -389,10 +452,10 @@ namespace core {
     bool Player::hasPrevious() const {
         auto currentQueue = getCurrentQueue();
         if (!currentQueue) {
-            throw std::runtime_error("Queue não inicializada");
+            return false;
         }
 
-        return (_currentSongIndex > 0) ||
-               (_currentQueueIndex > 0);
+        return (_currentSongIndex > 0) || (_currentQueueIndex > 0);
     }
-}; // namespace core
+
+} // namespace core
