@@ -26,6 +26,15 @@ namespace core {
         _aleatory(false),
         _history_repo(nullptr),
         _current_user(nullptr) {}
+    PlaybackQueue::PlaybackQueue(std::shared_ptr<User> current_user,
+                            std::shared_ptr<HistoryPlaybackRepository> history_repo,
+                            size_t max_size)
+    : _current(0),
+      _max_size(max_size),
+      _aleatory(false),
+      _loop(false), 
+      _history_repo(history_repo),
+      _current_user(current_user) {}
 
     PlaybackQueue::PlaybackQueue(std::shared_ptr<User> current_user,
                                 const IPlayable& playable,

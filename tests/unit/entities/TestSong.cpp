@@ -37,23 +37,23 @@ TEST_SUITE("Unit Tests - Entity: Song") {
 
         unsigned artistId = 50;
         unsigned userId = 99;
-        core::Song s2(1, "Title ABC", artistId, userId);
+        core::Song s3(1, "Title ABC", artistId, userId);
 
-        CHECK(s2.getTitle() == "Title ABC");
-        CHECK(s2.getArtist() == nullptr);
-        CHECK(s2.getUser() == nullptr);
+        CHECK(s3.getTitle() == "Title ABC");
+        CHECK(s3.getArtist() == nullptr);
+        CHECK(s3.getUser() == nullptr);
 
         core::Artist a("ArtZ", "Jazz");
         core::Album al;
         core::User u("John");
 
-        core::Song s3("FullSong", a, al, u);
+        core::Song s4("FullSong", a, al, u);
 
-        CHECK(s3.getTitle() == "FullSong");
-        CHECK(s3.getArtist() != nullptr);
-        CHECK(s3.getAlbum() != nullptr);
-        CHECK(s3.getUser() != nullptr);
-        CHECK(s3.getUser()->getUsername() == "John");
+        CHECK(s4.getTitle() == "FullSong");
+        CHECK(s4.getArtist() != nullptr);
+        CHECK(s4.getAlbum() != nullptr);
+        CHECK(s4.getUser() != nullptr);
+        CHECK(s4.getUser()->getUsername() == "John");
     }
 
     TEST_CASE("Song: setters básicos") {

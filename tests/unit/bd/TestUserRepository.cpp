@@ -108,16 +108,13 @@ TEST_SUITE("Unit Tests - UserRepository") {
         CHECK(repo.save(user3) == true);
 
         auto found_alice = repo.findByUsername("alice");
-        CHECK(found_alice.size() == 2);
-        for (const auto& u : found_alice)
-            CHECK(u->getUsername() == "alice");
+        CHECK(found_alice->getUsername() == "alice");
 
         auto found_bob = repo.findByUsername("bob");
-        CHECK(found_bob.size() == 1);
-        CHECK(found_bob[0]->getUsername() == "bob");
+        CHECK(found_bob->getUsername() == "bob");
 
         auto found_none = repo.findByUsername("charlie");
-        CHECK(found_none.empty());
+        CHECK(found_none == nullptr);
     }
 
     TEST_CASE("UserRepository: getAll retorna todos usuários") {

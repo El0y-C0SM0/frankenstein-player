@@ -1,9 +1,9 @@
 #include <doctest/doctest.h>
 
-#include <memory>
-#include <vector>
-#include <string>
 #include <cstdio>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include "core/bd/DatabaseManager.hpp"
 #include "core/bd/SongRepository.hpp"
@@ -23,9 +23,9 @@ TEST_SUITE("Unit Tests - core::SongRepository") {
     TEST_CASE("SongRepository: Inserir e remover") {
         core::SongRepository repo(createTempDB()->getDatabase());
 
-        core::Song song1 = core::Song(1, "media/test/music1.mp3", "Música teste 1", "Artista1");
-        core::Song song2 = core::Song(2, "media/test/music2.mp3", "Minha Música", "Artista1");
-        core::Song song3 = core::Song(3, "media/test/music3.mp3", "Música teste 2", "Artista2");
+        core::Song song1 = core::Song(1, "media/test/music1.mp3", "Música teste 1", 1);
+        core::Song song2 = core::Song(2, "media/test/music2.mp3", "Minha Música", 1);
+        core::Song song3 = core::Song(3, "media/test/music3.mp3", "Música teste 2", 2);
 
         CHECK(repo.count() == 0);
         CHECK(repo.save(song1) == true);
@@ -43,9 +43,9 @@ TEST_SUITE("Unit Tests - core::SongRepository") {
     TEST_CASE("SongRepository: Buscar") {
         core::SongRepository repo(createTempDB()->getDatabase());
 
-        core::Song song1 = core::Song(1, "media/test/music1.mp3", "Música teste 1", "Artista1");
-        core::Song song2 = core::Song(2, "media/test/music2.mp3", "Minha Música", "Artista1");
-        core::Song song3 = core::Song(3, "media/test/music3.mp3", "Música teste 2", "Artista2");
+        core::Song song1 = core::Song(1, "media/test/music1.mp3", "Música teste 1", 1);
+        core::Song song2 = core::Song(2, "media/test/music2.mp3", "Minha Música", 1);
+        core::Song song3 = core::Song(3, "media/test/music3.mp3", "Música teste 2", 2);
 
         CHECK(repo.count() == 0);
         CHECK(repo.save(song1) == true);
@@ -60,15 +60,14 @@ TEST_SUITE("Unit Tests - core::SongRepository") {
         CHECK(repo.findById(3) == nullptr);
         CHECK(repo.save(song3) == true);
         CHECK(repo.findById(3) != nullptr);
-
     }
 
     TEST_CASE("SongRepository: Get All") {
         core::SongRepository repo(createTempDB()->getDatabase());
 
-        core::Song song1 = core::Song(1, "media/test/music1.mp3", "Música teste 1", "Artista1");
-        core::Song song2 = core::Song(2, "media/test/music2.mp3", "Minha Música", "Artista1");
-        core::Song song3 = core::Song(3, "media/test/music3.mp3", "Música teste 2", "Artista2");
+        core::Song song1 = core::Song(1, "media/test/music1.mp3", "Música teste 1", 1);
+        core::Song song2 = core::Song(2, "media/test/music2.mp3", "Minha Música", 1);
+        core::Song song3 = core::Song(3, "media/test/music3.mp3", "Música teste 2", 2);
 
         CHECK(repo.save(song1) == true);
         CHECK(repo.save(song2) == true);
@@ -82,6 +81,5 @@ TEST_SUITE("Unit Tests - core::SongRepository") {
         CHECK(vector.size() == 3);
         CHECK(vector.end()->get()->getTitle() == "Música teste 2");
         CHECK(vector.begin()->get()->getTitle() == "Música teste 1");
-
     }
 }

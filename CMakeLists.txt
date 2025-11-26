@@ -103,6 +103,7 @@ message(STATUS " MiniAudio configurado - suporte a MP3, WAV, OGG, FLAC")
 
 # 6. Boost Filesystem (find_package)
 find_package(Boost 1.65 COMPONENTS filesystem iostreams REQUIRED)
+
 # ============================================================================
 # BIBLIOTECA CORE
 # ============================================================================
@@ -197,21 +198,26 @@ if(BUILD_TESTING)
     enable_testing()
     message(STATUS "Configuração de testes ativada.")
 
+    # Testes de aceitação
     file(GLOB_RECURSE ACCEPTANCE_TEST_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/acceptance/*.cpp"
     )
-    #file(GLOB_RECURSE UNIT_TEST_SOURCES
-    #    "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/**/*.cpp"
-    #)
+    
+    file(GLOB_RECURSE UNIT_TEST_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/*.cpp"
+    )
 
-    set(ALL_TEST_SOURCES ${ACCEPTANCE_TEST_SOURCES})#${UNIT_TEST_SOURCES}
+    message(STATUS "Acceptance tests encontrados: ${ACCEPTANCE_TEST_SOURCES}")
+    message(STATUS "Unit tests encontrados: ${UNIT_TEST_SOURCES}")
+
+    set(ALL_TEST_SOURCES ${ACCEPTANCE_TEST_SOURCES} ${UNIT_TEST_SOURCES})
 
     foreach(testfile IN LISTS ALL_TEST_SOURCES)
         get_filename_component(testname ${testfile} NAME_WE)
         string(REGEX REPLACE "[^A-Za-z0-9_]" "_" testname_sanitized ${testname})
-        set(test_target "${testname_sanitized}")
+        set(test_target "test_${testname_sanitized}")
 
-        add_executable(${test_target} tests/test_main.cpp  ${testfile})
+        add_executable(${test_target} tests/test_main.cpp ${testfile})
         target_link_libraries(${test_target} PRIVATE frankenstein_core doctest)
 
         target_include_directories(${test_target} PUBLIC
@@ -226,13 +232,14 @@ if(BUILD_TESTING)
         endif()
 
         add_test(NAME ${test_target} COMMAND ${test_target})
-        set_tests_properties(${test_target} PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} TIMEOUT 120)
+        set_tests_properties(${test_target} PROPERTIES 
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} 
+            TIMEOUT 120
+        )
     endforeach()
 
-    # Alvo auxiliar para rodar todos os testes localmente
     add_custom_target(run_all_tests
          COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
-         DEPENDS ${ALL_TEST_SOURCES}
          COMMENT "Running all test suites via ctest"
     )
 endif()

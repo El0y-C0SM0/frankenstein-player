@@ -9,6 +9,7 @@
 
 #include "core/entities/Playlist.hpp"
 #include "core/entities/Song.hpp"
+#include "core/entities/Artist.hpp"
 #include "core/entities/User.hpp"
 
 #include <memory>

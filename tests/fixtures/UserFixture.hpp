@@ -57,4 +57,4 @@ class UserFixture {
     const std::string getBaseTestPath() const {
         return _base_test_path;
     }
-};
+};;

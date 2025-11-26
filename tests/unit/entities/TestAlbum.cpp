@@ -17,7 +17,7 @@ TEST_SUITE("Unit Tests - Entity: Album") {
     }
 
     TEST_CASE("Album: construtor com artista") {
-        auto artist = std::make_shared<core::Artist>(1, "Artista Teste");
+        auto artist = std::make_shared<core::Artist>(1, "Artista Teste", 1);
         core::Album album("Album X", artist, "Rock");
 
         CHECK(album.getName() == "Album X");
@@ -37,7 +37,7 @@ TEST_SUITE("Unit Tests - Entity: Album") {
         CHECK(album.getGenre() == "Jazz");
         CHECK(album.getYear() == 1999);
 
-        auto artist = std::make_shared<core::Artist>(2, "Novo Artista");
+        auto artist = std::make_shared<core::Artist>(2, "Novo Artista", 1); // User Id podemos tirar caso de erro
         album.setArtist(artist);
         CHECK(album.getArtist() == artist);
 
@@ -54,16 +54,16 @@ TEST_SUITE("Unit Tests - Entity: Album") {
     TEST_CASE("Album: adicionar e contar músicas") {
         auto album = std::make_shared<core::Album>();
         CHECK(album->getSongCount() == 0);
-    
+
         std::shared_ptr<core::Artist> nullArtist;
         core::Song s1("Musica 1", nullArtist, album);
         core::Song s2("Musica 2", nullArtist, album);
-    
+
         album->addSong(s1);
         album->addSong(s2);
-    
+
         CHECK(album->getSongCount() == 2);
-    
+
         auto found = album->findSongById(2);
         CHECK(found != nullptr);
         CHECK(found->getTitle() == "Musica 2");

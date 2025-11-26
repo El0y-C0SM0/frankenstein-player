@@ -1,8 +1,8 @@
 #include <doctest/doctest.h>
 
+#include "core/entities/Album.hpp"
 #include "core/entities/Artist.hpp"
 #include "core/entities/Song.hpp"
-#include "core/entities/Album.hpp"
 #include "core/entities/User.hpp"
 
 TEST_SUITE("Unit Tests - Entity: Artist") {
@@ -163,7 +163,6 @@ TEST_SUITE("Unit Tests - Entity: Artist") {
 
         CHECK(artist.switchSong(3, 0) == true);
     }
-
 
     TEST_CASE("Artist: toString deve retornar algo não vazio") {
         core::Artist artist("ToStringArtist", "Jazz");
