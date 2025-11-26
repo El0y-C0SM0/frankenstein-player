@@ -9,6 +9,8 @@
  */
 
 #include "cli/Cli.hpp"
+#include <fstream>
+#include <iomanip>
 #include "core/bd/DatabaseManager.hpp"
 
 namespace cli
@@ -89,13 +91,17 @@ namespace cli
         _player = std::make_shared<core::Player>();
 
         _library = std::make_shared<core::Library>(_user, _db);
-    }
 
-    /*
-        void Cli::play(Core::IPlayable &playabel){
-            _player.play(playabel);
+        try
+        {
+            std::ifstream helpFile("resources/help.json");
+            helpFile >> _helpData;
         }
-    */
+        catch (const std::exception &e)
+        {
+            std::cerr << "Erro ao carregar o arquivo de ajuda 'assets/help.json': " << e.what() << std::endl;
+        }
+    }
 
     void Cli::restart()
     {
@@ -289,34 +295,176 @@ namespace cli
         return true;
     }
 
-    // TODO: implementar (depende de player)
-    /*
+    void Cli::play(core::IPlayable &playabel)
+    {
+        std::shared_ptr<core::PlaybackQueue> _savedQueue;
 
-        void Cli::play(Core::IPlayable &playabel)
+        if (_player->getPlaybackQueue() && !_player->getPlaybackQueue()->empty())
         {
-            _player->play(playabel);
+            _savedQueue = std::make_shared<core::PlaybackQueue>(*_player->getPlaybackQueue());
         }
 
-        void Cli::shuffle()
+        _player->clearPlaylist();
+
+        _player->getPlaybackQueue()->add(playabel);
+
+        _player->play();
+
+        _player->getPlaybackQueue()->add(*_savedQueue);
+    }
+
+    void Cli::shuffle()
+    {
+        _player->getPlaybackQueue()->shuffle();
+    }
+
+    void Cli::removeFromQueue(unsigned idx)
+    {
+        _player->getPlaybackQueue()->remove(idx);
+    }
+
+    void Cli::showStatus() const
+    {
+        try
         {
-            _player->getPlaybackQueue->shuffle();
+
+            std::cout << "=== Player Status ===" << std::endl;
+
+            std::string state;
+            if (_player->isPlaying())
+                state = "Playing";
+            else if (_player->isPaused())
+                state = "Paused";
+            else
+                state = "Stopped";
+
+            std::cout << "Estado: " << state << std::endl;
+
+            float vol = _player->getVolume() * 100.0f;
+            std::cout << "Volume: " << static_cast<unsigned int>(vol) << "%";
+            if (_player->isMuted())
+                std::cout << " (muted)";
+            std::cout << std::endl;
+
+            std::cout << "Loop: " << (_player->isLooping() ? "on" : "off") << std::endl;
+
+            std::shared_ptr<core::PlaybackQueue> queue;
+
+            queue = _player->getPlaybackQueue();
+
+            if (queue)
+            {
+                std::cout << "Tamanho da fila: " << queue->size() << std::endl;
+
+                auto curr = queue->getCurrentSong();
+                if (curr)
+                {
+
+                    std::cout << "Musica atual: " << curr->getTitle();
+                    if (curr->getArtist())
+                        std::cout << " - " << curr->getArtist()->getName();
+                    std::cout << std::endl;
+
+                    unsigned int elapsed = 0;
+                    float progress = 0.0f;
+
+                    elapsed = _player->getElapsedTime();
+
+                    progress = _player->getProgress();
+
+                    if (progress > 0.0f && elapsed > 0)
+                    {
+                        unsigned int total = static_cast<unsigned int>(elapsed / progress);
+
+                        unsigned int m = elapsed / 60;
+                        unsigned int sec = elapsed % 60;
+                        char bufElapsed[32];
+                        std::snprintf(bufElapsed, sizeof(bufElapsed), "%02u:%02u", m, sec);
+
+                        m = total / 60;
+                        sec = total % 60;
+                        char bufTotal[32];
+                        std::snprintf(bufTotal, sizeof(bufTotal), "%02u:%02u", m, sec);
+
+                        std::cout << "Progresso: " << bufElapsed << " / " << bufTotal << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Progresso: 0:0/0:0" << std::endl;
+                    }
+                }
+                else
+                {
+                    std::cout << "Nenhuma musica carregada atualmente." << std::endl;
+                }
+
+                auto next = queue->getNextSong();
+                if (next)
+                {
+
+                    std::cout << "Proxima musica: " << next->getTitle();
+                    if (next->getArtist())
+                        std::cout << " - " << next->getArtist()->getName();
+                    std::cout << std::endl;
+                }
+                else
+                {
+                    std::cout << "Proxima musica: (nenhuma)" << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "Fila: N/D" << std::endl;
+            }
+
+            std::cout << "======================" << std::endl;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Erro ao obter status do player: " << e.what() << std::endl;
+        }
+    }
+
+    void Cli::showHelp() const
+    {
+        if (_helpData.empty() || !_helpData.contains("commands"))
+        {
+            std::cout << "Nenhuma informação de ajuda disponível." << std::endl;
+            return;
         }
 
-        void Cli::removeFromQueue(unsigned idx)
+        std::cout << "Comandos disponíveis:" << std::endl;
+        for (auto it = _helpData["commands"].begin(); it != _helpData["commands"].end(); ++it)
         {
-            _player->removeFromPlaybackQueue(idx);
+            std::cout << "  " << std::left << std::setw(15) << it.key()
+                      << it.value().value("description", "") << std::endl;
+        }
+        std::cout << "\nDigite 'help <comando>' para mais detalhes." << std::endl;
+    }
+
+    void Cli::showHelp(const std::string &topic) const
+    {
+        if (topic.empty())
+        {
+            showHelp();
+            return;
         }
 
-        void Cli::showStatus() const
+        if (_helpData.empty() || !_helpData.contains("commands") || !_helpData["commands"].contains(topic))
         {
-            _player->showStatus();
+            std::cout << "Nenhuma ajuda encontrada para o comando '" << topic << "'." << std::endl;
+            return;
         }
 
-        void Cli::showHelp (std::string command) const
+        const auto &cmd_info = _helpData["commands"][topic];
+        std::cout << "Ajuda para o comando: " << topic << std::endl;
+        std::cout << "  Descrição: " << cmd_info.value("description", "N/A") << std::endl;
+        std::cout << "  Uso: " << cmd_info.value("usage", "N/A") << std::endl;
+        if (cmd_info.contains("aliases"))
         {
-            // implementar
+            std::cout << "  Apelidos: " << cmd_info["aliases"].dump() << std::endl;
         }
-    */
+    }
 
     void Cli::searchSong(const std::string &query) const
     {
@@ -834,7 +982,7 @@ namespace cli
         }
         else if (firstCommand == "help")
         {
-            showHelp();
+            ss >> firstCommand ? showHelp(firstCommand) : showHelp();
             return true;
         }
         else

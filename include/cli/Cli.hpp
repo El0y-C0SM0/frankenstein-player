@@ -13,11 +13,10 @@
 #include <string>
 #include <memory>
 #include <sstream>
-#include <iostream>
-#include <optional>
 #include <cstdlib>
 #include <iostream>
 
+#include <nlohmann/json.hpp>
 #include "core/bd/DatabaseManager.hpp"
 #include "core/services/ConfigManager.hpp"
 #include "core/entities/User.hpp"
@@ -41,6 +40,7 @@ namespace cli
     std::shared_ptr<core::Player> _player;
     std::shared_ptr<core::Library> _library;
     std::shared_ptr<SQLite::Database> _db;
+    nlohmann::json _helpData;
     core::ConfigManager _config;
     core::DatabaseManager _db_manager;
 

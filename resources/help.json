@@ -1,0 +1,87 @@
+{
+  "commands": {
+    "play": {
+      "description": "Toca uma música, pausa ou retoma a reprodução.",
+      "usage": "play [nome da música]",
+      "aliases": ["pause", "resume"],
+      "details": "Se nenhum nome de música for fornecido, o comando alterna entre pausar e retomar a música atual. Se um nome de música for fornecido, ele a procurará e a tocará."
+    },
+    "status": {
+      "description": "Mostra o status atual do player.",
+      "usage": "status",
+      "aliases": ["info"],
+      "details": "Exibe informações como a música atual, volume, progresso, etc."
+    },
+    "restart": {
+      "description": "Reinicia a música atual.",
+      "usage": "restart",
+      "aliases": ["replay"]
+    },
+    "volume": {
+      "description": "Ajusta ou exibe o volume.",
+      "usage": "volume [up|down|set <valor>]",
+      "details": "Sem argumentos, exibe o volume atual (0-100). 'up' aumenta, 'down' diminui. 'set <valor>' define o volume para um valor específico."
+    },
+    "rewind": {
+      "description": "Retrocede a música atual em alguns segundos.",
+      "usage": "rewind <segundos>"
+    },
+    "forward": {
+      "description": "Avança a música atual em alguns segundos.",
+      "usage": "forward <segundos>"
+    },
+    "mute": {
+      "description": "Silencia ou reativa o som do player.",
+      "usage": "mute | unmute | toggle_mute",
+      "aliases": ["unmute", "toggle_mute"]
+    },
+    "next": {
+      "description": "Pula para a próxima música na fila.",
+      "usage": "next"
+    },
+    "previous": {
+      "description": "Volta para a música anterior na fila.",
+      "usage": "previous"
+    },
+    "like": {
+      "description": "Adiciona a música atual à sua playlist de 'curtidas'.",
+      "usage": "like"
+    },
+    "deslike": {
+      "description": "Remove a música atual da sua playlist de 'curtidas'.",
+      "usage": "deslike"
+    },
+    "shuffle": {
+      "description": "Embaralha a fila de reprodução atual.",
+      "usage": "shuffle"
+    },
+    "loop": {
+      "description": "Ativa ou desativa a repetição da música atual.",
+      "usage": "loop <on|off>"
+    },
+    "queue": {
+      "description": "Gerencia a fila de reprodução.",
+      "usage": "queue <show|clear|add <música>|remove <índice>>",
+      "details": "Use 'show' para ver a fila, 'clear' para limpar, 'add' para adicionar uma música e 'remove' para remover pelo índice."
+    },
+    "playlist": {
+      "description": "Gerencia playlists.",
+      "usage": "playlist <show <playlist>|add <playlist> <música>|remove <playlist> <música>>",
+      "details": "Use 'show' para ver as músicas de uma playlist, 'add' para adicionar uma música e 'remove' para remover."
+    },
+    "search": {
+      "description": "Busca por músicas, artistas, álbuns ou playlists.",
+      "usage": "search <song|artist|album|playlist> <termo de busca>",
+      "aliases": ["music"]
+    },
+    "help": {
+      "description": "Mostra a lista de comandos ou a ajuda para um comando específico.",
+      "usage": "help [comando]"
+    },
+    "exit": {
+      "description": "Sai do Frankenstein Media Player.",
+      "usage": "exit",
+      "aliases": ["quit"]
+    }
+  }
+}
