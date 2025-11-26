@@ -64,9 +64,15 @@ namespace core {
          */
         ~Playlist();
 
+        /**
+         * @brief Getter de título
+         */
         std::string getTitulo();
         std::string getTitle() const;
 
+        /**
+         * @brief Setter de título
+         */
         void setTitulo(const std::string nome);
 
         /**
@@ -83,35 +89,106 @@ namespace core {
          */
         virtual bool operator!=(const Entity& other) const override;
 
-        // metodos ICollection
+        /**
+         * @brief Getter do vector de músicas de ICollection
+         * 
+         */
         virtual std::vector<std::shared_ptr<Song>> getSongs() const override;
 
+        /**
+         * @brief Setter da função de loader
+         * 
+         * @param loader função para fazer load de música
+         */
         virtual void setSongsLoader(
             const std::function<std::vector<std::shared_ptr<Song>>()>& loader)
             override;
 
+        /**
+         * @brief Adiciona música à coleção
+         * 
+         * @param song música a ser adicionada
+         */
         virtual void addSong(Song& song) override;
 
+        /**
+         * @brief Troca uma música de posição na playlist
+         * 
+         * @param id da música a ser trocada de posição
+         * @param index para o qual a música será realocada
+         * @return true caso a troca seja bem sucedida
+         * @return false caso a troca não seja bem sucedida
+         */
         virtual bool switchSong(unsigned id, unsigned index) override;
 
+        /**
+         * @brief 
+         * 
+         * @param id 
+         * @return true 
+         * @return false 
+         */
         virtual bool removeSong(unsigned id) override;
 
+        /**
+         * @brief Acha uma música pelo ID da música
+         * 
+         * @param songId id da música
+         * @return std::shared_ptr<Song> para a instância da música
+         * @return nullptr caso a música não exista
+         */
         virtual std::shared_ptr<Song>
         findSongById(unsigned songId) override;
 
+        /**
+         * @brief Acha uma música pelo título da música
+         * 
+         * @param title título da música
+         * @return std::shared_ptr<Song> para a instância da música
+         * @return nullptr caso a música não exista
+         */
         virtual std::shared_ptr<Song>
         findSongByTitle(const std::string& title) override;
 
+        /**
+         * @brief Calcula duração total da música
+         * 
+         * @return duração da música em segundos
+         */
         virtual int calculateTotalDuration() override;
 
+        /**
+         * @brief Calcula a duração e formata a string
+         * 
+         * @return std::string no formato hh:mm
+         */
         virtual std::string getFormattedDuration() override;
 
+        /**
+         * @brief Pega a próxima música na ordem da playlist
+         * 
+         * @param current música atual
+         * @return std::shared_ptr<Song> para a próxima
+         */
         virtual std::shared_ptr<Song>
         getNextSong(Song &current) override;
 
+        /**
+         * @brief Pega a música anterior
+         * 
+         * @param current música atual
+         * @return std::shared_ptr<Song> para a anterior
+         */
         virtual std::shared_ptr<Song>
         getPreviousSong(Song &current) override;
 
+        /**
+         * @brief Pega a música na posição
+         * 
+         * @param index posição da música
+         * @return std::shared_ptr<Song> para a música no index indicado
+         * @return nullptr caso o index esteja fora do escopo
+         */
         virtual std::shared_ptr<Song> getSongAt(int index) override;
 
         // IPlayable
@@ -122,7 +199,18 @@ namespace core {
         virtual std::vector<std::shared_ptr<IPlayableObject>>
         getPlayableObjects() const override;
 
+        /**
+         * @brief Getter de user da interface IPlayable
+         * 
+         * @return std::shared_ptr<User> para o usuário
+         */
         std::shared_ptr<User> getUser() const;
+
+        /**
+         * @brief Setter para o user da interface IPlayable
+         * 
+         * @param user usuário
+         */
         void setUser(const User& user);
     };
 }  // namespace core
