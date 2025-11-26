@@ -283,19 +283,36 @@ namespace cli
         return true;
     }
 
+    void Cli::play(core::IPlayable &playabel)
+    {
+        std::shared_ptr<core::PlaybackQueue> _savedQueue;
+
+        if (_player->getPlaybackQueue() && !_player->getPlaybackQueue()->empty())
+        {
+            _savedQueue = std::make_shared<core::PlaybackQueue>(*_player->getPlaybackQueue());
+        }
+
+        _player->clearPlaylist();
+
+        _player->getPlaybackQueue()->add(playabel);
+
+        _player->play();
+
+        _player->getPlaybackQueue()->add(*_savedQueue);
+    }
+
+    void Cli::shuffle()
+    {
+        _player->getPlaybackQueue()->shuffle();
+    }
+
+    void Cli::removeFromQueue(unsigned idx)
+    {
+        _player->getPlaybackQueue()->remove(idx);
+    }
+
     // TODO: implementar (depende de player)
     /*
-
-        void Cli::play(Core::IPlayable &playabel)
-        {
-            _player->play(playabel);
-        }
-
-        void Cli::removeFromQueue(unsigned idx)
-        {
-            _player->removeFromPlaybackQueue(idx);
-        }
-
         void Cli::showStatus() const
         {
             _player->showStatus();
@@ -796,7 +813,7 @@ namespace cli
                                 std::cout << "Música não encontrada: " << playable << std::endl;
                                 return false;
                             }
-                            
+
                             auto spPl = optPl.at(0);
                             auto spSong = optSong.at(0);
                             removeFromPlaylist(*spPl, *spSong);
