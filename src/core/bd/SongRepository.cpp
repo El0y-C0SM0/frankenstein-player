@@ -110,6 +110,9 @@ namespace core {
         song->setFeaturingArtistsLoader(featuringArtistsLoader);
         song->setAlbumLoader(albumLoader);
 
+        auto user_repo = UserRepository(_db);
+        song->setUser(*user_repo.findById(user_id));
+
         return song;
     }
     bool SongRepository::save(Song &entity) {

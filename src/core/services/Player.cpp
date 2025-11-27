@@ -95,12 +95,10 @@ namespace core {
             throw std::runtime_error("Música é null");
         }
 
-        std::string filePath = _currentSong->getFilePath();
+        std::string filePath = _currentSong->getAudioFilePath();
         if (filePath.empty()) {
             throw std::runtime_error("Caminho vazio");
         }
-
-        std::cout << "\n♪ Carregando: " << _currentSong->getTitle() << std::endl;
 
         // Inicializa com flags de decodificação
         ma_uint32 flags = MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_ASYNC;

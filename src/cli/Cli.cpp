@@ -73,9 +73,9 @@ namespace cli
 
         _player = std::make_shared<core::Player>();
 
-        _library = std::make_shared<core::Library>(_user, _db_manager.getDatabase());
-
         _db = _db_manager.getDatabase();
+        _library = std::make_shared<core::Library>(_user, _db);
+
 
         try
         {
@@ -628,6 +628,7 @@ namespace cli
         std::string firstCommand;
         ss >> firstCommand;
 
+        try {
         if (firstCommand.empty())
         {
             std::cout << "Comando vazio. Por favor, insira um comando válido." << std::endl;
@@ -644,6 +645,9 @@ namespace cli
             {
                 std::string playable;
                 std::getline(ss, playable);
+
+                _player->play();
+
                 if (playable.empty())
                 {
                     toggleResumePause();
@@ -793,12 +797,9 @@ namespace cli
                     std::string playable;
                     std::getline(ss, playable);
                     playable = trimSpaces(playable);
-                     std::cout << "queue adicionar 1" << std::endl;
                     if (!playable.empty())
                     {
-                        std::cout << "queue adicionar 2" << std::endl;
                         auto opt = _library->searchSong(playable);
-                        std::cout << "queue adicionar 3" << std::endl;
                         if (opt.empty())
                         {
                             std::cout << "Música não encontrada: " << playable << std::endl;
@@ -806,9 +807,7 @@ namespace cli
                         }
 
                         auto sp = opt.at(0);
-                        std::cout << "queue adicionar 4" << std::endl;
                         addToQueue(*sp);
-                        std::cout << "queue adicionar 5" << std::endl;
                         return true;
                     }
 
@@ -1010,6 +1009,10 @@ namespace cli
         else
         {
             std ::cout << "Comando não reconhecido: " << firstCommand << std::endl;
+            return false;
+        }
+        } catch (const std::exception &e) {
+            std::cerr << "Erro ao executar o comando '" << command << "': " << e.what() << std::endl;
             return false;
         }
     }
