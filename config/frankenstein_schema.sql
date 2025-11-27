@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS songs (
     track_number INTEGER,
     album_id INTEGER,
     artist_id INTEGER NOT NULL,
+    release_year INTEGER,
+    genre TEXT,
     file_size INTEGER,
     bitrate INTEGER,
     sample_rate INTEGER,
