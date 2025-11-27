@@ -11,6 +11,7 @@
 #include "core/services/ConfigManager.hpp"
 #include "core/services/PlaybackQueue.hpp"
 #include "core/services/Player.hpp"
+#include "cli/Cli.hpp"
 
 int main(int argc, char *argv[]) {
     std::string logo =
@@ -32,16 +33,10 @@ int main(int argc, char *argv[]) {
     std::cout << "Arquivo de configurações: " << config_path << std::endl;
 
     core::ConfigManager configManager(config_path);
-    // configManager.loadConfig();
+    configManager.loadConfig();
 
-    // Exemplo de execução
-    core::Player player;
-    // player.addPlaybackQueue(const core::PlaybackQueue &track);
-    player.play();
-    // stateOfPlayer controla o callback.
-    while (player.stateOfPlayer() != core::PlayerState::STOPPED) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
+    cli::Cli cli(configManager);
+    cli.start();
 
     return 0;
 }
