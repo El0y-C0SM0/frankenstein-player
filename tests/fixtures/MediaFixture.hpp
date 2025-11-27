@@ -50,7 +50,7 @@ public:
             "Test",
             "2025",
             "Testing",
-            "1/2"
+            "1"
         };
         _test_song_mocks["Medium_Song_Test_The_Testers"] = SongTestMock{
             _test_media_path + "Medium_Song_Test_The_Testers.mp3",
@@ -60,7 +60,7 @@ public:
             "Test",
             "2025",
             "Testing",
-            "2/2"
+            "2"
         };
         _test_song_mocks["Short_Song_Examples_Example_Band"] = SongTestMock{
             _test_media_path + "Short_Song_Example_Band.mp3",
@@ -70,7 +70,7 @@ public:
             "Examples",
             "2025",
             "Example Genre",
-            "1/2"
+            "1"
         };
         _test_song_mocks["Medium_Song_Examples_Example_Band"] = SongTestMock{
             _test_media_path + "Medium_Song_Example_Band.mp3",
@@ -80,7 +80,7 @@ public:
             "Examples",
             "2025",
             "Example Genre",
-            "2/2"
+            "2"
         };
         _test_song_mocks["Song_Test_No_Artist"] = SongTestMock{
             _test_media_path + "Song_Test_No_Artist.mp3",
@@ -90,7 +90,7 @@ public:
             "No Album",
             "2025",
             "No Genre",
-            "1/1"
+            "1"
         };
         _test_song_mocks["Song_Test_No_Album"] = SongTestMock{
             _test_media_path + "Song_Test_No_Album.mp3",
@@ -100,7 +100,7 @@ public:
             "",
             "2025",
             "No Genre",
-            "1/1"
+            "1"
         };
     }
 

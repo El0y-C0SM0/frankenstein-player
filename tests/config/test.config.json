@@ -5,10 +5,10 @@
     "schema_path": "../config/frankenstein_schema.sql"
   },
   "paths": {
-    "public_user": "..tests/fixtures/data/public_user",
+    "public_user": "../tests/fixtures/data/public_user",
     "user_home": "../tests/fixtures/data/user",
-    "input_user": "../tests/fixtures/data/input/public_user/",
-    "input_public": "../tests/fixtures/data/input/user/",
+    "input_user": "../tests/fixtures/data/input/user/:username:",
+    "input_public": "../tests/fixtures/data/input/public_user/",
     "logs": "test/fixtures/data/logs/"
   },
   "features": {
