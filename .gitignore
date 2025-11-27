@@ -85,3 +85,6 @@ user_data/
 # nvim tavares
 .clang-format
 .clangd
+
+# output da documentação do doxygen
+docs/output
