@@ -95,10 +95,14 @@ sudo dnf install cmake
 sudo pacman -S cmake
 ```
 
-#### macOS (Homebrew)
+#### MacOS (Homebrew)
 ```bash
 brew install cmake
 ```
+
+#### Windows
+
+Acesse o link https://cmake.org/download/ para baixar e executar o instalador
 
 ### 2. Criar o diretório de compilação
 
@@ -123,6 +127,15 @@ make
 
 ```bash
 ./frankenstein_player
+```
+
+#### Windows
+
+```bash
+cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM="3.5"
+cmake --build build
+cd build
+.\frankenstein_player.exe
 ```
 
 ## 👥 Autores
