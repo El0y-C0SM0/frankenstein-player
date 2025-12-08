@@ -35,18 +35,18 @@ Por exemplo:
 Em commits que entregam muitas modificações, também é recomendável uma descrição melhor no corpo do commit.
 Abaixo segue a tabela de tipos de commits que podem ser usados.
 
-| Tipo     | Código                | Descrição                                       |
-| -------- | --------------------- | ----------------------------------------------- |
-| feat     | `:sparkles:feat`      | Nova funcionalidade                             |
-| task     | `:memo:task`          | Tarefa completa                                 |
-| fix      | `:bug:fix`            | Correção de bug                                 |
-| docs     | `:books:docs`         | Alterações na documentação                      |
-| style    | `:lipstick:style`     | Formatação do código                            |
-| refactor | `:recycle:refactor`   | Refatoração de código                           |
-| test     | `:test_tube:test`     | Adição ou correção de testes                    |
-| chore    | `chore`               | Atualização de tarefas de build e configurações |
-| perf     | `:zap:perf`           | Melhorias de performance                        |
-| build    | `:wrench:build`       | Mudanças no sistema de build ou dependências    |
-| security | `:lock:security`      | Atualizações de segurana                        |
-| remove   | `:wastebasket:remove` | Remoção de arquivos                             |
-|          | `:boom:revert`        | Revertendo mudanças                             |
+| Tipo     | Código                 | Descrição                                       |
+| -------- | ---------------------- | ----------------------------------------------- |
+| feat     | `:sparkles: feat`      | Nova funcionalidade                             |
+| task     | `:memo: task`          | Tarefa completa                                 |
+| fix      | `:bug: fix`            | Correção de bug                                 |
+| docs     | `:books: docs`         | Alterações na documentação                      |
+| style    | `:lipstick: style`     | Formatação do código                            |
+| refactor | `:recycle: refactor`   | Refatoração de código                           |
+| test     | `:test_tube: test`     | Adição ou correção de testes                    |
+| chore    | `chore`                | Atualização de tarefas de build e configurações |
+| perf     | `:zap: perf`           | Melhorias de performance                        |
+| build    | `:wrench: build`       | Mudanças no sistema de build ou dependências    |
+| security | `:lock: security`      | Atualizações de segurana                        |
+| remove   | `:wastebasket: remove` | Remoção de arquivos                             |
+|          | `:boom: revert`        | Revertendo mudanças                             |
