@@ -1,5 +1,5 @@
 /***
- * @file Manager
+ * @file FilesManager
  * @brief Essa classe é responsável por gerenciar as músicas do dispositivo
  *
  * @date 2025-10-14
@@ -34,7 +34,7 @@ namespace fs = boost::filesystem;
 
 namespace core {
 
-    class Manager {
+    class FilesManager {
     private:
         ConfigManager& _config;
         std::shared_ptr<SongRepository> _songRepo;
@@ -79,20 +79,20 @@ namespace core {
     public:
 
         /**
-         * @brief Construtor da classe Manager
+         * @brief Construtor da classe FilesManager
          * @param config Instância da configuração do sistema
          * @param songRepo Repositório de músicas
          * @param artistRepo Repositório de artistas
          * @param albumRepo Repositório de álbuns
          */
-        Manager(ConfigManager& config,
+        FilesManager(ConfigManager& config,
                 std::shared_ptr<SongRepository> songRepo,
                 std::shared_ptr<ArtistRepository> artistRepo,
                 std::shared_ptr<AlbumRepository> albumRepo);
 
-        Manager(ConfigManager &config);
+        FilesManager(ConfigManager &config);
 
-        Manager(ConfigManager &config, SQLite::Database& db);
+        FilesManager(ConfigManager &config, SQLite::Database& db);
 
         /***
          * @brief Atualiza toda a organização das músicas com base no diretório temporário
@@ -108,16 +108,6 @@ namespace core {
          * @return true se não houver nenhuma atualização a ser feita e false caso exista alguma música no diretório temporário
          */
         bool isUpdated();
-
-        /**
-         * @brief Define artista para músicas deconhecidas
-         *
-         * Atribui artista para uma música cuja o artista não foi identificado
-         * Verifica se s música não tem nenhum artista definido
-         *
-         */
-        void defineArtist(int songId, int artistId);
-
     };
 
 }

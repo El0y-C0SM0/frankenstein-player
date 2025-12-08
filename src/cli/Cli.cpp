@@ -62,7 +62,7 @@ namespace cli
         }
 
         try {
-            _manager = std::make_shared<core::Manager>(config_manager);
+            _manager = std::make_shared<core::FilesManager>(config_manager);
         } catch (const std::exception &e) {
             std::cerr << "Erro ao criar o gerenciador principal:\n\t" << e.what() << std::endl;
             throw;

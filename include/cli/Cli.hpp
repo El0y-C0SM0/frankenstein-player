@@ -20,7 +20,7 @@
 #include "core/bd/DatabaseManager.hpp"
 #include "core/services/ConfigManager.hpp"
 #include "core/entities/User.hpp"
-#include "core/services/Manager.hpp"
+#include "core/services/FilesManager.hpp"
 #include "core/services/Player.hpp"
 #include "core/entities/Playlist.hpp"
 #include "core/entities/Album.hpp"
@@ -46,7 +46,7 @@ namespace cli
     core::ConfigManager _config;
     core::DatabaseManager _db_manager;
     std::shared_ptr<core::UsersManager> _usersManager;
-    std::shared_ptr<core::Manager> _manager;
+    std::shared_ptr<core::FilesManager> _manager;
 
     /**
      * @brief toca um IPlayable ou um IPlayableObject

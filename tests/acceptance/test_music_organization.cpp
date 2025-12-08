@@ -11,7 +11,7 @@
 #include "core/bd/SongRepository.hpp"
 #include "core/bd/UserRepository.hpp"
 #include "core/entities/User.hpp"
-#include "core/services/Manager.hpp"
+#include "core/services/FilesManager.hpp"
 #include "core/services/UsersManager.hpp"
 
 #include "fixtures/ConfigFixture.hpp"
@@ -90,7 +90,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
     //     boost::filesystem::create_directories(user.getHomePath());
     //     boost::filesystem::create_directories(user.getInputPath());
     // }
-    std::shared_ptr<core::Manager> manager;
+    std::shared_ptr<core::FilesManager> manager;
 
     void setup() {
         db = DatabaseFixture().getDatabase();
@@ -101,7 +101,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
         artist_repo = repo_factory.createArtistRepository();
         album_repo = repo_factory.createAlbumRepository();
         user_repo = repo_factory.createUserRepository();
-        manager = std::make_shared<core::Manager>(config, *db);
+        manager = std::make_shared<core::FilesManager>(config, *db);
     }
 
 

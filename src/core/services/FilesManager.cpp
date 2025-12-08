@@ -1,4 +1,4 @@
-#include "core/services/Manager.hpp"
+#include "core/services/FilesManager.hpp"
 #include "core/bd/DatabaseManager.hpp"
 #include "core/bd/RepositoryFactory.hpp"
 #include "core/entities/User.hpp"
@@ -7,7 +7,7 @@
 
 namespace core
 {
-    Manager::Manager(ConfigManager &config,
+    FilesManager::FilesManager(ConfigManager &config,
                      std::shared_ptr<SongRepository> songRepo,
                      std::shared_ptr<ArtistRepository> artistRepo,
                      std::shared_ptr<AlbumRepository> albumRepo)
@@ -21,7 +21,7 @@ namespace core
             _albumRepo = repo_factory.createAlbumRepository();
         }
 
-    Manager::Manager(ConfigManager &config) : _config(config), _usersManager(config) {
+    FilesManager::FilesManager(ConfigManager &config) : _config(config), _usersManager(config) {
             DatabaseManager db_manager(_config.databasePath(),
                                             _config.databaseSchemaPath());
 
@@ -31,7 +31,7 @@ namespace core
             _albumRepo = repo_factory.createAlbumRepository();
         }
 
-    Manager::Manager(ConfigManager &config, SQLite::Database &db)
+    FilesManager::FilesManager(ConfigManager &config, SQLite::Database &db)
         : _config(config), _usersManager(config, db) {
             RepositoryFactory repo_factory(std::shared_ptr<SQLite::Database>(&db, [](SQLite::Database*){}));
             _songRepo = repo_factory.createSongRepository();
@@ -39,7 +39,7 @@ namespace core
             _albumRepo = repo_factory.createAlbumRepository();
         }
 
-    std::string Manager::cleanString(const std::string& str)
+    std::string FilesManager::cleanString(const std::string& str)
     {
         auto begin = std::find_if_not(str.begin(), str.end(),
                                         [](unsigned char ch){ return std::isspace(ch); });
@@ -53,7 +53,7 @@ namespace core
         return std::string(begin, end);
     }
 
-    void Manager::move(std::string filePath, std::string newFilePath)
+    void FilesManager::move(std::string filePath, std::string newFilePath)
     {
         fs::path source(filePath);
         fs::path destination(newFilePath);
@@ -68,7 +68,7 @@ namespace core
         }
     }
 
-    std::shared_ptr<Song> Manager::readMetadata(TagLib::FileRef file, User &user)
+    std::shared_ptr<Song> FilesManager::readMetadata(TagLib::FileRef file, User &user)
     {
         if (file.isNull() || !file.tag())
         {
@@ -165,7 +165,7 @@ namespace core
         return song;
     }
 
-    void Manager::verifyDir(std::string path)
+    void FilesManager::verifyDir(std::string path)
     {
         fs::path dir(path);
         if (!fs::exists(dir))
@@ -180,7 +180,7 @@ namespace core
         }
     }
 
-    void Manager::update()
+    void FilesManager::update()
     {
         std::shared_ptr<User> currentUser = _usersManager.getCurrentUser();
         std::shared_ptr<User> publicUser = _usersManager.getPublicUser();
@@ -250,7 +250,7 @@ namespace core
         }
     }
 
-    bool Manager::isUpdated()
+    bool FilesManager::isUpdated()
     {
         std::shared_ptr<User> currentUser = _usersManager.getCurrentUser();
         std::shared_ptr<User> publicUser = _usersManager.getPublicUser();
@@ -282,10 +282,4 @@ namespace core
 
         return true;
     }
-
-    void Manager::defineArtist(int songId, int artistId)
-    {
-        std::cout << "Método fora do escopo do MVP" << std::endl;
-    }
-
 }
