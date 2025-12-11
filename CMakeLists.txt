@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.5)
 project(Frankenstein_Media_Player VERSION 1.0.0 LANGUAGES CXX)
 
-# Configuração C++11
-set(CMAKE_CXX_STANDARD 11)
+# Configuração C++17
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -95,14 +95,11 @@ FetchContent_MakeAvailable(miniaudio)
 
 # Cria um target simples
 add_library(miniaudio_lib INTERFACE)
-target_include_directories(miniaudio_lib INTERFACE 
+target_include_directories(miniaudio_lib INTERFACE
     ${miniaudio_SOURCE_DIR}
 )
 
 message(STATUS " MiniAudio configurado - suporte a MP3, WAV, OGG, FLAC")
-
-# 6. Boost Filesystem (find_package)
-find_package(Boost 1.65 COMPONENTS filesystem iostreams REQUIRED)
 
 # ============================================================================
 # BIBLIOTECA CORE
@@ -155,9 +152,7 @@ target_link_libraries(frankenstein_core PUBLIC
     SQLiteCpp
     nlohmann_json::nlohmann_json
     ${TAGLIB_LINK_TARGET}
-    ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_IOSTREAMS_LIBRARY}
-    miniaudio_lib  
+    miniaudio_lib
 )
 
 # Aplica flags de cobertura ao core quando apropriado
@@ -172,7 +167,7 @@ target_compile_definitions(frankenstein_core PUBLIC HAVE_MINI_AUDIO)
 message(STATUS "MiniAudio habilitado para suporte a áudio.")
 
 # Garante C++11 para todos que usarem o core
-target_compile_features(frankenstein_core PUBLIC cxx_std_11)
+target_compile_features(frankenstein_core PUBLIC cxx_std_17)
 
 # ============================================================================
 # EXECUTÁVEL PRINCIPAL
@@ -202,7 +197,7 @@ if(BUILD_TESTING)
     file(GLOB_RECURSE ACCEPTANCE_TEST_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/acceptance/*.cpp"
     )
-    
+
     file(GLOB_RECURSE UNIT_TEST_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/*.cpp"
     )
@@ -232,8 +227,8 @@ if(BUILD_TESTING)
         endif()
 
         add_test(NAME ${test_target} COMMAND ${test_target})
-        set_tests_properties(${test_target} PROPERTIES 
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} 
+        set_tests_properties(${test_target} PROPERTIES
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             TIMEOUT 120
         )
     endforeach()
@@ -256,14 +251,14 @@ if(WIN32)
     message(STATUS "Build configurado para Windows com MiniAudio")
 elseif(APPLE)
     # macOS requer frameworks do Audio
-    target_link_libraries(frankenstein_core PRIVATE 
+    target_link_libraries(frankenstein_core PRIVATE
         "-framework AudioToolbox"
         "-framework CoreAudio"
         "-framework CoreFoundation"
     )
-    target_link_libraries(test_music PRIVATE 
+    target_link_libraries(test_music PRIVATE
         "-framework AudioToolbox"
-        "-framework CoreAudio" 
+        "-framework CoreAudio"
         "-framework CoreFoundation"
     )
     message(STATUS "Build configurado para macOS com MiniAudio")
