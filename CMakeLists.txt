@@ -210,7 +210,7 @@ if(BUILD_TESTING)
     foreach(testfile IN LISTS ALL_TEST_SOURCES)
         get_filename_component(testname ${testfile} NAME_WE)
         string(REGEX REPLACE "[^A-Za-z0-9_]" "_" testname_sanitized ${testname})
-        set(test_target "test_${testname_sanitized}")
+        set(test_target "${testname_sanitized}")
 
         add_executable(${test_target} tests/test_main.cpp ${testfile})
         target_link_libraries(${test_target} PRIVATE frankenstein_core doctest)
