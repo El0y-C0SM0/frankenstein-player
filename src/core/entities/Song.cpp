@@ -6,7 +6,6 @@
 #include "core/entities/Artist.hpp"
 #include "core/entities/Entity.hpp"
 #include "core/entities/User.hpp"
-#include <boost/smart_ptr/intrusive_ptr.hpp>
 #include <cassert>
 #include <memory>
 #include <miniaudio.h>

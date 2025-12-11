@@ -9,8 +9,9 @@
 
 #include "core/bd/DatabaseManager.hpp"
 
-#include <boost/filesystem.hpp>
-#include <boost/iostreams/device/mapped_file.hpp>
+#include <filesystem>
+#include <fstream>
+#include <sstream>
 
 
 namespace core {
@@ -24,15 +25,17 @@ namespace core {
         SQLite::Statement query(*_db, "PRAGMA foreign_keys = ON;");
         query.exec();
 
-        boost::filesystem::path schema_file(_schema_path);
-        if (boost::filesystem::exists(schema_file)) {
-            boost::iostreams::mapped_file_source mapped_file;
-            mapped_file.open(_schema_path);
-            std::string schema_sql(mapped_file.data(), mapped_file.size());
+        std::filesystem::path schema_file(_schema_path);
+        if (std::filesystem::exists(schema_file)) {
+            std::ifstream file(_schema_path);
+            if (!file)
+                throw std::runtime_error("Failed to open schema file");
+
+            std::stringstream buffer;
+            buffer << file.rdbuf();
+            std::string schema_sql = buffer.str();
 
             _db->exec(schema_sql);
-
-            mapped_file.close();
         } else {
             throw std::runtime_error("Schema file not found");
         }

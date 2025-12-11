@@ -2,7 +2,7 @@
 
 #include <string>
 #include <map>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 #include "core/entities/User.hpp"
 
@@ -21,7 +21,7 @@ class UserFixture {
         std::map<std::string, UserTestMock> _test_user_mocks;
 
         UserFixture(){
-            _base_test_path = (boost::filesystem::current_path() / "tests" / "temp_user_data").string();
+            _base_test_path = (std::filesystem::current_path() / "tests" / "temp_user_data").string();
             _test_user_mocks["ADMIN_USER"] = UserTestMock{
                 1,
                 "admin_test",

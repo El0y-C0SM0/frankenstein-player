@@ -18,7 +18,7 @@
 #include "core/services/UsersManager.hpp"
 
 #include <exception>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <memory>
 #include <sstream>
 #ifdef _WIN32
@@ -30,7 +30,7 @@
 #endif
 #include <string>
 
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace core {
 

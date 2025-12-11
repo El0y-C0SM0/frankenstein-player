@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <vector>
@@ -14,6 +14,8 @@
 
 #include "fixtures/ConfigFixture.hpp" // TODO corrigir include
 #include "fixtures/MediaFixture.hpp"
+
+namespace fs = std::filesystem;
 
 TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
     ConfigFixture config = ConfigFixture();
@@ -62,27 +64,27 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música") {
                     medium_song};
             });
 
-            boost::filesystem::create_directories(
+            fs::create_directories(
                 short_song->getAudioFilePath());
-            boost::filesystem::create_directories(
+            fs::create_directories(
                 medium_song->getAudioFilePath());
 
-            boost::filesystem::copy_file(
+            fs::copy_file(
                 short_song_mock.path,
                 short_song->getAudioFilePath(),
-                //boost::filesystem::copy_option::overwrite_if_exists
-                boost::filesystem::copy_options::overwrite_existing
+                //fs::copy_option::overwrite_if_exists
+                fs::copy_options::overwrite_existing
             );
-            boost::filesystem::copy_file(
+            fs::copy_file(
                 medium_song_mock.path,
                 medium_song->getAudioFilePath(),
-                //boost::filesystem::copy_options::overwrite_existing);
-                boost::filesystem::copy_options::overwrite_existing);
+                //fs::copy_options::overwrite_existing);
+                fs::copy_options::overwrite_existing);
         }
 
         ~PlayerFixture() {
-            boost::filesystem::remove(short_song->getAudioFilePath());
-            boost::filesystem::remove(medium_song->getAudioFilePath());
+            fs::remove(short_song->getAudioFilePath());
+            fs::remove(medium_song->getAudioFilePath());
         }
     };
 

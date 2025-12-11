@@ -2,7 +2,6 @@
 #include "core/entities/Entity.hpp"
 #include "core/bd/ArtistRepository.hpp"
 #include "core/entities/Artist.hpp"
-#include <boost/smart_ptr/intrusive_ptr.hpp>
 #include <cassert>
 #include <cstddef>
 #include <memory>

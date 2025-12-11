@@ -212,7 +212,7 @@ namespace core
 
             for (const auto &entry : fs::directory_iterator(inputDir))
             {
-                if (!boost::filesystem::is_regular_file(entry.status()))
+                if (!fs::is_regular_file(entry.status()))
                 {
                     continue;
                 }
@@ -273,7 +273,7 @@ namespace core
 
             for (const auto &entry : fs::directory_iterator(dir))
             {
-                if (boost::filesystem::is_regular_file(entry.status()))
+                if (fs::is_regular_file(entry.status()))
                 {
                     return false;
                 }

@@ -9,13 +9,10 @@
  */
 
 #include "cli/Cli.hpp"
-#include <boost/filesystem/path.hpp>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include "core/bd/DatabaseManager.hpp"
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
 
 namespace cli
 {

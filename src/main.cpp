@@ -5,8 +5,6 @@
 #include <string>
 #include <thread>
 
-#include <boost/filesystem.hpp>
-
 #include "cli/Cli.hpp"
 #include "core/entities/Song.hpp"
 #include "core/services/ConfigManager.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <map>
 #include <string>
 
@@ -26,7 +26,7 @@ public:
         #else
             long uid;
         #endif
-        
+
         bool is_current_user;
     };
 
@@ -37,7 +37,7 @@ private:
 public:
     UserFixture() {
         _base_test_path =
-            (boost::filesystem::current_path() / "tests" / "temp_user_data")
+            (std::filesystem::current_path() / "tests" / "temp_user_data")
                 .string();
         _test_user_mocks["ADMIN_USER"] =
             UserTestMock {0,

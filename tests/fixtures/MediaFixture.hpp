@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 class MediaFixture {
 public:
@@ -24,7 +24,7 @@ private:
     std::map<std::string, SongTestMock> _test_song_mocks;
 
     bool existsFile(const std::string &file_path) const {
-        return boost::filesystem::exists(file_path);
+        return std::filesystem::exists(file_path);
     }
 
 public:
@@ -35,7 +35,7 @@ public:
         _test_media_env["TEST_ALBUM"] = "Test Album";
         _test_media_env["TEST_ARTIST"] = "The Testers";
 
-        _test_media_path = boost::filesystem::current_path().string() + "/../tests/fixtures/media/";
+        _test_media_path = std::filesystem::current_path().string() + "/../tests/fixtures/media/";
         _test_files = {
             _test_media_path + _test_media_env["SHORT_TEST_SONG"],
             _test_media_path + _test_media_env["MEDIUM_TEST_SONG"]

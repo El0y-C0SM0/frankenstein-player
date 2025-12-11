@@ -9,11 +9,13 @@
 
 #include "core/services/ConfigManager.hpp"
 
-#include <boost/iostreams/device/mapped_file.hpp>
-#include <boost/filesystem.hpp>
+#include <string>
+#include <filesystem>
+#include <fstream>
+#include <sstream>
+
 #include <nlohmann/json.hpp>
 
-#include <string>
 
 namespace core {
     ConfigManager::ConfigManager(const std::string& config_file_path)
@@ -22,31 +24,26 @@ namespace core {
     ConfigManager::~ConfigManager() {}
 
     void ConfigManager::loadConfig() {
-        boost::filesystem::path config_file(_config_file_path);
+        std::filesystem::path config_file(_config_file_path);
 
-        if (!boost::filesystem::exists(config_file)) {
+        if (!std::filesystem::exists(config_file)) {
             throw std::runtime_error("Config file not found");
         }
 
-        boost::iostreams::mapped_file_source mapped_file;
-        mapped_file.open(_config_file_path);
+        std::ifstream file(_config_file_path);
 
-        if (mapped_file.data() == nullptr) {
-            mapped_file.close();
+        if (!file.is_open())
+            throw std::runtime_error("Failed to open config file");
 
-            throw std::runtime_error("Failed to map config file, file data is null");
-        }
-
-        std::string config_content(mapped_file.data(), mapped_file.size());
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        std::string config_content = buffer.str();
 
         try {
             _config_data = nlohmann::json::parse(config_content);
         } catch (const nlohmann::json::parse_error& e) {
-            mapped_file.close();
-
             throw std::runtime_error("Failed to parse config file, invalid JSON format");
         }
-        mapped_file.close();
     }
 
     // bool ConfigManager::saveConfig() {
