@@ -42,8 +42,6 @@ namespace core {
         _uid(uid),
         _is_current_user(false) {}
 
-    User::~User() = default;
-
     std::string User::getUsername() const {
         return _username;
     }
@@ -105,5 +103,33 @@ namespace core {
 
     bool User::operator!=(const Entity& other) const {
         return !(*this == other);
+    }
+
+    bool User::operator<(const Entity& other) const {
+        const User* other_user = dynamic_cast<const User*>(&other);
+        if (other_user)
+            return this->getUsername() < other_user->getUsername();
+        throw std::invalid_argument("Erro no casting: objeto não é do tipo User");
+    }
+
+    bool User::operator<=(const Entity& other) const {
+        const User* other_user = dynamic_cast<const User*>(&other);
+        if (other_user)
+            return *this < *other_user || *this == *other_user;
+        throw std::invalid_argument("Erro no casting: objeto não é do tipo User");
+    }
+
+    bool User::operator>(const Entity& other) const {
+        const User* other_user = dynamic_cast<const User*>(&other);
+        if (other_user)
+            return this->getUID() > other_user->getUID();
+        throw std::invalid_argument("Erro no casting: objeto não é do tipo User");
+    }
+
+    bool User::operator>=(const Entity& other) const {
+        const User* other_user = dynamic_cast<const User*>(&other);
+        if (other_user)
+            return *this > *other_user || *this == *other_user;
+        throw std::invalid_argument("Erro no casting: objeto não é do tipo User");
     }
 }

@@ -46,10 +46,31 @@ namespace core {
          * @param _username Nome do usuário
          */
         User(const std::string &username);
+
+        /**
+         * @brief Constroi um novo usuário
+         *
+         * @param username Nome do usuário
+         * @param home_path Caminho do diretório home do usuário
+         * @param input_path Caminho do diretório de entrada de músicas do
+         * usuário
+         * @param uid ID do usuário no OS
+         */
         User(const std::string &username,
              const std::string &home_path,
              const std::string &input_path,
              const userid &uid);
+
+        /**
+         * @brief Constroi um novo usuário
+         *
+         * @param id ID do usuário na aplicação
+         * @param username Nome do usuário
+         * @param home_path Caminho do diretório home do usuário
+         * @param input_path Caminho do diretório de entrada de músicas do
+         * usuário
+         * @param uid ID do usuário no OS
+         */
         User(unsigned id,
              const std::string &username,
              const std::string &home_path,
@@ -57,10 +78,25 @@ namespace core {
              const userid &uid);
 
         /**
+		 * @brief Construtor de cópia
+		 *
+		 * @param other Usuário a ser copiado
+		 */
+        User(const User &other) = default;
+
+        /**
+		 * @brief Operador de atribuição
+		 *
+		 * @param other Usuário a ser atribuído
+		 * @return Referência para o usuário atual
+		 */
+        User &operator=(const User &other) = default;
+
+        /**
          * @brief Destrutor de um usuário
          *
          */
-        ~User();
+        ~User() = default;
 
         /**
          * @brief Obtém o nome do usuário
@@ -142,6 +178,38 @@ namespace core {
          * @return true se forem diferentes, false caso contrário
          */
         bool operator!=(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual usuário é menor
+         * @param other Outro usuário para comparação
+         * @return true se o usuário atual for menor que o outro, false caso
+         * contrário
+         */
+        bool operator<(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual usuário é maior
+         * @param other Outro usuário para comparação
+         * @return true se o usuário atual for maior que o outro, false caso
+         * contrário
+         */
+        bool operator>(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual usuário é maior ou igual
+         * @param other Outro usuário para comparação
+         * @return true se o usuário atual for maior ou igual que o outro, false
+         * caso contrário
+         */
+        bool operator>=(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual usuário é menor ou igual
+         * @param other Outro usuário para comparação
+         * @return true se o usuário atual for menor ou igual que o outro, false
+         * caso contrário
+         */
+        bool operator<=(const Entity &other) const override;
     };
 
 } // namespace core

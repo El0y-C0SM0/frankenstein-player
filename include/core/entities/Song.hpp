@@ -27,6 +27,8 @@ namespace core {
     class Artist;
     class SongRepository;
 
+    inline const std::string SINGLE_ALBUM = "Single/";
+
     /**
      * @class Song
      * @brief Representa uma música com seus metadados
@@ -40,26 +42,34 @@ namespace core {
                  public core::IPlayable,
                  public core::IPlayableObject {
     private:
-        std::string _file_path;
+        // std::string _file_path;
         std::string _title;
+        // unsigned user_id;
+        std::shared_ptr<User> _user;
         unsigned _artist_id;
-        unsigned user_id;
-        User _user;
-        std::shared_ptr<Artist> _artist;
+        mutable std::weak_ptr<Artist> _artist;
         std::vector<unsigned> _featuring_artists_ids;
         unsigned _album_id;
-        mutable std::shared_ptr<Album> _album;
+        mutable std::weak_ptr<Album> _album;
         int _duration;
         std::string _genre;
         int _year;
         unsigned _track_number;
-        bool _metadata_loaded;
+        // bool _metadata_loaded;
+
+        bool _artistLoaded = false;
+        bool _albumLoaded = false;
+
         ma_decoder_config decoderConfig;
 
         std::function<std::shared_ptr<Artist>()> artistLoader;
         std::function<std::vector<std::shared_ptr<Artist>>()>
             featuringArtistsLoader;
         std::function<std::shared_ptr<Album>()> albumLoader;
+
+        std::shared_ptr<Artist> loadArtist() const;
+        std::vector<std::shared_ptr<Artist>> loadFeaturingArtists() const;
+        std::shared_ptr<Album> loadAlbum() const;
 
     public:
         /**
@@ -80,12 +90,10 @@ namespace core {
         /**
          * @brief Construtor básico para criação de música com informações essenciais
          * @param id Identificador único da música
-         * @param file_path Caminho do arquivo de áudio
          * @param title Título da música
          * @param artist_id Identificador do artista principal
          */
         Song(unsigned id,
-             std::string file_path,
              std::string title,
              unsigned artist_id);
 
@@ -94,12 +102,12 @@ namespace core {
          * @param id Identificador único da música
          * @param title Título da música
          * @param artist Referência para o ID do artista
-         * @param user_id Referência para o ID do usuário proprietário
+         * @param album Referência para o ID do álbum
          */
         Song(unsigned id,
              const std::string &title,
-             unsigned &artist,
-             unsigned &user_id);
+             unsigned &artist_id,
+             unsigned &album_id);
 
         /**
          * @brief Construtor completo com objetos relacionados
@@ -108,19 +116,27 @@ namespace core {
          * @param album Referência para o objeto Album
          * @param user Referência para o objeto User proprietário
          */
-        Song(const std::string &title, Artist &artist, Album &album, User &user);
+        Song(const std::string &title, const Artist &artist, const Album &album, const User &user);
+
+        /**
+         * @brief Construtor de cópia da classe Song
+         * @param other Outro objeto Song para copiar
+         */
+        Song(const Song &other) = default;
+
+        /**
+         * @brief Operador de atribuição da classe Song
+         * @param other Outro objeto Song para atribuir
+         * @return Referência ao objeto Song atribuído
+         */
+        Song &operator=(const Song &other) = default;
 
         /**
          * @brief Destrutor da classe Song
          */
-        ~Song();
+        ~Song() = default;
 
         // Getters
-        /**
-         * @brief Obtém o caminho do arquivo
-         * @return Caminho completo do arquivo de áudio
-         */
-        std::string getFilePath() const;
         /**
          * @brief Obtém o título da música
          * @return Título da música
@@ -132,11 +148,11 @@ namespace core {
          */
         std::shared_ptr<const Artist> getArtist() const;
 
-        /*
-         * @brief Obtem ID dos artista musica
-         * @return Vetor com id dos artistas
-         */
-        std::vector<unsigned> getFeaturingArtistsId() const;
+        // /*
+        //  * @brief Obtem ID dos artista musica
+        //  * @return Vetor com id dos artistas
+        //  */
+        // std::vector<unsigned> getFeaturingArtistsId() const;
 
         /**
          * @brief Obtém os artistas colaboradores (featuring)
@@ -144,6 +160,14 @@ namespace core {
          * colaboradores
          */
         std::vector<std::shared_ptr<const Artist>> getFeaturingArtists();
+
+        /*
+         * @brief Adciona um artista feat a musica
+         * @param artist Artista  a ser adicionado
+         */
+        void
+        setFeaturingArtists(std::shared_ptr<Artist> &
+                                artist); // TODO overloard p passar o vector
 
         /**
          * @brief Obtém o álbum
@@ -174,7 +198,7 @@ namespace core {
          * @brief Obtém o usuário dono da música
          * @return Usuário dono da música
          */
-        std::shared_ptr<User> getUser() const;
+        std::shared_ptr<const User> getUser() const;
         // Setters
         /**
          * @brief Define o usuário dono da música
@@ -196,13 +220,6 @@ namespace core {
          * @param track_number Novo número da faixa
          */
         void setTrackNumber(unsigned track_number);
-        /*
-         * @brief Adciona um artista feat a musica
-         * @param artist Artista  a ser adicionado
-         */
-        void
-        setFeaturingArtists(std::shared_ptr<Artist> &
-                                artist); // TODO overloard p passar o vector
         /**
          * @brief Define a função para carregar o artista
          * @param loader Função que retorna um ponteiro compartilhado para o
@@ -259,12 +276,6 @@ namespace core {
         // inicio
 
         /**
-         * @brief Obtém a duração formatada
-         * @return String com a duração no formato "MM:SS"
-         */
-        std::string getFormattedDuration() const;
-
-        /**
          * @brief Converte a música para string
          * @return String com todas as informações da música formatadas
          */
@@ -295,6 +306,39 @@ namespace core {
          * @return true se as entidades forem diferentes, false caso contrário
          */
         bool operator!=(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual Song é menor
+         * @param other Song a ser comparada
+         * @return true se a entidade atual for menor que a outra, false caso
+         * contrário
+         */
+        bool operator<(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual Song é maior ou igual
+         * @param other Song a ser comparada
+         * @return true se a entidade atual for maior ou igual que a outra, false
+         * caso contrário
+         */
+        bool operator<=(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual Song é maior
+         * @param other Song a ser comparada
+         * @return true se a entidade atual for maior que a outra, false caso
+         * contrário
+         */
+        bool operator>(const Entity &other) const override;
+
+        /**
+         * @brief Compara qual Song é maior ou igual
+         * @param other Song a ser comparada
+         * @return true se a entidade atual for maior ou igual que a outra, false
+         * caso contrário
+         */
+        bool operator>=(const Entity &other) const override;
+
 
         /**
          * @brief Obtém o caminho do arquivo de áudio

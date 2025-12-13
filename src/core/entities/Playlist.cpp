@@ -6,18 +6,14 @@
 
 namespace core {
 
-	Playlist::Playlist() : Entity(0), _titulo(""), _user_id(0), _user(nullptr), _songs(), _loader() {}
+	Playlist::Playlist() : Entity(0), _title(""), _user(nullptr) {}
 
-	Playlist::Playlist(const unsigned id, const std::string titulo)
-		: Entity(id), _titulo(titulo), _user_id(0), _user(nullptr), _songs(), _loader() {}
+	Playlist::Playlist(const unsigned id, const std::string title)
+		: Entity(id), _title(title), _user(nullptr), _songs(), _loader() {}
 
-	Playlist::~Playlist() = default;
+	std::string Playlist::getTitle() const { return _title; }
 
-	std::string Playlist::getTitulo() { return _titulo; }
-
-	std::string Playlist::getTitle() const { return _titulo; }
-
-	void Playlist::setTitulo(const std::string nome) { _titulo = nome; }
+	void Playlist::setTitle(const std::string &title) { _title = title; }
 
 	bool Playlist::operator==(const Entity& other) const {
 		const Playlist* otherPl = dynamic_cast<const Playlist*>(&other);
@@ -29,7 +25,54 @@ namespace core {
 		return !(*this == other);
 	}
 
-	std::vector<std::shared_ptr<Song>> Playlist::getSongs() const { return _songs; }
+	bool Playlist::operator<(const Entity& other) const {
+        const Playlist* otherPl = dynamic_cast<const Playlist*>(&other);
+        if(otherPl == nullptr) {
+            throw std::invalid_argument("Erro no casting: objeto não é do tipo Playlist");
+        }
+        return this->getTitle() < otherPl->getTitle();
+    }
+
+    bool Playlist::operator>(const Entity& other) const {
+        const Playlist* otherPl = dynamic_cast<const Playlist*>(&other);
+        if(otherPl == nullptr) {
+            throw std::invalid_argument("Erro no casting: objeto não é do tipo Playlist");
+        }
+        return this->getTitle() > otherPl->getTitle();
+    }
+
+    bool Playlist::operator>=(const Entity& other) const {
+        return *this > other || *this == other;
+    }
+
+    bool Playlist::operator<=(const Entity& other) const {
+        return *this < other || *this == other;
+    }
+
+    std::vector<std::shared_ptr<Song>> Playlist::loadSongs() const {
+        if (!_loader) {
+            throw std::runtime_error("Songs loader nao foi definido");
+        }
+
+        if (!_songsLoaded) {
+            _songs = _loader();
+            _songsLoaded = true;
+        }
+
+        return _songs;
+    }
+
+	std::vector<std::shared_ptr<Song>> Playlist::getSongs() const {
+        loadSongs();
+
+        std::vector<std::shared_ptr<Song>> v;
+        v.reserve(_songs.size() + 5);
+
+        for (auto const &s : _songs)
+            v.push_back(s);
+
+        return v;
+	}
 
 	void Playlist::setSongsLoader(
 		const std::function<std::vector<std::shared_ptr<Song>>()>& loader) {
@@ -38,150 +81,80 @@ namespace core {
 		}
 	}
 
-	void Playlist::addSong(Song& song) {
+	void Playlist::addSong(const Song& song) {
+	    loadSongs();
 		_songs.push_back(std::make_shared<Song>(song));
 	}
 
-	bool Playlist::switchSong(unsigned id, unsigned index) {
-			try {
-				if (index > _songs.size()) throw std::out_of_range("index maior que o tamanho da playlist");
-
-				auto it = _songs.begin();
-				while (it != _songs.end()) {
-					if ((*it)->getId() == id) {
-						break;
-					}
-					++it;
-				}
-
-				if (it == _songs.end()) return false;
-				auto node = *it;
-				_songs.erase(it);
-				if (index >= _songs.size()) {
-					_songs.push_back(node);
-				} else {
-					_songs.insert(_songs.begin() + index, node);
-				}
-				return true;
-			} catch (const std::out_of_range &e) {
-				std::cerr << "switchSong: índice inválido: " << e.what() << std::endl;
-				return false;
-			} catch (const std::exception &e) {
-				std::cerr << "switchSong: erro inesperado: " << e.what() << std::endl;
-				return false;
-			}
-	}
-
 	bool Playlist::removeSong(unsigned id) {
-		std::vector<std::shared_ptr<Song>>::iterator it = _songs.begin();
-        while(it != _songs.end()) {
-            if(it->get()->getId() == id) {
-                break;
+	    loadSongs();
+	    for (size_t i = 0; i < _songs.size(); i++) {
+            if (_songs[i]->getId() == id) {
+                _songs.erase(_songs.begin() + static_cast<int>(i));
+                return true;
             }
         }
-		if (it == _songs.end()) return false;
-		_songs.erase(it);
-		return true;
+        return false;
 	}
 
 	std::shared_ptr<Song> Playlist::findSongById(unsigned songId) {
-		std::vector<std::shared_ptr<Song>>::iterator it = _songs.begin();
-        while(it != _songs.end()) {
-            if(it->get()->getId() == songId) {
-                break;
+        loadSongs();
+	    for (const auto &i : _songs) {
+            if (i->getId() == songId) {
+                return i;
             }
         }
-		if (it == _songs.end()) return nullptr;
-		return std::static_pointer_cast<Song>(*it);
+        return nullptr;
 	}
 
 	std::shared_ptr<Song> Playlist::findSongByTitle(const std::string& title) {
-		std::vector<std::shared_ptr<Song>>::iterator it = _songs.begin();
-        while(it != _songs.end()) {
-            if(it->get()->getTitle() == title) {
-                break;
+	    loadSongs();
+        for (auto const &s : _songs) {
+            if (s->getTitle() == title) {
+                return s;
             }
         }
-		if (it == _songs.end()) return nullptr;
-		return std::static_pointer_cast<Song>(*it);
+        return nullptr;
 	}
 
-	int Playlist::calculateTotalDuration() {
+	unsigned Playlist::calculateTotalDuration() {
+	    loadSongs();
 		int total = 0;
 		for (const auto& s : _songs) {
 			if (!s) continue;
-			int d = s->getDuration();
-			if (d > 0) total += d;
+			total += s->getDuration();
 		}
 		return total;
 	}
 
-	std::string Playlist::getFormattedDuration() {
-		int totalSeconds = calculateTotalDuration();
-		int h = totalSeconds / 3600;
-		int m = (totalSeconds % 3600) / 60;
-		int s = totalSeconds % 60;
-
-		std::ostringstream ss;
-		if (h > 0) {
-			ss << h << ":" << (m < 10 ? "0" : "") << m << ":" << (s < 10 ? "0" : "") << s;
-		} else {
-			ss << m << ":" << (s < 10 ? "0" : "") << s;
-		}
-		return ss.str();
-	}
-
-	std::shared_ptr<Song> Playlist::getNextSong(Song &current) {
-		unsigned curId = current.getId();
-
-		for (size_t i = 0; i < _songs.size(); ++i) {
-			if (!_songs[i]) continue;
-			if ((_songs[i]->getId() == curId) || (curId == 0)) {
-				if (i + 1 < _songs.size()) return std::static_pointer_cast<Song>(_songs[i + 1]);
-				return nullptr;
-			}
-		}
-		return nullptr;
-	}
-
-	std::shared_ptr<Song> Playlist::getPreviousSong(Song &current) {
-		unsigned curId = current.getId();
-
-		for (size_t i = 0; i < _songs.size(); ++i) {
-			if (!_songs[i]) continue;
-			if ((_songs[i]->getId() == curId) || (curId == 0)) {
-				if (i == 0) return nullptr;
-				return std::static_pointer_cast<Song>(_songs[i - 1]);
-			}
-		}
-		return nullptr;
-	}
-
 	std::shared_ptr<Song> Playlist::getSongAt(int index) {
-			if (index < 0) return nullptr;
-			try {
-				return _songs.at(static_cast<size_t>(index));
-			} catch (const std::out_of_range &e) {
-				std::cerr << "getSongAt: índice fora do intervalo: " << e.what() << std::endl;
-				return nullptr;
-			}
+	    loadSongs();
+	    if (index < 0 || static_cast<size_t>(index) >= _songs.size()) {
+            throw std::out_of_range("Índice fora dos limites: " + std::to_string(index));
+        }
+		return _songs.at(static_cast<size_t>(index));
 	}
+
+    std::shared_ptr<Song> Playlist::operator[](int index) {
+        return getSongAt(index);
+    }
 
 	std::vector<std::shared_ptr<IPlayableObject>> Playlist::getPlayableObjects() const {
+	    loadSongs();
 		std::vector<std::shared_ptr<IPlayableObject>> out;
+		out.reserve(_songs.size());
 		for (const auto& s : _songs) {
-			if (!s) continue;
-			auto objs = s->getPlayableObjects();
-			out.insert(out.end(), objs.begin(), objs.end());
+		    out.push_back(s);
 		}
 		return out;
 	}
 
-	std::shared_ptr<User> Playlist::getUser() const { return _user; }
+	std::shared_ptr<const User> Playlist::getUser() const {
+	    return std::const_pointer_cast<const User>(_user);
+	}
 
 	void Playlist::setUser(const User& user) {
 		_user = std::make_shared<User>(user);
-		_user_id = user.getId();
 	}
 
 }

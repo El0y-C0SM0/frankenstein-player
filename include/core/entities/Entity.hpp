@@ -20,59 +20,83 @@ namespace core {
  */
 class Entity {
 protected:
-  unsigned _id = 0;      /**< ID da entidade */
-  Datetime _dataCriacao; /** Data de criação */
+	unsigned _id = 0;      /**< ID da entidade */
+	Datetime _dataCriacao; /** Data de criação */
 
 public:
-    Entity() : _id(0), _dataCriacao(Datetime()) {};
-    Entity(unsigned id) : _id(id), _dataCriacao(Datetime()) {}
-  virtual ~Entity() = default;
+	Entity() : _id(0), _dataCriacao(Datetime()) {};
+	Entity(unsigned id) : _id(id), _dataCriacao(Datetime()) {}
+	virtual ~Entity() = default;
 
-  /**
-   * @brief Obtém o ID da entidade
-   * @return ID da entidade
-   */
-  unsigned getId() const;
+	/**
+	* @brief Obtém o ID da entidade
+	* @return ID da entidade
+	*/
+	unsigned getId() const;
 
-  /**
-   * @brief Define o ID da entidade
-   * @param id Novo ID da entidade
-   */
-  void setId(unsigned id);
+	/**
+	* @brief Define o ID da entidade
+	* @param id Novo ID da entidade
+	*/
+	void setId(unsigned id);
 
+	// TODO rever a necessidade de Datetime na Entity
+	/**
+	* @brief Obtém a data de criação
+	* @return a data de criação da entidade
+	*/
+	const Datetime getDataCriacao() const;
 
-  // TODO rever a necessidade de Datetime na Entity
-  /**
-   * @brief Obtém a data de criação
-   * @return a data de criação da entidade
-   */
-  const Datetime getDataCriacao() const;
+	/**
+	* @brief Define a data de criação da entidade
+	* @param date Data de criação
+	*/
+	void setDataCriacao(Datetime date);
 
-  /**
-   * @brief Define a data de criação da entidade
-   * @param date Data de criação
-   */
-  void setDataCriacao(Datetime date);
+	/**
+	* @brief Compara duas entidades
+	* @param other Entidade a ser comparada
+	* @return true se as entidades forem iguais, false caso contrário
+	*/
+	virtual bool operator==(const Entity &other) const;
 
-  /**
-   * @brief Compara duas entidades
-   * @param other Entidade a ser comparada
-   * @return true se as entidades forem iguais, false caso contrário
-   */
-  virtual bool operator==(const Entity &other) const;
+	/**
+	* @brief Compara duas entidades para desigualdade
+	* @param other Entidade a ser comparada
+	* @return true se as entidades forem diferentes, false caso contrário
+	*/
+	virtual bool operator!=(const Entity &other) const;
 
-  /**
-   * @brief Compara duas entidades para desigualdade
-   * @param other Entidade a ser comparada
-   * @return true se as entidades forem diferentes, false caso contrário
-   */
-  virtual bool operator!=(const Entity &other) const;
+	/**
+	* @brief Compara qual entidade é menor
+	* @param other Entidade a ser comparada
+	* @return true se a entidade atual for menor que a outra, false caso
+	* contrário
+	*/
+	virtual bool operator<(const Entity &other) const;
 
-  /**
-   * @brief Compara qual entidade é menor
-   * @param other Entidade a ser comparada
-   * @return true se a entidade atual for menor que a outra, false caso contrário
-   */
-    virtual bool operator<(const Entity &other) const;
+	/**
+	* @brief Compara qual entidade é menor ou igual
+	* @param other Entidade a ser comparada
+	* @return true se a entidade atual for menor ou igual que a outra, false
+	* caso contrário
+	*/
+	virtual bool operator<=(const Entity &other) const;
+
+	/**
+	* @brief Compara qual entidade é maior
+	* @param other Entidade a ser comparada
+	* @return true se a entidade atual for maior que a outra, false caso
+	* contrário
+	*/
+	virtual bool operator>(const Entity &other) const;
+
+	/**
+	* @brief Compara qual entidade é maior ou igual
+	* @param other Entidade a ser comparada
+	* @return true se a entidade atual for maior ou igual que a outra, false
+	* caso contrário
+	*/
+	virtual bool operator>=(const Entity &other) const;
 };
 } // namespace core

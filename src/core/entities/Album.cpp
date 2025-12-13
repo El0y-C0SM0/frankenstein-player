@@ -2,6 +2,7 @@
 #include "core/entities/Entity.hpp"
 #include "core/bd/ArtistRepository.hpp"
 #include "core/entities/Artist.hpp"
+#include "core/entities/User.hpp"
 #include <cassert>
 #include <cstddef>
 #include <memory>
@@ -16,70 +17,61 @@ namespace core {
                  std::string title,
                  int year,
                  std::string genre,
-                 unsigned user_id)
-        : Entity(id), _user_id(0), _genre(""), _year(0) {
+                 User &user)
+        : Entity(id), _title(title), _genre(genre), _year(year) {
 
         // Validações PRIMEIRO
-        if (user_id == 0) {
-            throw std::invalid_argument("ID do usuário não pode ser 0");
-        }
-
         if (title.empty()) {
             throw std::invalid_argument("Título do álbum não pode estar vazio");
         }
 
-        _name = std::move(title);
-        _year = year;
-        _genre = std::move(genre);
-        _user_id = user_id;
+        _user = std::make_shared<User>(user);
     };
 
-    Album::Album(const std::string name,
+    Album::Album(const std::string title,
                  std::shared_ptr<Artist> artist,
                  const std::string genre)
-        : _name(name), _artist(artist), _genre(genre) {};
+        : _title(title), _genre(genre), _artist_id(artist->getId()) {};
 
     Album::Album(unsigned id,
-                 const std::string name,
+                 const std::string title,
                  std::shared_ptr<Artist> artist,
                  const std::string genre,
                  int year)
-        : Entity(id), _name(name), _artist(artist), _genre(genre), _year(year) {};
-
-    Album::~Album() = default;
+        : Entity(id), _title(title), _genre(genre), _year(year), _artist_id(artist->getId()) {};
 
     // Getters
-    std::string Album::getName() const {
-
-        return _name;
+    std::string Album::getTitle() const {
+        return _title;
     };
 
-    std::shared_ptr<User> Album::getUser() const {
-        return _user;
+    std::shared_ptr<const User> Album::getUser() const {
+        return std::const_pointer_cast<const User>(_user);
     };
 
-    std::shared_ptr<Artist> Album::getArtist() const {
-        if (!_artist) {
-            throw std::invalid_argument("Artista desconhecido");
-        }
-        return _artist;
+    std::shared_ptr<const Artist> Album::getArtist() const {
+        if (!_artist.expired())
+            return std::const_pointer_cast<const Artist>(_artist.lock());
+
+        auto artist = artistLoader();
+        _artist = artist;
+        return std::const_pointer_cast<const Artist>(artist);
     };
 
     std::vector<std::shared_ptr<const Artist>>
     Album::getFeaturingArtists() const {
-        if (featuringArtistsLoader) {
-            auto allArtists = featuringArtistsLoader();
-            std::vector<std::shared_ptr<const Artist>> featuring;
-
-            if (allArtists.size() > 1) {
-                for (auto it = allArtists.begin(); it != allArtists.end(); ++it) {
-                    featuring.push_back(std::const_pointer_cast<const Artist>(*it));
-                }
-            }
-
-            return featuring;
+        if (!featuringArtistsLoader) {
+            throw std::runtime_error("Featuring Artists Loader nao foi definido");
         }
-        return {};
+
+        auto allArtists = featuringArtistsLoader();
+        std::vector<std::shared_ptr<const Artist>> featuring;
+
+        for (auto it : allArtists) {
+            featuring.push_back(std::const_pointer_cast<const Artist>(it));
+        }
+
+        return featuring;
     };
 
     std::string Album::getGenre() const {
@@ -90,30 +82,42 @@ namespace core {
         return _year;
     };
 
-    int Album::getSongCount() const {
-        return static_cast<int>(getSongs().size());
+    size_t Album::getSongCount() const {
+        return static_cast<int>(loadSongs().size());
+    };
+
+    bool Album::isSongsLoaded() const {
+        return _songsLoaded;
     };
 
     // Setters
 
-    void Album::setFilePath(std::string &path) {
-        if (path.empty()) {
-            throw std::invalid_argument("Path nao pode ser vazio");
+    std::vector<std::shared_ptr<Song>> Album::loadSongs() const {
+        if (!songsLoader) {
+            throw std::runtime_error("Songs loader nao foi definido");
         }
-        _file_path = path;
+
+        if (!_songsLoaded) {
+            _songs = songsLoader();
+            _songsLoaded = true;
+        }
+
+        return _songs;
     }
 
-    void Album::setArtist(const std::shared_ptr<Artist> &artist) {
-        if (artist == nullptr) {
-            throw std::invalid_argument("Artist nao pode ser null");
+    void Album::setArtist(const Artist &artist) {
+        if (artist.getId() == 0) {
+            throw std::invalid_argument("Artist nao pode ser nulo");
         }
-        _artist = artist;
+        _artist_id = artist.getId();
     };
 
     void Album::setFeaturingArtists(const std::vector<Artist> &artists) {
         if (!artists.empty()) {
             throw std::invalid_argument("Parametro vazio");
         }
+
+        _featuring_artists_ids.clear();
         for (auto const &a : artists) {
             _featuring_artists_ids.push_back(a.getId());
         }
@@ -150,12 +154,14 @@ namespace core {
         featuringArtistsLoader = loader;
     };
 
-    void Album::setUser(std::shared_ptr<User> user) {
-        _user = user;
-    }
+    void Album::setSongsLoader(
+        const std::function<std::vector<std::shared_ptr<Song>>()> &
+            loader) {
+        songsLoader = loader;
+    };
 
     std::string Album::toString() const {
-        std::string info = "{Album: " + _name + ", Artista: " + _artist->getName() + ", Ano: " + std::to_string(_year) + "}";
+        std::string info = "{Album: " + _title + ", Artista: " + getArtist()->getName() + ", Ano: " + std::to_string(_year) + "}";
 
         return info;
     };
@@ -167,7 +173,7 @@ namespace core {
         if (otherAlbum == nullptr) {
             throw std::invalid_argument("Erro no casting");
         }
-        if (otherAlbum->_name == this->_name && otherAlbum->getSongCount() == this->getSongCount()) {
+        if (otherAlbum->_title == this->_title && otherAlbum->getSongCount() == this->getSongCount()) {
             return true;
         }
         return false;
@@ -179,85 +185,77 @@ namespace core {
             throw std::invalid_argument("Erro no casting");
         }
 
-        if (otherAlbum->_name == this->_name && otherAlbum->getSongCount() == this->getSongCount()) {
+        if (otherAlbum->_title == this->_title && otherAlbum->getSongCount() == this->getSongCount()) {
             return false;
         }
         return true;
     };
+    bool Album::operator<(const Entity &other) const {
+        const Album *otherAlbum = dynamic_cast<const Album *>(&other);
+        if (otherAlbum == nullptr) {
+            throw std::invalid_argument("Erro no casting");
+        }
+        if (this->getArtist() == otherAlbum->getArtist())
+            return this->getYear() < otherAlbum->getYear();
+        return this->getTitle() < otherAlbum->getTitle();
+    };
+    bool Album::operator<=(const Entity &other) const {
+        const Album *otherAlbum = dynamic_cast<const Album *>(&other);
+        if (otherAlbum == nullptr) {
+            throw std::invalid_argument("Erro no casting");
+        }
+        return *this < *otherAlbum || *this == *otherAlbum;
+    };
+    bool Album::operator>(const Entity &other) const {
+        const Album *otherAlbum = dynamic_cast<const Album *>(&other);
+        if (otherAlbum == nullptr) {
+            throw std::invalid_argument("Erro no casting");
+        }
+        if (this->getArtist() == otherAlbum->getArtist())
+            return this->getYear() > otherAlbum->getYear();
+        return this->getTitle() > otherAlbum->getTitle();
+    };
+    bool Album::operator>=(const Entity &other) const {
+        const Album *otherAlbum = dynamic_cast<const Album *>(&other);
+        if (otherAlbum == nullptr) {
+            throw std::invalid_argument("Erro no casting");
+        }
+        return *this > *otherAlbum || *this == *otherAlbum;
+    };
 
     std::vector<std::shared_ptr<IPlayableObject>>
     Album::getPlayableObjects() const {
-        std::vector<std::shared_ptr<IPlayableObject>> vector;
+        loadSongs();
+        std::vector<std::shared_ptr<IPlayableObject>> v;
+        v.reserve(_songs.size());
 
         for (auto const &s : _songs) {
-            vector.push_back(s);
+            v.push_back(s);
         }
 
-        return vector;
+        return v;
     }
-    std::string Album::getAudioFilePath() const {
-        return _file_path;
-    };
 
     std::vector<std::shared_ptr<Song>> Album::getSongs() const {
-        if (songsLoader) {
-            _songs = songsLoader();
-            return songsLoader();
+        loadSongs();
+
+        std::vector<std::shared_ptr<Song>> v;
+        v.reserve(_songs.size() + 5);
+
+        for (auto const &s : _songs) {
+            v.push_back(s);
         }
 
-        std::vector<std::shared_ptr<Song>> vector;
-        for (auto const &s : _songs) {
-            vector.push_back(s);
-        }
-        return vector;
+        return v;
     }
 
-    void Album::setSongsLoader(
-        const std::function<std::vector<std::shared_ptr<Song>>()> &
-            loader) {
-        songsLoader = loader;
-    };
-
-    void Album::addSong(Song &song) {
+    void Album::addSong(const Song &song) {
+        loadSongs();
         _songs.push_back(std::make_shared<Song>(song));
     };
 
-    bool Album::switchSong(unsigned id, unsigned index) {
-
-        int currentIndex = -1;
-        for (size_t i = 0; i < _songs.size(); i++) {
-            if (_songs[i]->getId() == id) {
-                currentIndex = i;
-                break;
-            }
-        }
-
-        if (currentIndex == -1) {
-            throw std::invalid_argument("Musica não encontrada com id passado");
-        }
-
-        if (index >= _songs.size()) {
-            throw std::invalid_argument("Index invalido");
-        }
-
-        if (static_cast<unsigned>(currentIndex) == index) {
-            return true;
-        }
-
-        auto songToMove = _songs[currentIndex];
-        _songs.erase(_songs.begin() + currentIndex); // reorganiza vetor apos tirar
-
-        if (index >= _songs.size()) {
-            _songs.push_back(songToMove); // talvez usar end() aponta para
-                                          // posicao alem do vector
-        } else {
-            _songs.insert(_songs.begin() + static_cast<int>(index), songToMove);
-        }
-
-        return true;
-    }
-
     bool Album::removeSong(unsigned id) {
+        loadSongs();
         for (size_t i = 0; i < _songs.size(); i++) {
             if (_songs[i]->getId() == id) {
                 _songs.erase(_songs.begin() + static_cast<int>(i));
@@ -268,6 +266,7 @@ namespace core {
     };
 
     std::shared_ptr<Song> Album::findSongById(unsigned songId) {
+        loadSongs();
         for (const auto &song : _songs) {
             if (song && song->getId() == songId) {
                 return song;
@@ -278,6 +277,7 @@ namespace core {
 
     std::shared_ptr<Song>
     Album::findSongByTitle(const std::string &title) {
+        loadSongs();
         for (auto const &s : _songs) {
             if (s && s->getTitle() == title) {
                 return s;
@@ -286,7 +286,8 @@ namespace core {
         return nullptr;
     };
 
-    int Album::calculateTotalDuration() {
+    unsigned Album::calculateTotalDuration() {
+        loadSongs();
         int totalSeconds = 0;
         for (auto const &s : _songs) {
             totalSeconds += s->getDuration();
@@ -294,57 +295,16 @@ namespace core {
         return totalSeconds;
     };
 
-    std::string Album::getFormattedDuration() {
-        int totalSeconds = calculateTotalDuration();
-
-        int h = totalSeconds / 3600;
-        int m = (totalSeconds % 3600) / 60;
-        int s = totalSeconds % 60;
-
-        std::string formatted;
-        if (h > 0) {
-            formatted = std::to_string(h) + ":" + (m < 10 ? "0" : "") + std::to_string(m) + ":" + (s < 10 ? "0" : "") + std::to_string(s);
-        } else {
-            formatted = std::to_string(m) + ":" + (s < 10 ? "0" : "") + std::to_string(s);
-        }
-
-        return formatted;
-    };
-    std::shared_ptr<Song>
-    Album::getNextSong(Song &current) {
-        for (size_t i = 0; i < _songs.size(); i++) {
-
-            if (*_songs[i] == current) {
-
-                if (i + 1 < _songs.size()) {
-                    return _songs[i + 1];
-                } else {
-                    return nullptr;
-                }
-            }
-        }
-        return nullptr;
-    }
-
-    std::shared_ptr<Song>
-    Album::getPreviousSong(Song &current) {
-        for (size_t i = 0; i < _songs.size(); i++) {
-            if (*_songs[i] == current) {
-                if (i > 0) {
-                    return _songs[i - 1];
-                } else {
-                    return nullptr;
-                }
-            }
-        }
-        return nullptr;
-    };
-
     std::shared_ptr<Song> Album::getSongAt(int index) {
+        loadSongs();
         if (index < 0 || static_cast<size_t>(index) >= _songs.size()) {
             throw std::out_of_range("Índice fora dos limites: " + std::to_string(index));
         }
         return _songs.at(static_cast<size_t>(index));
     };
+
+    std::shared_ptr<Song> Album::operator[](int index) {
+        return getSongAt(index);
+    }
 
 } // namespace core
