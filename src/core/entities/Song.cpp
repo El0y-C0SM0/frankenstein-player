@@ -6,7 +6,6 @@
 #include "core/entities/Artist.hpp"
 #include "core/entities/Entity.hpp"
 #include "core/entities/User.hpp"
-#include <cassert>
 #include <memory>
 #include <miniaudio.h>
 #include <stdexcept>
@@ -16,22 +15,25 @@
 #include <taglib/tpropertymap.h>
 
 namespace core {
-    Song::Song() {
-    }
+    Song::Song()
+        : _duration(0),
+          _year(0),
+          _track_number(0) {}
 
     Song::Song(const std::string &title,
-               std::shared_ptr<Artist> &artist,
-               std::shared_ptr<Album> &album)
+               Artist &artist,
+               Album &album)
         : _title(title),
-          _artist(artist),
-          _album(album) {};
+          _artist(std::make_shared<Artist>(artist)),
+          _album(std::make_shared<Album>(album)) {};
 
     Song::Song(unsigned id,
                std::string title,
                unsigned artist_id)
         : Entity(id),
           _title(std::move(title)),
-          _artist_id(artist_id) {};
+          _artist_id(artist_id),
+          _duration(0) {};
 
     Song::Song(unsigned id,
                const std::string &title,
@@ -90,7 +92,7 @@ namespace core {
     //     return {};
     // };
     std::vector<std::shared_ptr<const Artist>>
-    Album::getFeaturingArtists() const {
+    Song::getFeaturingArtists() const {
         if (!featuringArtistsLoader) {
             throw std::runtime_error("Featuring Artists Loader nao foi definido");
         }
@@ -144,7 +146,9 @@ namespace core {
     };
 
     void Song::setTitle(const std::string &title) {
-        assert(!title.empty());
+        if (title.empty()) {
+            throw std::invalid_argument("Título da música não pode estar vazio");
+        }
         _title = title;
     };
 
@@ -167,7 +171,6 @@ namespace core {
     };
 
     void Song::setFeaturingArtists(const std::vector<Artist> &artists) {
-
         for (auto const &a : artists) {
             _featuring_artists_ids.push_back(a.getId());
         }
@@ -285,7 +288,7 @@ namespace core {
     };
 
     std::string Song::getAudioFilePath() const {
-        std::string path = _user->getHomePath() + "/" + getArtist()->getName() + "/";
+        std::string path = _user->getHomePath() + getArtist()->getName() + "/";
         if (getAlbum())
             path += getAlbum()->getTitle() + "/";
         else

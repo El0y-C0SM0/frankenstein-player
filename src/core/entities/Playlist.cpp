@@ -2,6 +2,7 @@
 
 #include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
+#include <vector>
 
 
 namespace core {
@@ -10,6 +11,15 @@ namespace core {
 
 	Playlist::Playlist(const unsigned id, const std::string title)
 		: Entity(id), _title(title), _user(nullptr), _songs(), _loader() {}
+
+	Playlist::Playlist(const unsigned id,
+                       const std::string title,
+                       const User &user)
+        : Entity(id),
+          _title(title),
+          _user(std::make_shared<User>(user)),
+          _songs(),
+          _loader() {}
 
 	std::string Playlist::getTitle() const { return _title; }
 
@@ -107,14 +117,20 @@ namespace core {
         return nullptr;
 	}
 
-	std::shared_ptr<Song> Playlist::findSongByTitle(const std::string& title) {
+	std::vector<std::shared_ptr<Song>> Playlist::findSongByTitle(const std::string& title) {
 	    loadSongs();
+        std::vector<std::shared_ptr<Song>> result;
         for (auto const &s : _songs) {
             if (s->getTitle() == title) {
-                return s;
+                result.push_back(s);
             }
         }
-        return nullptr;
+        return result;
+	}
+
+	size_t Playlist::getSongsCount() const {
+        loadSongs();
+        return _songs.size();
 	}
 
 	unsigned Playlist::calculateTotalDuration() {
@@ -128,15 +144,21 @@ namespace core {
 	}
 
 	std::shared_ptr<Song> Playlist::getSongAt(int index) {
-	    loadSongs();
-	    if (index < 0 || static_cast<size_t>(index) >= _songs.size()) {
-            throw std::out_of_range("Índice fora dos limites: " + std::to_string(index));
+        loadSongs();
+
+        try {
+        return this->operator[](index);
+        } catch (const std::out_of_range& e) {
+            return nullptr;
         }
-		return _songs.at(static_cast<size_t>(index));
 	}
 
     std::shared_ptr<Song> Playlist::operator[](int index) {
-        return getSongAt(index);
+        loadSongs();
+	    if (index < 0 || static_cast<size_t>(index) >= _songs.size()) {
+               throw std::out_of_range("Índice fora dos limites: " + std::to_string(index));
+           }
+		return _songs.at(static_cast<size_t>(index));
     }
 
 	std::vector<std::shared_ptr<IPlayableObject>> Playlist::getPlayableObjects() const {

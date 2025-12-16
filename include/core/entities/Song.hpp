@@ -84,8 +84,8 @@ namespace core {
          * @param album Ponteiro compartilhado para o álbum
          */
         Song(const std::string &title,
-             std::shared_ptr<Artist> &artist,
-             std::shared_ptr<Album> &album);
+             Artist &artist,
+             Album &album);
 
         /**
          * @brief Construtor básico para criação de música com informações essenciais
@@ -159,7 +159,7 @@ namespace core {
          * @return Vetor de ponteiros compartilhados para os artistas
          * colaboradores
          */
-        std::vector<std::shared_ptr<const Artist>> getFeaturingArtists();
+        std::vector<std::shared_ptr<const Artist>> getFeaturingArtists() const;
 
         /*
          * @brief Adciona um artista feat a musica

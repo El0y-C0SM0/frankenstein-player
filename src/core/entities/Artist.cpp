@@ -1,27 +1,30 @@
 #include "core/entities/Artist.hpp"
 #include "core/entities/Album.hpp"
+#include "core/entities/Entity.hpp"
+#include "core/entities/User.hpp"
 #include <cassert>
 #include <cstddef>
+#include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 namespace core {
 
-    Artist::Artist() {};
+    Artist::Artist() : Entity() {};
 
-    Artist::Artist(unsigned id, std::string name, unsigned user_id) {
-        if (id <= 0 || user_id <= 0) {
-            throw std::invalid_argument("Id invalido");
-        }
+    Artist::Artist(unsigned id, std::string name, const User &user)
+        : Entity(id), _name(name), _user(std::make_shared<User>(user)) {}
 
-        _id = id;
-        _name = name;
-        _user_id = user_id;
-    };
+    Artist::Artist(unsigned id,
+                   std::string name,
+                   std::string genre,
+                   const User &user)
+        : Entity(id), _name(name),  _genre(genre), _user(std::make_shared<User>(user)) {}
 
     Artist::Artist(const std::string &name, const std::string &genre)
-        : _name(name), _genre(genre) {
+        : Entity(), _name(name), _genre(genre) {
     }
 
     std::vector<std::shared_ptr<Song>> Artist::loadSongs() const {
@@ -71,6 +74,9 @@ namespace core {
     };
 
     std::vector<std::shared_ptr<Album>> Artist::getAlbums() const {
+        if (!_songsLoaded)
+            loadSongs();
+
         return _albums;
     };
 
@@ -167,16 +173,18 @@ namespace core {
     //     return true;
     // };
 
-    std::shared_ptr<Song>
+    std::vector<std::shared_ptr<Song>>
     Artist::findSongByTitle(const std::string &title) {
         loadSongs();
 
+        std::vector<std::shared_ptr<Song>> result;
+
         for (auto const &s : _songs) {
             if (s->getTitle() == title) {
-                return s;
+                result.push_back(s);
             }
         }
-        return nullptr;
+        return result;
     };
 
     std::shared_ptr<Song> Artist::findSongById(unsigned songId) {
@@ -190,17 +198,44 @@ namespace core {
         return nullptr;
     };
 
+    std::shared_ptr<Album> Artist::findAlbumById(unsigned albumId) {
+        loadAlbums();
+
+        for (auto const &a : _albums) {
+            if (a->getId() == albumId) {
+                return a;
+            }
+        }
+        return nullptr;
+    };
+
     bool Artist::removeAlbum(unsigned albumId) {
         loadAlbums();
 
-        for (size_t i = 0; i < _albums.size(); i++) {
-            if (_albums[i]->getId() == albumId) {
-                _albums.erase(_albums.begin() + static_cast<int>(i));
-                return true;
+        auto it = std::find_if(_albums.begin(), _albums.end(),
+                               [albumId](const std::shared_ptr<Album> &a) {
+                                   return a->getId() == albumId;
+                               });
+
+        if (it == _albums.end())
+            return false;
+
+        _albums.erase(it);
+        return true;
+    };
+
+    std::vector<std::shared_ptr<Album>> Artist::findAlbumByTitle(const std::string &title) {
+        loadAlbums();
+
+        std::vector<std::shared_ptr<Album>> result;
+
+        for (auto const &a : _albums) {
+            if (a->getTitle() == title) {
+                result.push_back(a);
             }
         }
-        return false;
-    };
+        return result;
+    }
 
     // std::shared_ptr<Album>
     // Artist::findAlbumByName(const std::string &albumName) const {
@@ -329,16 +364,27 @@ namespace core {
 
     bool Artist::removeSong(unsigned id) {
         loadSongs();
-        for (size_t i = 0; i < _songs.size(); i++) {
-            if (_songs[i]->getId() == id) {
-                _songs.erase(_songs.begin() + static_cast<int>(i));
-                return true;
-            }
-        }
-        return false;
-    };
+        auto it = std::find_if(_songs.begin(), _songs.end(),
+            [id](const std::shared_ptr<Song>& song) { return song->getId() == id; });
+
+        if (it == _songs.end())
+            return false;
+
+        _songs.erase(it);
+        return true;
+    }
 
     std::shared_ptr<Song> Artist::getSongAt(int index) {
+        loadSongs();
+
+        try {
+            return this->operator[](index);
+        } catch (const std::out_of_range &e) {
+            return nullptr;
+        }
+    };
+
+    std::shared_ptr<Song> Artist::operator[](int index) {
         loadSongs();
         if (index < 0 || static_cast<size_t>(index) >= _songs.size()) {
             throw std::out_of_range("Índice fora dos limites: " + std::to_string(index));
@@ -347,9 +393,15 @@ namespace core {
         return _songs.at(index);
     };
 
-    std::shared_ptr<Song> Artist::operator[](int index) {
-        return getSongAt(index);
-    };
+    std::shared_ptr<Album> Artist::getAlbumAt(int index) {
+        loadAlbums();
+
+        try {
+            return _albums.at(index);
+        } catch (const std::out_of_range &e) {
+            return nullptr;
+        }
+    }
 
     std::shared_ptr<const User> Artist::getUser() const {
         return std::const_pointer_cast<const User>(_user);

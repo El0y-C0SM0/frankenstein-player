@@ -47,14 +47,22 @@ namespace core {
     }
 
     void User::setUsername(const std::string& username) {
+        if (username.empty())
+            throw std::invalid_argument("Nome do usuario não pode ser vazio");
         _username = username;
     }
 
     std::string User::getHomePath() const {
         std::string home_path = _home_path;
+
+        if (home_path.empty())
+            return home_path;
+
         size_t pos = home_path.find(":username:");
         if (pos != std::string::npos)
             home_path.replace(pos, 10, _username);
+        if (home_path.back() != '/')
+            home_path += '/';
         return home_path;
     }
 
@@ -66,9 +74,15 @@ namespace core {
 
     std::string User::getInputPath() const {
         std::string input_path = _input_path;
+
+        if (input_path.empty())
+            return "";
+
         size_t pos = input_path.find(":username:");
         if (pos != std::string::npos)
             input_path.replace(pos, 10, _username);
+        if (input_path.back() != '/')
+            input_path += '/';
         return input_path;
     }
 

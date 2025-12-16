@@ -76,6 +76,7 @@ namespace core {
               std::string title,
               int year,
               std::string genre,
+              const Artist &artist,
               User &user);
 
         /**
@@ -85,8 +86,8 @@ namespace core {
          * @param genre Gênero do álbum
          */
         Album(const std::string title,
-              std::shared_ptr<Artist> artist,
-              const std::string genre);
+              const std::string genre,
+              const Artist &artist);
 
         /**
          * @brief Construtor completo da classe Album
@@ -98,9 +99,9 @@ namespace core {
          */
         Album(unsigned id,
               const std::string title,
-              std::shared_ptr<Artist> artist,
+              int year,
               const std::string genre,
-              int year);
+              const Artist &artist);
 
         /**
          * @brief Construtor de cópia da classe Album
@@ -169,7 +170,7 @@ namespace core {
          * @brief Obtém a quantidade de músicas no álbum
          * @return Número total de músicas
          */
-        size_t getSongCount() const;
+        size_t getSongsCount() const override;
 
         /**
          * @brief Verifica se as músicas do artista foram carregadas
@@ -177,6 +178,12 @@ namespace core {
         bool isSongsLoaded() const;
 
         // Setters
+
+        /**
+         * @brief Define o título do álbum
+         * @param title Novo título do álbum
+         */
+        void setTitle(const std::string &title);
 
         /**
          * @brief Define o artista do álbum
@@ -258,7 +265,8 @@ namespace core {
         bool operator!=(const Entity &other) const override;
 
         /**
-         * @brief Compara qual Album é menor
+         * @brief Compara qual Album é menor por ano se forem do mesmo artista
+         * caso contrário por ordem lexicográfica
          * @param other Album a ser comparada
          * @return true se a entidade atual for menor que a outra, false caso
          * contrário
@@ -274,7 +282,8 @@ namespace core {
         bool operator<=(const Entity &other) const override;
 
         /**
-         * @brief Compara qual Album é maior
+         * @brief Compara qual Album é maior por  por ano se forem do mesmo artista
+         * caso contrário por ordem lexicográfica
          * @param other Album a ser comparada
          * @return true se a entidade atual for maior que a outra, false caso
          * contrário
@@ -323,10 +332,9 @@ namespace core {
         /**
          * @brief Busca uma música pelo título
          * @param title Título da música a ser buscada
-         * @return Ponteiro compartilhado para IPlayable da música encontrada,
-         * ou nullptr se não encontrada
+         * @return Vetor de ponteiros com as músicas encontradas
          */
-        std::shared_ptr<Song>
+        std::vector<std::shared_ptr<Song>>
         findSongByTitle(const std::string &title) override;
 
         /**

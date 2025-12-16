@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "core/interfaces/IPlayable.hpp"
+#include <cstddef>
 #include <functional>
 #include <memory>
 #include <string>
@@ -29,6 +30,12 @@ namespace core {
         virtual void setSongsLoader(
             const std::function<std::vector<std::shared_ptr<Song>>()>&
                 loader) = 0;
+
+        /**
+         * @brief Obtém a quantidade de músicas na coleção
+         * @return Número total de músicas
+         */
+        virtual std::size_t getSongsCount() const = 0;
 
         /**
 		 * @brief Adiciona uma música à coleção
@@ -61,7 +68,7 @@ namespace core {
 		 * @brief Encontra uma música na coleção pelo título
 		 * @param title Título da música a ser encontrada
 		 */
-        virtual std::shared_ptr<Song>
+        virtual std::vector<std::shared_ptr<Song>>
         findSongByTitle(const std::string& title) = 0;
 
         /**
@@ -85,6 +92,7 @@ namespace core {
          * @brief Obtém a música na posição especificada
          * @param index Índice da música a ser obtida
 		 * @return Ponteiro compartilhado para a música na posição especificada
+			* ou nullptr se índice inválido
          */
         virtual std::shared_ptr<Song> getSongAt(int index) = 0;
 

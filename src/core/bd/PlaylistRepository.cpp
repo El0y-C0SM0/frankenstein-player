@@ -138,7 +138,7 @@ namespace core {
             std::string title = query.getColumn("title").getString();
             unsigned artist_id = query.getColumn("artist_id").getUInt();
 
-            Song song(song_id, file_path, title, artist_id);
+            Song song(song_id, title, artist_id);
             song.setUser(*playlist.getUser());
             songs.push_back(std::make_shared<Song>(song));
         }

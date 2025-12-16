@@ -56,7 +56,9 @@ namespace core {
         std::string name = query.getColumn("name").getString();
         unsigned user_id = query.getColumn("user_id").getInt();
 
-        return std::make_shared<Artist>(id, name, user_id);
+        // return std::make_shared<Artist>(id, name, user_id);
+        // TODO carregar usuário do artista
+        return std::make_shared<Artist>();
     };
 
     bool ArtistRepository::save(Artist& entity) {

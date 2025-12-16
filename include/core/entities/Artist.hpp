@@ -70,12 +70,25 @@ namespace core {
         Artist();
 
         /**
+         * @brief Construtor da classe Artist com ID, nome, genero e usuário
+         * @param id ID do artista
+         * @param name Nome do artista
+         * @param genre Gênero musical do artista
+         * @param user Ponteiro compartilhado para o usuário associado ao artista
+         */
+        Artist(unsigned id,
+               std::string name,
+               std::string genre,
+               const User &user);
+
+        /**
 		 * @brief Construtor da classe Artist ideal para repositórios
 		 * @param id ID do artista
 		 * @param name Nome do artista
 		 * @param user_id ID do usuário associado ao artista
 		 */
-        Artist(unsigned id, std::string name, unsigned user_id);
+        Artist(unsigned id, std::string name, const User &user);
+
 
         /**
          * @brief Construtor da classe Artist
@@ -147,7 +160,7 @@ namespace core {
          * @brief Obtém a quantidade de músicas do artista
          * @return Número total de músicas
          */
-        size_t getSongsCount() const;
+        size_t getSongsCount() const override;
 
         /**
          * @brief Obtém a quantidade de álbuns do artista
@@ -216,10 +229,10 @@ namespace core {
         /**
          * @brief Busca uma musica pelo título
          * @param title Título da musica de um artista a ser buscado
-         * @return Ponteiro compartilhado para IPlayable da música encontrada,
-         * ou nullptr se não encontrada
+         * @return Vetor de ponteiros compartilhados para Song das músicas
+         * encontradas
          */
-        std::shared_ptr<Song> findSongByTitle(const std::string &title) override;
+        std::vector<std::shared_ptr<Song>> findSongByTitle(const std::string &title) override;
         /**
          * @brief Busca uma música de um artista pelo ID
          * @param songId ID da música a ser buscada
@@ -230,9 +243,10 @@ namespace core {
 	    /**
          * @brief Busca um álbum pelo titulo
 		 * @param title Nome do álbum a ser buscado
-		 * @return Ponteiro compartilhado para Album do álbum encontrado,
+		 * @return Vetor de ponteiros compartilhados para Album dos álbuns
+         * encontrados
          */
-        std::shared_ptr<Album> findAlbumByTitle(const std::string &title);
+        std::vector<std::shared_ptr<Album>> findAlbumByTitle(const std::string &title);
         /**
          * @brief Busca um álbum pelo ID
          * @param albumId ID do álbum a ser buscado
@@ -296,7 +310,7 @@ namespace core {
         bool operator!=(const Entity &other) const override;
 
         /**
-		 * @brief Compara qual Artista é menor
+		 * @brief Compara qual Artista é menor por ordem lexicográfica
 		 * @param other Artista a ser comparada
 		 * @return true se a entidade atual for menor que a outra, false caso
 		 * contrário
@@ -312,7 +326,7 @@ namespace core {
         bool operator<=(const Entity &other) const override;
 
         /**
-         * @brief Compara qual Artista é maior
+         * @brief Compara qual Artista é maior por ordem lexicográfica
          * @param other Artista a ser comparada
          * @return true se a entidade atual for maior que a outra, false caso
 		 * contrário
@@ -410,6 +424,14 @@ namespace core {
 		 * @return Ponteiro compartilhado para IPlayable da música na posição
          */
         std::shared_ptr<Song> operator[](int index) override;
+
+        /**
+         * @brief Obtem o album em uma posição específica de albums
+         * @param index Índice do album em albums
+         * @return Ponteiro compartilhado para Album na posição especificada,
+         * ou nullptr se índice inválido
+         */
+        std::shared_ptr<Album> getAlbumAt(int index);
 
         // /**
         //  * @brief Obtém a música em uma posição específica de Album

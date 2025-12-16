@@ -138,7 +138,7 @@ namespace core
 
         bool albumFound = false;
         for (const std::shared_ptr<Album> &existingAlbum : albums) {
-            if (existingAlbum->getName() == albumTitle)
+            if (existingAlbum->getTitle() == albumTitle)
             {
                 album = existingAlbum;
                 albumFound = true;
@@ -148,7 +148,7 @@ namespace core
 
         if (!albumFound)
         {
-            album = std::make_shared<Album>(albumTitle, artist, song->getGenre());
+            album = std::make_shared<Album>(albumTitle, song->getGenre(), *artist);
             album->setYear(song->getYear());
             album->setUser(*song->getUser());
             _albumRepo->save(*album);

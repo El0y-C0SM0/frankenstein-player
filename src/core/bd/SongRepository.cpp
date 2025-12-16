@@ -263,7 +263,8 @@ namespace core {
             std::string name = query.getColumn("name").getString();
             unsigned user_id = query.getColumn("user_id").getInt();
 
-            artists.push_back(std::make_shared<Artist>(id, name, user_id));
+            // TODO carregar usuário do artista
+            // artists.push_back(std::make_shared<Artist>(id, name, user_id));
         }
 
         return artists;

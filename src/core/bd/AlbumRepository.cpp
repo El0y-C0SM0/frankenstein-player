@@ -3,6 +3,7 @@
 #include "core/bd/ArtistRepository.hpp"
 #include "core/bd/SQLiteRepositoryBase.hpp"
 #include "core/bd/SongRepository.hpp"
+#include "core/entities/Album.hpp"
 #include "core/entities/Song.hpp"
 #include <memory>
 #include <string>
@@ -28,7 +29,7 @@ namespace core {
         std::string sql = "INSERT INTO " + _table_name + " (title, release_year, genre, user_id) " + "VALUES (?, ?, ?, ?);";
         SQLite::Statement query = prepare(sql);
 
-        query.bind(1, entity.getName());
+        query.bind(1, entity.getTitle());
         query.bind(2, entity.getYear());
         query.bind(3, entity.getGenre());
         query.bind(4, entity.getUser()->getId());
@@ -43,14 +44,13 @@ namespace core {
 
     bool AlbumRepository::update(const Album &entity) {
         std::string sql =
-            "UPDATE " + _table_name + " SET title = ?, release_year = ?, genre = ?, user_id = ? " + "WHERE id = ?";
+            "UPDATE " + _table_name + " SET title = ?, release_year = ?, genre = ?" + "WHERE id = ?";
 
         SQLite::Statement query = prepare(sql);
-        query.bind(1, entity.getName());
+        query.bind(1, entity.getTitle());
         query.bind(2, entity.getYear());
         query.bind(3, entity.getGenre());
-        query.bind(4, entity.getUser()->getId());
-        query.bind(5, entity.getId());
+        query.bind(4, entity.getId());
 
         return query.exec() > 0;
     };
@@ -63,7 +63,9 @@ namespace core {
         std::string genre = query.getColumn("genre").getString();
         unsigned user_id = query.getColumn("user_id").getInt();
 
-        auto album = std::make_shared<Album>(id, title, year, genre, user_id);
+        // TODO carregar usuário do album
+        // auto album = std::make_shared<Album>(id, title, year, genre, user_id);
+        std::shared_ptr<Album> album;
 
         auto artists_loader = [this, id]() -> std::vector<std::shared_ptr<Artist>> {
             Album tempAlbum;
@@ -186,7 +188,9 @@ namespace core {
             std::string name = query.getColumn("name").getString();
             unsigned user_id = query.getColumn("user_id").getInt();
 
-            artists.push_back(std::make_shared<Artist>(id, name, user_id));
+            // TODO carregar usuário do artista
+            // artists.push_back(std::make_shared<Artist>(id, name, user_id));
+            artists.push_back(std::make_shared<Artist>());
         }
 
         return artists;
