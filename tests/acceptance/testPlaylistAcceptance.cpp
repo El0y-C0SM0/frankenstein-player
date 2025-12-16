@@ -47,14 +47,14 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists") {
 
         auto playlist = std::make_shared<core::Playlist>();
         std::string PlaylistTesteTitulo = "Playlist Teste";
-        playlist->setTitulo(PlaylistTesteTitulo);
+        playlist->setTitle(PlaylistTesteTitulo);
 
         myPlaylists.push_back(playlist);
 
         SUBCASE("Criar uma playlist e atribuir um nome a ela") {
 
             CHECK(myPlaylists.size() == 1);
-            CHECK(myPlaylists[0]->getTitulo() == PlaylistTesteTitulo);
+            CHECK(myPlaylists[0]->getTitle() == PlaylistTesteTitulo);
         }
 
         SUBCASE("Adicionar e remover músicas de uma playlist existente") {
@@ -78,7 +78,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Reprodução de Música: Playlists") {
 
             std::vector<std::string> playlistTitles;
             for (const auto &pl : myPlaylists) {
-                playlistTitles.push_back(pl->getTitulo());
+                playlistTitles.push_back(pl->getTitle());
             }
 
             bool found = false;

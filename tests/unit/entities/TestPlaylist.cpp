@@ -16,181 +16,191 @@
 #include <string>
 
 TEST_SUITE("Unit Tests - Entity: Playlist") {
+    class FixtureCollectionPlaylist {
+    public:
+        std::vector<std::shared_ptr<core::Song>> songs;
+        core::Artist artist;
+        core::Album album;
+        core::User user;
 
-    TEST_CASE("Playlist: Construtores") {
+        FixtureCollectionPlaylist() {
+            songs.push_back(std::make_shared<core::Song>());
+            songs.push_back(std::make_shared<core::Song>());
+            songs.push_back(std::make_shared<core::Song>());
+            songs.push_back(std::make_shared<core::Song>());
+            songs.push_back(std::make_shared<core::Song>());
+
+            user = core::User("user");
+            artist = core::Artist(1, "Artist A", user);
+            album = core::Album(1, "Album A", 2020, "Pop", artist, user);
+        }
+
+        std::vector<std::shared_ptr<core::Song>> getSongs() {
+            return songs;
+        }
+    };
+
+    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: construtores e getters básicos") {
 
         SUBCASE("Construtor padrão") {
             core::Playlist p;
 
-            CHECK(p.getTitulo().empty());
-            CHECK(p.getSongs().empty());
-            CHECK(p.getUser() == nullptr);
+            CHECK(p.getTitle().empty());
+            CHECK_EQ(p.getUser(), nullptr);
         }
 
         SUBCASE("Construtor com id e título") {
-            core::Playlist p(10, "Rock Classics");
+            core::Playlist p(1, "Rock Classics");
 
-            CHECK(p.getTitle() == "Rock Classics");
-            CHECK(p.getTitulo() == "Rock Classics");
-            CHECK(p.getSongs().empty());
+            CHECK_EQ(p.getTitle(), "Rock Classics");
+            CHECK_EQ(p.getId(), 1);
+            CHECK_EQ(p.getUser(), nullptr);
+        }
+
+        SUBCASE("Construtor com id, título e usuário") {
+            core::Playlist p(2, "Pop Hits", this->user);
+
+            CHECK_EQ(p.getTitle(), "Pop Hits");
+            CHECK_EQ(p.getId(), 2);
+            CHECK_NE(p.getUser(), nullptr);
+            CHECK_EQ(p.getUser()->getUsername(), user.getUsername());
         }
     }
 
-    TEST_CASE("Playlist: setTitulo e getTitulo funcionam corretamente") {
-
+    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: setters e getters") {
         core::Playlist p;
 
-        SUBCASE("Definindo e obtendo o título") {
-            p.setTitulo("Chill Vibes");
-            CHECK(p.getTitulo() == "Chill Vibes");
-            CHECK(p.getTitle() == "Chill Vibes");
-        }
+        p.setTitle("My Playlist");
+        CHECK_EQ(p.getTitle(), "My Playlist");
 
-        SUBCASE("Alterando título após definir") {
-            p.setTitulo("Workout");
-            p.setTitulo("Focus Mode");
-            CHECK(p.getTitulo() == "Focus Mode");
-        }
+        p.setUser(this->user);
+        CHECK_NE(p.getUser(), nullptr);
+        CHECK_EQ(p.getUser()->getUsername(), this->user.getUsername());
     }
 
-    TEST_CASE("Playlist: adicionar e acessar músicas (integração simples)") {
+    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: Comparações") {
+        core::Playlist p1(1, "Playlist A");
+        p1.setSongsLoader([this]() { return this->getSongs(); });
+        core::Playlist p2(2, "Playlist B");
+        p2.setSongsLoader([this]() { return this->getSongs(); });
 
+        CHECK(p1 < p2);
+        CHECK(p1 <= p2);
+        CHECK_FALSE(p1 > p2);
+        CHECK_FALSE(p1 >= p2);
+
+        core::Playlist p3(1, "Playlist A");
+        p3.setSongsLoader([this]() { return this->getSongs(); });
+
+        CHECK_NE(p1, p2);
+        CHECK_EQ(p1, p3);
+        CHECK_FALSE(p1 < p3);
+        CHECK(p1 <= p3);
+        CHECK_FALSE(p1 > p3);
+        CHECK(p1 >= p3);
+    }
+
+    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: herança com IPlayable") {
         core::Playlist p;
+        CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
 
-        auto art = std::make_shared<core::Artist>("A", "Pop");
-        auto alb = std::make_shared<core::Album>();
+        CHECK_EQ(p.getSongs().size(), this->getSongs().size());
 
-        auto s1 = std::make_shared<core::Song>("S1", art, alb);
-        auto s2 = std::make_shared<core::Song>("S2", art, alb);
-        auto s3 = std::make_shared<core::Song>("S3", art, alb);
-
-        SUBCASE("Adicionar músicas com addSong()") {
-            p.addSong(*s1);
-            p.addSong(*s2);
-
-            auto songs = p.getSongs();
-            CHECK(songs.size() == 2);
-            CHECK(songs[0]->getTitle() == "S1");
-            CHECK(songs[1]->getTitle() == "S2");
-        }
-
-        SUBCASE("Encontrar música por ID e Título") {
-            s1->setDuration(100);
-            s2->setDuration(200);
-            s3->setDuration(300);
-
-            p.addSong(*s1);
-            p.addSong(*s2);
-            p.addSong(*s3);
-
-            CHECK(p.findSongByTitle("S1")->getDuration() == 100);
-            CHECK(p.findSongByTitle("S3")->getDuration() == 300);
-            CHECK(p.findSongByTitle("NOPE") == nullptr);
-        }
-
-        SUBCASE("switchSong troca posições corretamente") {
-            p.addSong(*s1);
-            p.addSong(*s2);
-            p.addSong(*s3);
-
-            CHECK(p.switchSong(s3->getId(), 0) == true);
-
-            auto songs = p.getSongs();
-            CHECK(songs[0]->getTitle() == "S3");
-            CHECK(songs[1]->getTitle() == "S1");
-            CHECK(songs[2]->getTitle() == "S2");
-        }
-
-        SUBCASE("removeSong remove corretamente") {
-            p.addSong(*s1);
-            p.addSong(*s2);
-
-            CHECK(p.removeSong(s1->getId()) == true);
-            CHECK(p.getSongs().size() == 1);
-
-            CHECK(p.removeSong(999) == false);
-        }
-
-        SUBCASE("getNextSong e getPreviousSong") {
-            p.addSong(*s1);
-            p.addSong(*s2);
-            p.addSong(*s3);
-
-            CHECK(p.getNextSong(*s1)->getTitle() == "S2");
-            CHECK(p.getNextSong(*s2)->getTitle() == "S3");
-            CHECK(p.getNextSong(*s3) == nullptr);
-
-            CHECK(p.getPreviousSong(*s3)->getTitle() == "S2");
-            CHECK(p.getPreviousSong(*s1) == nullptr);
-        }
-
-        SUBCASE("getSongAt retorna corretamente ou nullptr") {
-            p.addSong(*s1);
-            p.addSong(*s2);
-
-            CHECK(p.getSongAt(0)->getTitle() == "S1");
-            CHECK(p.getSongAt(1)->getTitle() == "S2");
-            CHECK(p.getSongAt(5) == nullptr);
-        }
-
-        SUBCASE("calculateTotalDuration soma durações") {
-            s1->setDuration(120);
-            s2->setDuration(30);
-            s3->setDuration(50);
-
-            p.addSong(*s1);
-            p.addSong(*s2);
-            p.addSong(*s3);
-
-            CHECK(p.calculateTotalDuration() == 200);
-            CHECK(p.getFormattedDuration() == "03:20");
-        }
-
-        SUBCASE("Loader de músicas é chamado apenas quando necessário") {
-            bool loaderCalled = false;
-
-            p.setSongsLoader([&]() {
-                loaderCalled = true;
-                return std::vector<std::shared_ptr<core::Song>>{s1, s2};
-            });
-
-            CHECK(loaderCalled == false);
-
-            auto songs = p.getSongs();
-            CHECK(loaderCalled == true);
-            CHECK(songs.size() == 2);
-        }
+        std::shared_ptr<core::IPlayable> playable = std::make_shared<core::Playlist>(p);
+        CHECK_EQ(playable->getPlayableObjects().size(), this->getSongs().size());
     }
 
-    TEST_CASE("Playlist: Construtor e Destrutor") {
+    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: métodos de ICollection") {
+        SUBCASE("Adicionar e acessar musicas") {
+            core::Playlist p;
+            CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
 
-        SUBCASE("Criação e destruição não causam leaks ou crashes") {
-            core::Playlist* p = new core::Playlist();
-            p->setTitulo("Temporary Playlist");
+            CHECK_EQ(p.getSongs().size(), this->getSongs().size());
 
-            auto artist = std::make_shared<core::Artist>("TmpA", "Rock");
-            auto album = std::make_shared<core::Album>();
-            auto song = std::make_shared<core::Song>("TempSong", artist, album);
+            core::Song s1("Song A", this->artist, this->album);
+            core::Song s2("Song B", this->artist, this->album);
 
-            p->addSong(*song);
+            p.addSong(s1);
+            p.addSong(s2);
 
-            CHECK(p->getSongs().size() == 1);
+            CHECK_EQ(p.getSongs().size(), this->getSongs().size() + 2);
 
-            delete p;
+            auto songs = p.getSongs();
+            CHECK(songs.size() == this->getSongs().size() + 2);
+
+            CHECK_EQ(p[songs.size() - 2]->getTitle(), s1.getTitle());
+            CHECK_EQ(p.getSongAt(songs.size() - 2)->getTitle(), s1.getTitle());
+            CHECK(p.getSongAt(9999) == nullptr);
+            CHECK_THROWS(p[9999]);
         }
 
-        SUBCASE("Playlist com loader no destrutor") {
-            core::Playlist* p = new core::Playlist();
+        SUBCASE("Remover musicas") {
+            core::Playlist p;
+            CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
 
-            p->setSongsLoader([]() {
-                return std::vector<std::shared_ptr<core::Song>>{
-                    std::make_shared<core::Song>()
-                };
-            });
+            CHECK_EQ(p.getSongsCount(), this->songs.size());
 
-            CHECK(p->getSongs().size() == 1);
+            core::Song songToRemove("Song to Remove", this->artist, this->album);
+            unsigned id = 100;
+            songToRemove.setId(id);
+            p.addSong(songToRemove);
 
-            delete p;
+            CHECK_EQ(p.getSongsCount(), this->songs.size() + 1);
+            bool removed;
+            CHECK_NOTHROW(removed = p.removeSong(id));
+            CHECK(removed);
+            CHECK_EQ(p.getSongsCount(), this->songs.size());
+        }
+
+        SUBCASE("Pesquisar musicas") {
+            core::Playlist p;
+            CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
+
+            CHECK_EQ(p.getSongsCount(), this->songs.size());
+
+            core::Song s1("Unique Song Title", this->artist, this->album);
+            s1.setId(200);
+            p.addSong(s1);
+
+            auto foundSong = p.findSongById(200);
+            CHECK_NE(foundSong, nullptr);
+            CHECK_EQ(foundSong->getTitle(), "Unique Song Title");
+
+            auto foundSongsByTitle = p.findSongByTitle("Unique Song Title");
+            CHECK_FALSE(foundSongsByTitle.empty());
+            CHECK_EQ(foundSongsByTitle[0]->getTitle(), "Unique Song Title");
+
+            core::Song s2("Common Song Title", this->artist, this->album);
+            s2.setId(201);
+            core::Song s3("Common Song Title", this->artist, this->album);
+            s3.setId(202);
+            p.addSong(s2);
+            p.addSong(s3);
+
+            auto commonSongs = p.findSongByTitle("Common Song Title");
+            CHECK_EQ(commonSongs.size(), 2);
+
+            auto notFoundSong = p.findSongById(9999);
+            CHECK_EQ(notFoundSong, nullptr);
+        }
+
+        SUBCASE("Calcular duração") {
+            core::Playlist p;
+            CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
+
+            core::Song s1("Song 1", this->artist, this->album);
+            s1.setDuration(120);
+            core::Song s2("Song 2", this->artist, this->album);
+            s2.setDuration(150);
+            p.addSong(s1);
+            p.addSong(s2);
+
+            unsigned expectedDuration = s1.getDuration() + s2.getDuration();
+            for (const auto& song : this->songs) {
+                expectedDuration += song->getDuration();
+            }
+
+            CHECK_EQ(p.calculateTotalDuration(), expectedDuration);
         }
     }
 }

@@ -3,26 +3,22 @@
 #include "core/entities/User.hpp"
 
 TEST_SUITE("Unit Tests - Entity: User") {
-    TEST_CASE("User: criação e getters funcionam corretamente") {
+    TEST_CASE("User: getters e setters básicos") {
         core::User user("testeuser");
         CHECK(user.getUsername() == "testeuser");
 
-        CHECK(user.getHomePath() == "");
+        CHECK(user.getHomePath().empty());
         #ifdef _WIN32
-            CHECK(user.getUID() == "");
+            CHECK(user.getUID().empty());
         #else
             CHECK(user.getUID() == 0);
         #endif
-        CHECK_FALSE(user.isCurrentUser());
-    }
 
-    TEST_CASE("User: setters alteram os valores corretamente") {
-        core::User user("testeuser0");
-        user.setUsername("testeuser1");
-        CHECK(user.getUsername() == "testeuser1");
+        user.setHomePath("/home/:username:");
+        CHECK(user.getHomePath() == "/home/testeuser/");
 
-        user.setHomePath("/home/testeuser1");
-        CHECK(user.getHomePath() == "/home/testeuser1");
+        user.setInputPath("/music/:username:/input");
+        CHECK(user.getInputPath() == "/music/testeuser/input/");
 
         #ifdef _WIN32
             user.setUID("user123");
@@ -31,21 +27,64 @@ TEST_SUITE("Unit Tests - Entity: User") {
             user.setUID(1001);
             CHECK(user.getUID() == 1001);
         #endif
+
+        CHECK_FALSE(user.isCurrentUser());
+        user.setIsCurrentUser(true);
+        CHECK(user.isCurrentUser());
     }
 
-    TEST_CASE("User: isCurrentUser retorna corretamente") {
-        core::User user("joao");
-        CHECK_FALSE(user.isCurrentUser());
+    TEST_CASE("User: comparações entre usuários") {
+        core::User user1("userA");
+        user1.setId(1);
+        core::User user2("userA");
+        user2.setId(1);
+        core::User user3("userB");
+        user3.setId(1);
+        core::User user4("userA");
+        user4.setId(2);
+        core::User user5("userC");
+        user5.setId(3);
+
+        #ifdef _WIN32
+        user1.setUID("1000");
+        user2.setUID("1000");
+        user3.setUID("2000");
+        user4.setUID("1000");
+        user5.setUID("3000");
+        #else
+        user1.setUID(1000);
+        user2.setUID(1000);
+        user3.setUID(2000);
+        user4.setUID(1000);
+        user5.setUID(3000);
+        #endif
+
+        CHECK_EQ(user1, user2);
+        CHECK_NE(user1, user3);
+        CHECK_EQ(user1, user4);
+        CHECK_NE(user1, user5);
+        CHECK_NE(user3, user4);
+
+        CHECK_LE(user1, user2);
+        CHECK_LT(user1, user3);
+        CHECK_LT(user1, user5);
+
+        CHECK_GE(user1, user2);
+        CHECK_GT(user3, user1);
+        CHECK_GT(user5, user1);
     }
 
     TEST_CASE("User: valores extremos e inválidos") {
-        core::User user("");
-        CHECK(user.getUsername() == "");
-        user.setHomePath("");
-        CHECK(user.getHomePath() == "");
+        core::User user;
+        CHECK_THROWS(user.setUsername(""));
+        CHECK(user.getUsername().empty());
+        CHECK_THROWS(user.setHomePath(""));
+        CHECK(user.getHomePath().empty());
+        CHECK_THROWS(user.setInputPath(""));
+        CHECK(user.getInputPath().empty());
         #ifdef _WIN32
             user.setUID("");
-            CHECK(user.getUID() == "");
+            CHECK(user.getUID().empty());
             user.setUID("!@#$%");
             CHECK(user.getUID() == "!@#$%");
         #else
@@ -54,29 +93,5 @@ TEST_SUITE("Unit Tests - Entity: User") {
             user.setUID(-1);
             CHECK(user.getUID() == static_cast<core::userid>(-1));
         #endif
-    }
-
-    TEST_CASE("User: múltiplos usuários independentes") {
-        core::User user1("testeuser1");
-        core::User user2("testeuser2");
-        user1.setHomePath("/home/testeuser1");
-        user2.setHomePath("/home/testeuser2");
-        CHECK(user1.getUsername() == "testeuser1");
-        CHECK(user2.getUsername() == "testeuser2");
-        CHECK(user1.getHomePath() == "/home/testeuser1");
-        CHECK(user2.getHomePath() == "/home/testeuser2");
-        #ifdef _WIN32
-            user1.setUID("A1");
-            user2.setUID("B2");
-            CHECK(user1.getUID() == "A1");
-            CHECK(user2.getUID() == "B2");
-        #else
-            user1.setUID(101);
-            user2.setUID(202);
-            CHECK(user1.getUID() == 101);
-            CHECK(user2.getUID() == 202);
-        #endif
-        CHECK_FALSE(user1 == user2);
-        CHECK(user1 != user2);
     }
 }

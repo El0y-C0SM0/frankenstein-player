@@ -120,7 +120,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             auto song_mock2 =
                 media.getSongTestMock("Medium_Song_Test_The_Testers");
 
-            fs::path input_dir(user.getInputPath() + "/");
+            fs::path input_dir(user.getHomePath());
             if (!fs::exists(input_dir))
                 fs::create_directories(input_dir);
 
@@ -131,10 +131,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song1_path_registre =
-                user.getHomePath() + "/" + song_mock1.artist + "/" + song_mock1.album
+                user.getHomePath() + song_mock1.artist + "/" + song_mock1.album
                 + "/" + song_mock1.title + ".mp3";
             std::string song2_path_registre =
-                user.getHomePath() + "/" + song_mock2.artist + "/" + song_mock2.album
+                user.getHomePath() + song_mock2.artist + "/" + song_mock2.album
                 + "/" + song_mock2.title + ".mp3";
 
             CHECK(fs::exists(song1_path_registre));
@@ -160,7 +160,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             auto song_mock2 =
                 media.getSongTestMock("Medium_Song_Test_The_Testers");
 
-            fs::path input_dir(user.getInputPath() + "/");
+            fs::path input_dir(user.getHomePath());
             if (!fs::exists(input_dir))
                 fs::create_directories(input_dir);
 
@@ -169,7 +169,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song1_path_registre =
-                user.getHomePath() + "/" + song_mock1.artist + "/" + song_mock1.album
+                user.getHomePath() + song_mock1.artist + "/" + song_mock1.album
                 + "/" + song_mock1.title + ".mp3";
 
             CHECK(fs::exists(song1_path_registre));
@@ -179,7 +179,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song2_path_registre =
-                user.getHomePath() + "/" + song_mock2.artist + "/" + song_mock2.album
+                user.getHomePath() + song_mock2.artist + "/" + song_mock2.album
                 + "/" + song_mock2.title + ".mp3";
 
             CHECK(fs::exists(song2_path_registre));
@@ -215,10 +215,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             const MediaFixture::SongTestMock song_mock2 =
                 media.getSongTestMock("Short_Song_Examples_Example_Band");
 
-            fs::path input_dir1(user1.getInputPath() + "/");
+            fs::path input_dir1(user1.getHomePath());
             if (!fs::exists(input_dir1))
                 fs::create_directories(input_dir1);
-            fs::path input_dir2(user2.getInputPath() + "/");
+            fs::path input_dir2(user2.getHomePath());
             if (!fs::exists(input_dir2))
                 fs::create_directories(input_dir2);
 
@@ -227,10 +227,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song1_path_registre =
-                user1.getHomePath() + "/" + song_mock1.artist + "/"
+                user1.getHomePath() + song_mock1.artist + "/"
                 + song_mock1.album + "/" + song_mock1.title + ".mp3";
             // std::string song2_path_registre =
-            //     user2.getInputPath() + "/" + song_mock2.artist + "/"
+            //     user2.getHomePath() + song_mock2.artist + "/"
             //     + song_mock2.album + "/" + song_mock2.title + ".mp3";
 
             CHECK(fs::exists(song1_path_registre));
@@ -315,7 +315,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             const MediaFixture::SongTestMock song_mock =
                 media.getSongTestMock("Short_Song_Test_The_Testers");
 
-            fs::path input_dir(user.getInputPath() + "/");
+            fs::path input_dir(user.getHomePath());
             if (!fs::exists(input_dir))
                 fs::create_directories(input_dir);
 
@@ -325,7 +325,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song_path_registre =
-                user.getHomePath() + "/" + song_mock.artist + "/" + song_mock.album
+                user.getHomePath() + song_mock.artist + "/" + song_mock.album
                 + "/" + song_mock.title + ".mp3";
 
             CHECK(fs::exists(song_path_registre));
@@ -347,7 +347,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             const auto song_mock2 =
                 media.getSongTestMock("Medium_Song_Test_The_Testers");
 
-            fs::path input_dir(user.getInputPath() + "/");
+            fs::path input_dir(user.getHomePath());
             if (!fs::exists(input_dir))
                 fs::create_directories(input_dir);
 
@@ -359,10 +359,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song1_path_registre =
-                user.getHomePath() + "/" + song_mock1.artist + "/" + song_mock1.album
+                user.getHomePath() + song_mock1.artist + "/" + song_mock1.album
                 + "/" + song_mock1.title + ".mp3";
             std::string song2_path_registre =
-                user.getHomePath() + "/" + song_mock2.artist + "/" + song_mock2.album
+                user.getHomePath() + song_mock2.artist + "/" + song_mock2.album
                 + "/" + song_mock2.title + ".mp3";
 
             CHECK(fs::exists(song1_path_registre));
@@ -384,7 +384,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             const MediaFixture::SongTestMock song_mock =
                 media.getSongTestMock("Song_Test_No_Album");
 
-            fs::path input_dir(user.getInputPath() + "/");
+            fs::path input_dir(user.getHomePath());
             if (!fs::exists(input_dir))
                 fs::create_directories(input_dir);
 
@@ -393,7 +393,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
 
             manager->update();
 
-            std::string song_path_registre = user.getHomePath() + "/"
+            std::string song_path_registre = user.getHomePath()
                                              + song_mock.artist + "/Singles/"
                                              + song_mock.title + ".mp3";
             CHECK(fs::exists(song_path_registre));
@@ -451,7 +451,7 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             const MediaFixture::SongTestMock song_mock2 =
                 media.getSongTestMock("Short_Song_Examples_Example_Band");
 
-            fs::path input_dir(user.getInputPath() + "/");
+            fs::path input_dir(user.getHomePath());
             if (!fs::exists(input_dir))
                 fs::create_directories(input_dir);
 
@@ -463,10 +463,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song_path_registre =
-                user.getHomePath() + "/" + song_mock1.artist + "/" + song_mock1.album
+                user.getHomePath() + song_mock1.artist + "/" + song_mock1.album
                 + "/" + song_mock1.title + ".mp3";
             std::string song2_path_registre =
-                user.getHomePath() + "/" + song_mock2.artist + "/" + song_mock2.album
+                user.getHomePath() + song_mock2.artist + "/" + song_mock2.album
                 + "/" + song_mock2.title + ".mp3";
 
             CHECK(fs::exists(song_path_registre));
@@ -512,10 +512,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             const MediaFixture::SongTestMock song_mock2 =
                 media.getSongTestMock("Medium_Song_Test_The_Testers");
 
-            fs::path input_dir1(user1.getInputPath() + "/");
+            fs::path input_dir1(user1.getHomePath());
             if (!fs::exists(input_dir1))
                 fs::create_directories(input_dir1);
-            fs::path input_dir2(user2.getInputPath() + "/");
+            fs::path input_dir2(user2.getHomePath());
             if (!fs::exists(input_dir2))
                 fs::create_directories(input_dir2);
 
@@ -527,10 +527,10 @@ TEST_SUITE("HISTÓRIA DE USUÁRIO: Organização de Músicas") {
             manager->update();
 
             std::string song1_path_registre =
-                user1.getHomePath() + "/" + song_mock1.artist + "/"
+                user1.getHomePath() + song_mock1.artist + "/"
                 + song_mock1.album + "/" + song_mock1.title + ".mp3";
             std::string song2_path_registre =
-                user2.getHomePath() + "/" + song_mock2.artist + "/"
+                user2.getHomePath() + song_mock2.artist + "/"
                 + song_mock2.album + "/" + song_mock2.title + ".mp3";
 
             CHECK(fs::exists(song1_path_registre));
