@@ -212,12 +212,6 @@ namespace core {
          */
         void addAlbum(const Album &album);
 
-        /**
-         * @brief Atualiza o cache de músicas e álbuns usando os loaders definidos
-         * @return true se o cache foi atualizado, false se não foi necessário
-         */
-        bool updateCache();
-
         // /**
         //  * @brief Move uma música para uma nova posição no Artist
         //  * @param id ID da música a ser movida

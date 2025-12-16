@@ -8,7 +8,6 @@
 #include "core/entities/User.hpp"
 #include <memory>
 #include <miniaudio.h>
-#include <stdexcept>
 #include <string>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>

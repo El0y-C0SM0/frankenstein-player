@@ -4,7 +4,6 @@
 #include "core/entities/Artist.hpp"
 #include "core/entities/User.hpp"
 #include <cstddef>
-#include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <vector>
