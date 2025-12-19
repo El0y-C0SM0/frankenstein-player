@@ -31,9 +31,7 @@ namespace core {
           _volume(1.0f),
           _previousVolume(1.0f),
           _audioInitialized(false),
-          _shouldAdvanceToNext(false),
-          _songStartTime(0),
-          _hasSongStartTime(false) {
+          _shouldAdvanceToNext(false) {
         ma_result result = ma_engine_init(NULL, &_audioEngine);
         if (result != MA_SUCCESS) {
             throw std::runtime_error("Falha ao inicializar Audio Engine: "
@@ -88,8 +86,6 @@ namespace core {
 
         ma_sound_uninit(&_currentSound);
         memset(&_currentSound, 0, sizeof(_currentSound));
-
-        _hasSongStartTime = false;
     }
 
     bool Player::loadCurrentSong() {
@@ -133,9 +129,6 @@ namespace core {
         ma_sound_set_volume(&_currentSound, _volume);
         ma_sound_set_looping(&_currentSound, _isLooping ? MA_TRUE : MA_FALSE);
         ma_sound_seek_to_pcm_frame(&_currentSound, 0);
-
-        _songStartTime = getEngineTime();
-        _hasSongStartTime = true;
 
         return true;
     }
@@ -205,9 +198,6 @@ namespace core {
         if (_currentSound.pDataSource != nullptr) {
             ma_sound_stop(&_currentSound);
             ma_sound_seek_to_pcm_frame(&_currentSound, 0);
-
-            _songStartTime = getEngineTime();
-            _hasSongStartTime = true;
 
             ma_sound_start(&_currentSound);
             _playerState = PlayerState::PLAYING;
@@ -283,11 +273,7 @@ namespace core {
 
         ma_sound_seek_to_pcm_frame(&_currentSound, newFrame);
 
-        if (_hasSongStartTime) {
-            _songStartTime = getEngineTime() - newFrame;
-        }
     }
-
     void Player::rewind(unsigned int seconds) {
         seek(-static_cast<int>(seconds));
     }
@@ -356,24 +342,22 @@ namespace core {
     }
 
     unsigned int Player::getElapsedTime() const {
-        const_cast<Player*>(this)->checkAndAdvanceIfNeeded();
-
-        if (!_currentSong || _currentSound.pDataSource == nullptr
-            || !_hasSongStartTime) {
+        if (!_currentSong || _currentSound.pDataSource == nullptr) {
             return 0;
         }
 
-        ma_uint64 currentTime = getEngineTime();
-        ma_uint64 elapsed = (currentTime >= _songStartTime)
-                                ? (currentTime - _songStartTime)
-                                : 0;
+        ma_uint64 currentFrame;
+        ma_result result =
+            ma_sound_get_cursor_in_pcm_frames(&_currentSound, &currentFrame);
+
+        if (result != MA_SUCCESS) {
+            return 0;
+        }
+
         ma_uint64 sampleRate = ma_engine_get_sample_rate(&_audioEngine);
-
-        return static_cast<unsigned int>(elapsed / sampleRate);
+        return static_cast<unsigned int>(currentFrame / sampleRate);
     }
-
     float Player::getProgress() const {
-        // Verifica se deve avançar
         const_cast<Player*>(this)->checkAndAdvanceIfNeeded();
 
         if (!_currentSong || _currentSound.pDataSource == nullptr) {

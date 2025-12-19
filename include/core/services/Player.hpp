@@ -54,8 +54,8 @@ namespace core {
 
         std::atomic<bool> _shouldAdvanceToNext;
 
-        ma_uint64 _songStartTime;
-        bool _hasSongStartTime;
+        // ma_uint64 _songStartTime;
+        // bool _hasSongStartTime;
 
         /**
          * @brief Callback para quando uma música termina
@@ -72,6 +72,9 @@ namespace core {
          */
         void cleanupCurrentSound();
 
+        /**
+         * @brief Analisa flag para chamar playNextSong()
+         */
         void checkAndAdvanceIfNeeded();
 
     public:
