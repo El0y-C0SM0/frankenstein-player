@@ -19,11 +19,10 @@
 #include "core/entities/Entity.hpp"
 #include "core/interfaces/ICollection.hpp"
 #include "core/interfaces/IPlayable.hpp"
-
-#include <cstddef>
 #include <functional>
 #include <memory>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 namespace core {
@@ -42,10 +41,12 @@ namespace core {
         std::string _name;
         std::string _genre;
         mutable std::vector<std::shared_ptr<Song>> _songs;
+        mutable std::unordered_set<unsigned int> _song_ids;
         mutable bool _songsLoaded = false;
         mutable std::vector<std::shared_ptr<Album>> _albums;
+        mutable std::unordered_set<unsigned int> _album_ids;
         mutable bool _albumsLoaded = false;
-        std::shared_ptr<User> _user; // TODO Trocar para User?
+        std::shared_ptr<User> _user;
         unsigned _user_id;
 
         std::function<std::vector<std::shared_ptr<Song>>()> songsLoader;
@@ -427,17 +428,32 @@ namespace core {
          */
         std::shared_ptr<Album> getAlbumAt(int index);
 
-        // /**
-        //  * @brief Obtém a música em uma posição específica de Album
-        //  * @param index Índice da música em songs
-        //  * @param idAlbum Id do album
-        //  * @return Ponteiro compartilhado para IPlayable da música na posição
-        //  * especificada, ou nullptr se índice inválido
-        //  */
-        // std::shared_ptr<IPlayable> getSongAtAlbum(int index, unsigned idAlbum);
+        /**
+         * @brief Verifica se o artista contém uma música com o ID especificado
+         * @param songId ID da música a ser verificada
+         * @return true se a música estiver no artista, false caso contrário
+         */
+        bool containsSong(unsigned songId) const override;
 
+        /**
+         * @brief Verifica se o artista contém uma música com o ID especificado
+         * @param song Música a ser verificada
+         * @return true se a música estiver no artista, false caso contrário
+         */
+        bool containsSong(const Song& song) const override;
 
-        // TODO IMPLEMENTAÇÃO NO CPP
+        /**
+         * @brief Verifica se o artista contém um álbum com o ID especificado
+         * @param albumId ID do álbum a ser verificada
+         * @return true se o álbum estiver no artista, false caso contrário
+         */
+        bool containsAlbum(unsigned albumId) const;
 
+        /**
+         * @brief Verifica se o artista contém um álbum com o ID especificado
+         * @param albumId ID do álbum a ser verificada
+         * @return true se o álbum estiver no artista, false caso contrário
+         */
+        bool containsAlbum(const Album &album) const;
     };
 } // namespace core
