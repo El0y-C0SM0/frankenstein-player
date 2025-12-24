@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace core {
-    Album::Album() {};
+    Album::Album() : songsLoader([]() {return std::vector<std::shared_ptr<Song>>();}) {};
 
     // Album para mapRowToEntity
     Album::Album(unsigned id,
@@ -17,8 +17,13 @@ namespace core {
                  int year,
                  std::string genre,
                  const Artist &artist,
-                 User &user)
-        : Entity(id), _title(title), _genre(genre), _year(year), _artist_id(artist.getId()) {
+                 User &user) :
+        Entity(id),
+        _title(title),
+        _genre(genre),
+        _year(year),
+        _artist_id(artist.getId()),
+        songsLoader([]() {return std::vector<std::shared_ptr<Song>>();}) {
 
         // Validações PRIMEIRO
         if (title.empty()) {
@@ -31,7 +36,10 @@ namespace core {
     Album::Album(const std::string title,
                  const std::string genre,
                  const Artist &artist)
-        : _title(title), _genre(genre), _artist_id(artist.getId()) {}
+        : _title(title),
+        _genre(genre),
+        _artist_id(artist.getId()),
+        songsLoader([]() {return std::vector<std::shared_ptr<Song>>();}) {}
 
     Album::Album(unsigned id,
                 std::string title,
@@ -42,7 +50,8 @@ namespace core {
         _title(title),
         _genre(genre),
         _year(year),
-        _artist_id(artist.getId()) {}
+        _artist_id(artist.getId()),
+        songsLoader([]() {return std::vector<std::shared_ptr<Song>>();}) {}
 
     // Getters
     std::string Album::getTitle() const {
@@ -60,6 +69,19 @@ namespace core {
         auto artist = artistLoader();
         _artist = artist;
         return std::const_pointer_cast<const Artist>(artist);
+    };
+
+    unsigned Album::getArtistId() const {
+        return _artist_id;
+    };
+
+    std::vector<unsigned> Album::getFeaturingArtistsId() const {
+        auto _featuring_artists = featuringArtistsLoader();
+        _featuring_artists_ids.clear();
+        for (auto const &a : _featuring_artists)
+            _featuring_artists_ids.push_back(a->getId());
+
+        return std::vector<unsigned>(_featuring_artists_ids);
     };
 
     std::vector<std::shared_ptr<const Artist>>
@@ -104,6 +126,9 @@ namespace core {
         if (!_songsLoaded) {
             _songs = songsLoader();
             _songsLoaded = true;
+            _song_ids.clear();
+            for (const auto &s : _songs)
+                if (s) _song_ids.insert(s->getId());
         }
 
         return _songs;
@@ -262,6 +287,8 @@ namespace core {
 
     void Album::addSong(const Song &song) {
         loadSongs();
+        if (containsSong(song))
+            return;
         _songs.push_back(std::make_shared<Song>(song));
     };
 
@@ -309,6 +336,15 @@ namespace core {
             totalSeconds += s->getDuration();
         }
         return totalSeconds;
+    };
+
+    bool Album::containsSong(unsigned songId) const {
+        loadSongs();
+        return _song_ids.find(songId) != _song_ids.end();
+    };
+
+    bool Album::containsSong(const Song &song) const {
+        return containsSong(song.getId());
     };
 
     std::shared_ptr<Song> Album::getSongAt(int index) {

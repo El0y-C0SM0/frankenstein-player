@@ -15,7 +15,6 @@
 #include "core/bd/UserRepository.hpp"
 #include "core/entities/User.hpp"
 
-#include <iostream>
 #include <string>
 #if defined(_WIN32)
     #include <windows.h>

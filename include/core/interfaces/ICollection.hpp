@@ -3,7 +3,7 @@
  * @brief Define métodos para coleções de IPlayable
  */
 #pragma once
-#include "core/interfaces/IPlayable.hpp"
+
 #include <cstddef>
 #include <functional>
 #include <memory>
@@ -77,16 +77,19 @@ namespace core {
 		 */
         virtual unsigned calculateTotalDuration() = 0;
 
-        // // ! remover
-        // virtual std::string getFormattedDuration() = 0;
+        /**
+         * @brief Verifica se a coleção contém uma música com o ID especificado
+         * @param songId ID da música a ser verificada
+         * @return true se a música estiver na playlist, false caso contrário
+         */
+        virtual bool containsSong(unsigned songId) const = 0;
 
-        // ! remover
-        // virtual std::shared_ptr<Song>
-        // getNextSong(Song& current) = 0;
-
-        // // ! remover
-        // virtual std::shared_ptr<Song>
-        // getPreviousSong(Song& current) = 0;
+        /**
+         * @brief Verifica se a coleção contém uma música com o ID especificado
+         * @param songId ID da música a ser verificada
+         * @return true se a música estiver na playlist, false caso contrário
+         */
+        virtual bool containsSong(const Song& song) const = 0;
 
         /**
          * @brief Obtém a música na posição especificada

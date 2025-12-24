@@ -43,20 +43,14 @@ namespace core {
         std::string sql = "INSERT INTO " + _table_name + " (title, duration, track_number, artist_id, album_id, user_id, release_year) "
                                                     "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
-
-
         SQLite::Statement query = prepare(sql);
         query.bind(1, entity.getTitle());
         query.bind(2, entity.getDuration());
         query.bind(3, entity.getTrackNumber());
-        query.bind(4, entity.getArtist()->getId());
-        query.bind(7, entity.getYear());
-        std::shared_ptr<const Album> album = entity.getAlbum();
-        if (album != nullptr)
-            query.bind(5, album->getId());
-        else
-            query.bind(5);
+        query.bind(4, entity.getArtistId());
+        query.bind(5, entity.getAlbumId());
         query.bind(6, entity.getUser()->getId());
+        query.bind(7, entity.getYear());
 
         bool success = query.exec() > 0;
 
@@ -72,7 +66,7 @@ namespace core {
 
         SQLite::Statement query = prepare(sql);
         query.bind(1, entity.getTitle());
-        query.bind(2, entity.getArtist()->getId());
+        query.bind(2, entity.getArtistId());
         query.bind(3, entity.getUser()->getId());
 
         return query.exec() > 0;

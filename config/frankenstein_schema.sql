@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS songs (
     duration INTEGER NOT NULL,
     track_number INTEGER,
     album_id INTEGER,
-    artist_id INTEGER NOT NULL,
+    artist_id INTEGER,
     release_year INTEGER,
     genre TEXT,
     file_size INTEGER,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS song_artists (
 -- Tabela de playlists
 CREATE TABLE IF NOT EXISTS playlists (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    title TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     user_id INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

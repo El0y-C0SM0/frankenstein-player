@@ -10,12 +10,16 @@
 
 #pragma once
 
+#include <cstddef>
 #include <memory.h>
 #include <memory>
 #include <string>
+#include <unordered_set>
 #include <vector>
 #include <cassert>
 
+#include "core/entities/Album.hpp"
+#include "core/entities/Artist.hpp"
 #include "core/entities/Entity.hpp"
 #include "core/entities/Song.hpp"
 #include "core/entities/User.hpp"
@@ -37,6 +41,7 @@ namespace core {
         std::string _title;
         std::shared_ptr<User> _user;
         mutable std::vector<std::shared_ptr<Song>> _songs;
+        mutable std::unordered_set<unsigned int> _song_ids;
         std::function<std::vector<std::shared_ptr<Song>>()> _loader;
         mutable bool _songsLoaded = false;
 
@@ -220,31 +225,6 @@ namespace core {
          */
         virtual unsigned calculateTotalDuration() override;
 
-        // /**
-        //  * @brief Calcula a duração e formata a string
-        //  *
-        //  * @return std::string no formato hh:mm
-        //  */
-        // virtual std::string getFormattedDuration() override;
-
-        // /**
-        //  * @brief Pega a próxima música na ordem da playlist
-        //  *
-        //  * @param current música atual
-        //  * @return std::shared_ptr<Song> para a próxima
-        //  */
-        // virtual std::shared_ptr<Song>
-        // getNextSong(Song &current) override;
-
-        // /**
-        //  * @brief Pega a música anterior
-        //  *
-        //  * @param current música atual
-        //  * @return std::shared_ptr<Song> para a anterior
-        //  */
-        // virtual std::shared_ptr<Song>
-        // getPreviousSong(Song &current) override;
-
         /**
          * @brief Pega a música na posição
          *
@@ -284,5 +264,146 @@ namespace core {
          * @param user usuário
          */
         void setUser(const User& user);
+
+        /**
+         * @brief Verifica se a playlist contém uma música com o ID especificado
+         * @param songId ID da música a ser verificada
+         * @return true se a música estiver na playlist, false caso contrário
+         */
+        bool containsSong(unsigned songId) const override;
+
+        /**
+         * @brief Verifica se a playlist contém uma música com o ID especificado
+         * @param songId ID da música a ser verificada
+         * @return true se a música estiver na playlist, false caso contrário
+         */
+        bool containsSong(const Song& song) const override;
+
+        /**
+         * @brief Insere música, álbum, artista ou playlist na posição pos
+         * @param song música a ser inserida
+         * @param pos posição para inserção
+         * @return true se a inserção for bem sucedida, false caso contrário
+         */
+        bool insert(const Song &song, size_t pos);
+
+        /**
+         * @brief Insere música, álbum, artista ou playlist na posição pos
+         * @param song música a ser inserida
+         * @param pos posição para inserção
+         * @return true se a inserção for bem sucedida, false caso contrário
+         */
+        bool insert(const Album &album, size_t pos);
+
+        /**
+         * @brief Insere música, álbum, artista ou playlist na posição pos
+         * @param song música a ser inserida
+         * @param pos posição para inserção
+         * @return true se a inserção for bem sucedida, false caso contrário
+         */
+        bool insert(const std::vector<std::shared_ptr<Song>> &songs, size_t pos);
+
+        /**
+         * @brief Insere música, álbum, artista ou playlist na posição pos
+         * @param song música a ser inserida
+         * @param pos posição para inserção
+         * @return true se a inserção for bem sucedida, false caso contrário
+         */
+        bool insert(const Artist &artist, size_t pos);
+
+        /**
+         * @brief Insere música, álbum, artista ou playlist na posição pos
+         * @param song música a ser inserida
+         * @param pos posição para inserção
+         * @return true se a inserção for bem sucedida, false caso contrário
+         */
+        bool insert(const Playlist &playlist, size_t pos);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao final da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushBack(const Song &song);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao final da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushBack(const Album &album);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao final da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushBack(const std::vector<std::shared_ptr<Song>> &songs);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao final da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushBack(const Artist &artist);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao final da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushBack(const Playlist &playlist);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao início da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushFront(const Song &song);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao início da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushFront(const Album &album);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao início da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushFront(const std::vector<std::shared_ptr<Song>> &songs);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao início da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushFront(const Artist &artist);
+
+        /**
+         * @brief Adiciona música, álbum, artista ou playlist ao início da coleção
+         * @param song música a ser adicionada
+         * @return true se a adição for bem sucedida, false caso contrário
+         */
+        bool pushFront(const Playlist &playlist);
+
+        /**
+         * @brief Troca uma música de posição na playlist
+         *
+         * @param id da música a ser trocada de posição
+         * @param index para o qual a música será realocada
+         */
+        void switchSong(unsigned id, unsigned index);
+
+        /**
+         * @brief Move uma música de uma posição para outra na playlist,
+         * realocando as outras músicas conforme necessário.
+         *
+         * @param fromIndex índice atual da música
+         * @param toIndex índice para o qual a música será movida
+         */
+        void moveSong(unsigned fromIndex, unsigned toIndex);
     };
 }  // namespace core

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <cstddef>
+#include <iterator>
 #include <vector>
 #include <string>
 #include <memory>
@@ -53,7 +55,7 @@ namespace core {
          * @param song Música a ser adicionada
          * @return true se a operação foi bem-sucedida, false caso contrário
          */
-        bool addSongToPlaylist(const Playlist& playlist, const Song& song);
+        bool addSongToPlaylist(const Playlist& playlist, size_t pos, const Song& song);
 
         /**
          * @brief Mapeia uma linha do resultado para uma playlist

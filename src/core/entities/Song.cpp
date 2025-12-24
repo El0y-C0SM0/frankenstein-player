@@ -36,8 +36,8 @@ namespace core {
 
     Song::Song(unsigned id,
                const std::string &title,
-               unsigned &artist_id,
-               unsigned &album_id)
+               unsigned artist_id,
+               unsigned album_id)
         : Entity(id),
           _title(title),
           _artist_id(artist_id),
@@ -71,9 +71,18 @@ namespace core {
         return std::const_pointer_cast<const Artist>(artist);
     };
 
-    // std::vector<unsigned> Song::getFeaturingArtistsId() const {
-    //     return _featuring_artists_ids;
-    // };
+    unsigned Song::getArtistId() const {
+        return _artist_id;
+    };
+
+    std::vector<unsigned> Song::getFeaturingArtistsId() const {
+        auto _featuring_artists = featuringArtistsLoader();
+        _featuring_artists_ids.clear();
+        for (auto const &a : _featuring_artists)
+            _featuring_artists_ids.push_back(a->getId());
+
+        return std::vector<unsigned>(_featuring_artists_ids);
+    };
 
     // std::vector<std::shared_ptr<const Artist>> Song::getFeaturingArtists() {
     //     if (featuringArtistsLoader) {
@@ -116,6 +125,10 @@ namespace core {
         auto album = albumLoader();
         _album = album;
         return std::const_pointer_cast<const Album>(album);
+    };
+
+    unsigned Song::getAlbumId() const {
+        return _album_id;
     };
 
     int Song::getDuration() const {

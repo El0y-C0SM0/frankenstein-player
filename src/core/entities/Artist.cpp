@@ -11,7 +11,7 @@
 
 namespace core {
 
-    Artist::Artist() : Entity() {};
+    Artist::Artist() : Entity(), songsLoader([]() {return std::vector<std::shared_ptr<Song>>();}) {};
 
     Artist::Artist(unsigned id, std::string name, const User &user)
         : Entity(id), _name(name), _user(std::make_shared<User>(user)) {}
@@ -20,11 +20,15 @@ namespace core {
                    std::string name,
                    std::string genre,
                    const User &user)
-        : Entity(id), _name(name),  _genre(genre), _user(std::make_shared<User>(user)) {}
+        : Entity(id),
+        _name(name),
+        _genre(genre),
+        _user(std::make_shared<User>(user)),
+       songsLoader([]() {return std::vector<std::shared_ptr<Song>>();}) {}
 
     Artist::Artist(const std::string &name, const std::string &genre)
-        : Entity(), _name(name), _genre(genre) {
-    }
+        : Entity(), _name(name), _genre(genre),
+       songsLoader([]() {return std::vector<std::shared_ptr<Song>>();}) {}
 
     std::vector<std::shared_ptr<Song>> Artist::loadSongs() const {
     	if (!songsLoader) {
@@ -34,6 +38,9 @@ namespace core {
         if (!_songsLoaded) {
             _songs = songsLoader();
             _songsLoaded = true;
+            _song_ids.clear();
+            for (const auto &s : _songs)
+                if (s) _song_ids.insert(s->getId());
         }
 
         return _songs;
@@ -47,6 +54,9 @@ namespace core {
         if (!_albumsLoaded) {
             _albums = albumsLoader();
             _albumsLoaded = true;
+            _album_ids.clear();
+            for (const auto &a : _albums)
+                if (a) _album_ids.insert(a->getId());
         }
 
         return _albums;
@@ -129,12 +139,18 @@ namespace core {
         if (!_songsLoaded)
             loadSongs();
 
+        if (containsSong(song))
+            return;
+
         _songs.push_back(std::make_shared<Song>(song));
     };
 
     void Artist::addAlbum(const Album &album) {
         if (!_albumsLoaded)
             loadAlbums();
+
+        if (containsAlbum(album))
+            return;
 
         _albums.push_back(std::make_shared<Album>(album));
     };
@@ -189,6 +205,9 @@ namespace core {
     std::shared_ptr<Song> Artist::findSongById(unsigned songId) {
         loadSongs();
 
+        if (!containsSong(songId))
+            return nullptr;
+
         for (auto const &s : _songs) {
             if (s->getId() == songId) {
                 return s;
@@ -199,6 +218,9 @@ namespace core {
 
     std::shared_ptr<Album> Artist::findAlbumById(unsigned albumId) {
         loadAlbums();
+
+        if (!containsAlbum(albumId))
+            return nullptr;
 
         for (auto const &a : _albums) {
             if (a->getId() == albumId) {
@@ -236,41 +258,6 @@ namespace core {
         return result;
     }
 
-    // std::shared_ptr<Album>
-    // Artist::findAlbumByName(const std::string &albumName) const {
-    //     for (auto const &a : _albums) {
-    //         if (a->getName().compare(albumName)) {
-    //             return a;
-    //         }
-    //     }
-    //     return nullptr;
-    // };
-
-    // unsigned Artist::getTotalDuration() const {
-    //     int totalSeconds = 0;
-    //     for (auto const &s : _songs) {
-    //         totalSeconds += s->getDuration();
-    //     }
-    //     return totalSeconds;
-    // };
-
-    // std::string Artist::getFormattedDuration() {
-    //     int totalSeconds = getTotalDuration();
-
-    //     int h = totalSeconds / 3600;
-    //     int m = (totalSeconds % 3600) / 60;
-    //     int s = totalSeconds % 60;
-
-    //     std::string formatted;
-
-    //     if (h > 0) {
-    //         formatted = std::to_string(h) + ":" + (m < 10 ? "0" : "") + std::to_string(m) + ":" + (s < 10 ? "0" : "") + std::to_string(s);
-    //     } else {
-    //         formatted = (m < 10 ? "0" : "") + std::to_string(m) + ":" + (s < 10 ? "0" : "") + std::to_string(s);
-    //     }
-    //     return formatted;
-    // };
-
     std::string Artist::toString() const {
         std::string info = "{Artist:Id:" + std::to_string(_id) + ", Nome:" + _name + ", Genre:" + _genre + "}";
         return info;
@@ -278,12 +265,12 @@ namespace core {
 
     bool Artist::hasSong() const {
         auto songs = loadSongs();
-        return (songs.empty() ? false : true);
+        return !songs.empty();
     };
 
     bool Artist::hasAlbum() const {
         auto albums = loadAlbums();
-        return (albums.empty() ? false : true);
+        return !albums.empty();
     };
 
     bool Artist::isSongsLoaded() const {
@@ -420,5 +407,24 @@ namespace core {
             throw std::invalid_argument("Loader não pode ser null");
         }
         songsLoader = loader;
+    }
+
+    bool Artist::containsAlbum(unsigned albumId) const {
+        loadAlbums();
+        return _album_ids.find(albumId) != _album_ids.end();
+    }
+
+    bool Artist::containsAlbum(const Album &album) const {
+        loadAlbums();
+        return containsAlbum(album.getId());
+    }
+
+    bool Artist::containsSong(unsigned songId) const {
+        loadSongs();
+        return _song_ids.find(songId) != _song_ids.end();
+    }
+
+    bool Artist::containsSong(const Song &song) const {
+        return containsSong(song.getId());
     }
 } // namespace core

@@ -3,6 +3,8 @@
 #include "core/entities/Album.hpp"
 #include "core/entities/Artist.hpp"
 #include "core/entities/Playlist.hpp"
+#include "core/services/UsersManager.hpp"
+#include "core/bd/DatabaseManager.hpp"
 
 namespace core
 {
@@ -13,6 +15,42 @@ namespace core
         _albumRepo = repo_factory.createAlbumRepository();
         _artistRepo = repo_factory.createArtistRepository();
         _playlistRepo = repo_factory.createPlaylistRepository();
+    }
+
+    Library::Library(const User &user, SQLite::Database &db) : _user(std::make_shared<User>(user))
+    {
+        RepositoryFactory repo_factory(std::shared_ptr<SQLite::Database>(&db, [](SQLite::Database*){}));
+        _songRepo = repo_factory.createSongRepository();
+        _albumRepo = repo_factory.createAlbumRepository();
+        _artistRepo = repo_factory.createArtistRepository();
+        _playlistRepo = repo_factory.createPlaylistRepository();
+    }
+
+    Library::Library(ConfigManager &config)
+    {
+        DatabaseManager db_manager(config.databasePath(), config.databaseSchemaPath());
+        RepositoryFactory repo_factory(db_manager.getDatabase());
+        _songRepo = repo_factory.createSongRepository();
+        _albumRepo = repo_factory.createAlbumRepository();
+        _artistRepo = repo_factory.createArtistRepository();
+        _playlistRepo = repo_factory.createPlaylistRepository();
+
+        UsersManager users_manager(config, *db_manager.getDatabase());
+        _public_user = users_manager.getPublicUser();
+        _user = users_manager.getCurrentUser();
+    }
+
+    Library::Library(ConfigManager &config, SQLite::Database &db)
+    {
+        RepositoryFactory repo_factory(std::shared_ptr<SQLite::Database>(&db, [](SQLite::Database*){}));
+        _songRepo = repo_factory.createSongRepository();
+        _albumRepo = repo_factory.createAlbumRepository();
+        _artistRepo = repo_factory.createArtistRepository();
+        _playlistRepo = repo_factory.createPlaylistRepository();
+
+        UsersManager users_manager(config, db);
+        _public_user = users_manager.getPublicUser();
+        _user = users_manager.getCurrentUser();
     }
 
     Library::~Library() {}
@@ -46,7 +84,7 @@ namespace core
             // return _playlistRepo->addSongToPlaylist(*pl, *song);
             return false;
         }
-        
+
         return false;
     }
 
@@ -62,47 +100,39 @@ namespace core
         return false;
     }
 
-    std::vector<std::shared_ptr<core::Song>> Library::searchSong(const std::string &query) const
-    {
-        auto songs = _songRepo->findByTitleAndUser(query, *_user);
-        if (songs.empty())
-        {
-            std::cout << "Nenhuma música encontrada com o termo: " << query << std::endl;
-        }
-
-        return songs;
+    std::vector<std::shared_ptr<core::Song>> Library::searchSong(const std::string &query) const {
+        return _songRepo->findByTitleAndUser(query, *_user);
     }
 
-    std::vector<std::shared_ptr<core::Artist>> Library::searchArtist(const std::string &query) const
-    {
-        auto artists = _artistRepo->findByNameAndUser(query, *_user);
-        if (artists.empty())
-        {
-            std::cout << "Nenhum artista encontrado com o termo: " << query << std::endl;
-        }
-
-        return artists;
+    std::vector<std::shared_ptr<core::Artist>> Library::searchArtist(const std::string &query) const {
+        return _artistRepo->findByNameAndUser(query, *_user);
     }
 
-    std::vector<std::shared_ptr<core::Album>> Library::searchAlbum(const std::string &query) const
-    {
-        auto albums = _albumRepo->findByTitleAndUser(query, *_user);
-        if (albums.empty())
-        {
-            std::cout << "Nenhum álbum encontrado com o termo: " << query << std::endl;
-        }
-
-        return albums;
+    std::vector<std::shared_ptr<core::Album>> Library::searchAlbum(const std::string &query) const {
+        return _albumRepo->findByTitleAndUser(query, *_user);
     }
 
-    std::vector<std::shared_ptr<core::Playlist>> Library::searchPlaylist(const std::string &query) const
-    {
-        auto playlists = _playlistRepo->findByTitleAndUser(query, *_user);
-        if (playlists.empty())
-        {
-            std::cout << "Nenhuma playlist encontrada com o termo: " << query << std::endl;
-        }
+    std::vector<std::shared_ptr<core::Playlist>> Library::searchPlaylist(const std::string &query) const {
+        return _playlistRepo->findByTitleAndUser(query, *_user);
+    }
 
-        return playlists;
+    bool Library::persist(Song &song) {
+        return _songRepo->save(song);
+    }
+
+    bool Library::persist(Artist &artist) {
+        return _artistRepo->save(artist);
+    }
+
+    bool Library::persist(Album &album) {
+        return _albumRepo->save(album);
+    }
+
+    bool Library::persist(Playlist &playlist) {
+        return _playlistRepo->save(playlist);
+    }
+
+    std::shared_ptr<core::User> Library::getUser() const {
+        return _user;
     }
 }
