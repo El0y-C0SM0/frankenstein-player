@@ -21,6 +21,11 @@ TEST_SUITE("Unit Tests - Entity: Album") {
             songs.push_back(std::make_shared<core::Song>());
             songs.push_back(std::make_shared<core::Song>());
 
+            for (size_t i = 0; i < songs.size(); ++i) {
+                songs[i]->setId(static_cast<unsigned>(i + 1));
+                songs[i]->setTitle("Song " + std::to_string(i + 1));
+            }
+
             user = core::User("user");
             artist1 = core::Artist(1, "Artist A", user);
             artist2 = core::Artist(2, "Artist B", user);
@@ -167,7 +172,9 @@ TEST_SUITE("Unit Tests - Entity: Album") {
             CHECK_EQ(album.getSongsCount(), this->getSongs().size());
 
             std::shared_ptr<core::Song> s1 = std::make_shared<core::Song>("Song A", this->artist1, album);
+            s1->setId(50);
             std::shared_ptr<core::Song> s2 = std::make_shared<core::Song>("Song B", this->artist1, album);
+            s2->setId(51);
 
             album.addSong(*s1);
             album.addSong(*s2);

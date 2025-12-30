@@ -12,29 +12,29 @@ cmake_policy(SET CMP0076 NEW)
 # Opções de configuração
 option(BUILD_TESTING "Build tests" ON)
 
-# ============================================================================
-# CONFIGURAÇÕES DE COBERTURA DE CÓDIGO
-# ===========================================================================
-if(BUILD_TESTING)
-    # Verifica se o compilador suporta cobertura
-    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        message(STATUS "Configuring code coverage...")
-        # Flags de cobertura (usar listas)
-        set(COVERAGE_CXX_FLAGS -g -O0 -fprofile-arcs -ftest-coverage -fno-inline -fno-omit-frame-pointer)
-        set(COVERAGE_LINK_FLAGS --coverage)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/coverage)
-        add_compile_options(${COVERAGE_CXX_FLAGS})
-        if(POLICY CMP0068) # add_link_options suportado
-            add_link_options(${COVERAGE_LINK_FLAGS})
-        else()
-            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
-            set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
-        endif()
-        message(STATUS "Code coverage enabled")
-    else()
-        message(WARNING "Code coverage only supported for GCC/Clang")
-    endif()
-endif()
+# # ============================================================================
+# # CONFIGURAÇÕES DE COBERTURA DE CÓDIGO
+# # ===========================================================================
+# if(BUILD_TESTING)
+#     # Verifica se o compilador suporta cobertura
+#     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+#         message(STATUS "Configuring code coverage...")
+#         # Flags de cobertura (usar listas)
+#         set(COVERAGE_CXX_FLAGS -g -O0 -fprofile-arcs -ftest-coverage -fno-inline -fno-omit-frame-pointer)
+#         set(COVERAGE_LINK_FLAGS --coverage)
+#         file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/coverage)
+#         add_compile_options(${COVERAGE_CXX_FLAGS})
+#         if(POLICY CMP0068) # add_link_options suportado
+#             add_link_options(${COVERAGE_LINK_FLAGS})
+#         else()
+#             set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
+#             set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
+#         endif()
+#         message(STATUS "Code coverage enabled")
+#     else()
+#         message(WARNING "Code coverage only supported for GCC/Clang")
+#     endif()
+# endif()
 
 # ============================================================================
 # DEPENDÊNCIAS EXTERNAS
@@ -156,10 +156,10 @@ target_link_libraries(frankenstein_core PUBLIC
 )
 
 # Aplica flags de cobertura ao core quando apropriado
-if(BUILD_TESTING AND (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"))
-    target_compile_options(frankenstein_core PRIVATE ${COVERAGE_CXX_FLAGS})
-    target_link_options(frankenstein_core PRIVATE ${COVERAGE_LINK_FLAGS})
-endif()
+# if(BUILD_TESTING AND (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"))
+#     target_compile_options(frankenstein_core PRIVATE ${COVERAGE_CXX_FLAGS})
+#     target_link_options(frankenstein_core PRIVATE ${COVERAGE_LINK_FLAGS})
+# endif()
 
 
 # Define que temos suporte a áudio com MiniAudio
@@ -221,10 +221,10 @@ if(BUILD_TESTING)
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/tests>
         )
 
-        if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-            target_compile_options(${test_target} PRIVATE ${COVERAGE_CXX_FLAGS})
-            target_link_options(${test_target} PRIVATE ${COVERAGE_LINK_FLAGS})
-        endif()
+        # if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        #     target_compile_options(${test_target} PRIVATE ${COVERAGE_CXX_FLAGS})
+        #     target_link_options(${test_target} PRIVATE ${COVERAGE_LINK_FLAGS})
+        # endif()
 
         add_test(NAME ${test_target} COMMAND ${test_target})
         set_tests_properties(${test_target} PROPERTIES

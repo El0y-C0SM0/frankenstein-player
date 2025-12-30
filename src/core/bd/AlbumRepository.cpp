@@ -199,7 +199,7 @@ namespace core {
     std::shared_ptr<Artist>
     AlbumRepository::getArtist(const Album &album) const {
         ArtistRepository artist_Repo(_db);
-        return artist_Repo.findById(album.getArtist()->getId());
+        return artist_Repo.findById(album.getArtistId());
     };
 
     size_t AlbumRepository::count() const {

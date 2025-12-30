@@ -28,6 +28,16 @@ TEST_SUITE("Unit Tests - Entity: Artist") {
             songs.push_back(std::make_shared<core::Song>());
             songs.push_back(std::make_shared<core::Song>());
 
+            for (size_t i = 0; i < albums.size(); ++i) {
+                albums[i]->setId(static_cast<unsigned>(i + 1));
+                albums[i]->setTitle("Album " + std::to_string(i + 1));
+            }
+
+            for (size_t i = 0; i < songs.size(); ++i) {
+                songs[i]->setId(static_cast<unsigned>(i + 1));
+                songs[i]->setTitle("Song " + std::to_string(i + 1));
+            }
+
             user = core::User("user");
             user.setId(1);
         }
@@ -107,7 +117,9 @@ TEST_SUITE("Unit Tests - Entity: Artist") {
             auto album = core::Album();
 
             std::shared_ptr<core::Song> s1 = std::make_shared<core::Song>("Song A", artist, album);
+            s1->setId(50);
             std::shared_ptr<core::Song> s2 = std::make_shared<core::Song>("Song B", artist, album);
+            s2->setId(51);
 
             artist.addSong(*s1);
             artist.addSong(*s2);
@@ -132,7 +144,9 @@ TEST_SUITE("Unit Tests - Entity: Artist") {
             CHECK_EQ(artist.getAlbumsCount(), this->getAlbums().size());
 
             core::Album a1("Album 1", "Rock", artist);
+            a1.setId(50);
             core::Album a2("Album 2", "MPB", artist);
+            a2.setId(51);
 
             artist.addAlbum(a1);
             artist.addAlbum(a2);
@@ -243,9 +257,11 @@ TEST_SUITE("Unit Tests - Entity: Artist") {
             auto album = std::make_shared<core::Album>();
 
             auto s1 = std::make_shared<core::Song>("Track 1", artist, *album);
+            s1->setId(100);
             s1->setDuration(120);
 
             auto s2 = std::make_shared<core::Song>("Track 2", artist, *album);
+            s2->setId(101);
             s2->setDuration(150);
 
             artist.setSongsLoader([s1, s2]() {

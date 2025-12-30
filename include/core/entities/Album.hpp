@@ -15,6 +15,7 @@
 
 #include <cstddef>
 #include <functional>
+#include <unordered_set>
 #include <memory>
 #include <string>
 #include <vector>
@@ -51,6 +52,7 @@ namespace core {
         mutable std::weak_ptr<Artist> _artist;
         mutable std::vector<unsigned> _featuring_artists_ids;
         mutable std::vector<std::shared_ptr<Song>> _songs;
+        mutable std::unordered_set<unsigned int> _song_ids;
 
         mutable bool _songsLoaded = false;
 
@@ -142,11 +144,23 @@ namespace core {
         std::shared_ptr<const Artist> getArtist() const;
 
         /**
+         * @brief Obtem ID do artista musica
+         * @return id do artista
+         */
+        unsigned getArtistId() const;
+
+        /**
          * @brief Obtém os artistas colaboradores (featuring)
          * @return Vetor de ponteiros compartilhados para os artistas
          * colaboradores
          */
         std::vector<std::shared_ptr<const Artist>> getFeaturingArtists() const;
+
+        /**
+         * @brief Obtem ID dos artista musica
+         * @return Vetor com id dos artistas
+         */
+        std::vector<unsigned> getFeaturingArtistsId() const;
 
         /**
          * @brief Obtém as músicas do álbum
@@ -342,6 +356,20 @@ namespace core {
          * @return Duração total em segundos
          */
         unsigned calculateTotalDuration() override;
+
+        /**
+         * @brief Verifica se o álbum contém uma música com o ID especificado
+         * @param songId ID da música a ser verificada
+         * @return true se a música estiver no álbum, false caso contrário
+         */
+        bool containsSong(unsigned songId) const override;
+
+        /**
+         * @brief Verifica se o álbum contém uma música com o ID especificado
+         * @param song Música a ser verificada
+         * @return true se a música estiver no álbum, false caso contrário
+         */
+        bool containsSong(const Song& song) const override;
 
         /**
          * @brief Obtém a música em uma posição específica do álbum

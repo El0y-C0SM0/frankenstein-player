@@ -9,6 +9,8 @@
 
 #include "core/bd/PlaylistRepository.hpp"
 #include "core/bd/UserRepository.hpp"
+#include <cstddef>
+#include <iostream>
 
 namespace core {
     PlaylistRepository::PlaylistRepository(std::shared_ptr<SQLite::Database> db)
@@ -24,9 +26,13 @@ namespace core {
         if (!query.exec())
             return false;
 
-        for (const auto& song : entity.getSongs()) {
-            if (!addSongToPlaylist(entity,
-                                   *std::dynamic_pointer_cast<Song>(song)))
+        entity.setId(static_cast<unsigned>(getLastInsertId()));
+
+        size_t size = entity.getSongsCount();
+        for (size_t i {0}; i < size; ++i) {
+            const auto& song =
+                *std::dynamic_pointer_cast<Song>(entity.getSongAt(i));
+            if (!addSongToPlaylist(entity, i, song))
                 return false;
         }
 
@@ -34,13 +40,15 @@ namespace core {
     }
 
     bool PlaylistRepository::addSongToPlaylist(const Playlist& playlist,
+                                               size_t pos,
                                                const Song& song) {
         SQLite::Statement query(*_db,
                                 "INSERT INTO playlist_songs (playlist_id, "
-                                "song_id) "
-                                "VALUES (?, ?);");
+                                "song_id, position) "
+                                "VALUES (?, ?, ?);");
         query.bind(1, playlist.getId());
         query.bind(2, song.getId());
+        query.bind(3, static_cast<unsigned>(pos));
 
         return query.exec() > 0;
     }
@@ -64,9 +72,13 @@ namespace core {
         if (!deleteQuery.exec())
             return false;
 
-        for (const auto& song : entity.getSongs()) {
-            if (!addSongToPlaylist(entity,
-                                   *std::dynamic_pointer_cast<Song>(song)))
+
+        size_t size = entity.getSongsCount();
+        auto songs = entity.getSongs();
+        for (size_t i {0}; i < size; ++i) {
+            const auto& song =
+                *std::dynamic_pointer_cast<Song>(songs[i]);
+            if (!addSongToPlaylist(entity, i, song))
                 return false;
         }
 
@@ -99,8 +111,8 @@ namespace core {
                                            const User& user) const {
         SQLite::Statement query(
             *_db,
-            "SELECT * FROM playlists WHERE title = ? AND user_id = ?;");
-        query.bind(1, title);
+            "SELECT * FROM playlists WHERE title LIKE ? AND user_id = ?;");
+        query.bind(1, "%" + title + "%");
         query.bind(2, user.getId());
 
         std::vector<std::shared_ptr<Playlist>> playlists;
@@ -134,7 +146,6 @@ namespace core {
         std::vector<std::shared_ptr<Song>> songs;
         while (query.executeStep()) {
             unsigned song_id = query.getColumn("id").getUInt();
-            std::string file_path = query.getColumn("file_path").getString();
             std::string title = query.getColumn("title").getString();
             unsigned artist_id = query.getColumn("artist_id").getUInt();
 

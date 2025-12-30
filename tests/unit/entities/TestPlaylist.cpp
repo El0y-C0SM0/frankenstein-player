@@ -16,19 +16,24 @@
 #include <string>
 
 TEST_SUITE("Unit Tests - Entity: Playlist") {
-    class FixtureCollectionPlaylist {
+    class CollectionPlaylistFixture {
     public:
         std::vector<std::shared_ptr<core::Song>> songs;
         core::Artist artist;
         core::Album album;
         core::User user;
 
-        FixtureCollectionPlaylist() {
+        CollectionPlaylistFixture() {
             songs.push_back(std::make_shared<core::Song>());
             songs.push_back(std::make_shared<core::Song>());
             songs.push_back(std::make_shared<core::Song>());
             songs.push_back(std::make_shared<core::Song>());
             songs.push_back(std::make_shared<core::Song>());
+
+            for (size_t i = 0; i < songs.size(); ++i) {
+                songs[i]->setId(static_cast<unsigned>(i + 1));
+                songs[i]->setTitle("Song " + std::to_string(i + 1));
+            }
 
             user = core::User("user");
             artist = core::Artist(1, "Artist A", user);
@@ -40,7 +45,7 @@ TEST_SUITE("Unit Tests - Entity: Playlist") {
         }
     };
 
-    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: construtores e getters básicos") {
+    TEST_CASE_FIXTURE(CollectionPlaylistFixture, "Playlist: construtores e getters básicos") {
 
         SUBCASE("Construtor padrão") {
             core::Playlist p;
@@ -67,7 +72,7 @@ TEST_SUITE("Unit Tests - Entity: Playlist") {
         }
     }
 
-    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: setters e getters") {
+    TEST_CASE_FIXTURE(CollectionPlaylistFixture, "Playlist: setters e getters") {
         core::Playlist p;
 
         p.setTitle("My Playlist");
@@ -78,7 +83,7 @@ TEST_SUITE("Unit Tests - Entity: Playlist") {
         CHECK_EQ(p.getUser()->getUsername(), this->user.getUsername());
     }
 
-    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: Comparações") {
+    TEST_CASE_FIXTURE(CollectionPlaylistFixture, "Playlist: Comparações") {
         core::Playlist p1(1, "Playlist A");
         p1.setSongsLoader([this]() { return this->getSongs(); });
         core::Playlist p2(2, "Playlist B");
@@ -100,7 +105,7 @@ TEST_SUITE("Unit Tests - Entity: Playlist") {
         CHECK(p1 >= p3);
     }
 
-    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: herança com IPlayable") {
+    TEST_CASE_FIXTURE(CollectionPlaylistFixture, "Playlist: herança com IPlayable") {
         core::Playlist p;
         CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
 
@@ -110,7 +115,7 @@ TEST_SUITE("Unit Tests - Entity: Playlist") {
         CHECK_EQ(playable->getPlayableObjects().size(), this->getSongs().size());
     }
 
-    TEST_CASE_FIXTURE(FixtureCollectionPlaylist, "Playlist: métodos de ICollection") {
+    TEST_CASE_FIXTURE(CollectionPlaylistFixture, "Playlist: métodos de ICollection") {
         SUBCASE("Adicionar e acessar musicas") {
             core::Playlist p;
             CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
@@ -118,12 +123,14 @@ TEST_SUITE("Unit Tests - Entity: Playlist") {
             CHECK_EQ(p.getSongs().size(), this->getSongs().size());
 
             core::Song s1("Song A", this->artist, this->album);
+            s1.setId(98);
             core::Song s2("Song B", this->artist, this->album);
+            s2.setId(99);
 
             p.addSong(s1);
             p.addSong(s2);
 
-            CHECK_EQ(p.getSongs().size(), this->getSongs().size() + 2);
+             CHECK_EQ(p.getSongs().size(), this->getSongs().size() + 2);
 
             auto songs = p.getSongs();
             CHECK(songs.size() == this->getSongs().size() + 2);
@@ -188,9 +195,11 @@ TEST_SUITE("Unit Tests - Entity: Playlist") {
             core::Playlist p;
             CHECK_NOTHROW(p.setSongsLoader([this]() { return this->getSongs(); }));
 
-            core::Song s1("Song 1", this->artist, this->album);
+            core::Song s1("Song A", this->artist, this->album);
+            s1.setId(300);
             s1.setDuration(120);
-            core::Song s2("Song 2", this->artist, this->album);
+            core::Song s2("Song B", this->artist, this->album);
+            s2.setId(301);
             s2.setDuration(150);
             p.addSong(s1);
             p.addSong(s2);
